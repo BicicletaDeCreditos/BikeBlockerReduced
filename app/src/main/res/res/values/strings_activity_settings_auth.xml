@@ -1,10 +1,5 @@
 <resources>
-    <string name="app_name">BikeBlocker</string>
-
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
-    <string name="title_activity_settings_login">Sign in</string>
+    <string name="title_activity_settings_auth">Sign in</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
