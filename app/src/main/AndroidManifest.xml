@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".Control.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/FullscreenTheme" >
@@ -24,8 +24,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsLoginActivity"
-            android:label="@string/title_activity_settings_login"
+            android:name=".Control.SettingsAuthActivity"
+            android:label="@string/title_activity_settings_auth"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name=".Control.RegisterActivity"
+            android:label="@string/title_activity_register"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
     </application>

@@ -37,7 +37,7 @@
             android:id="@+id/settingsButton"
             android:layout_gravity="right|bottom"
             android:clickable="true"
-            android:onClick="startSettingsLoginActivity" />
+            android:onClick="startSettingsAuthActivity" />
     </FrameLayout>
 
 </FrameLayout>
