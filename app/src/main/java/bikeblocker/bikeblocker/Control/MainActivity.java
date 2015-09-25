@@ -1,6 +1,5 @@
 package bikeblocker.bikeblocker.Control;
 
-import bikeblocker.bikeblocker.Model.UserAdmin;
 import bikeblocker.bikeblocker.R;
 import bikeblocker.bikeblocker.util.SystemUiHider;
 

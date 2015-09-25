@@ -81,10 +81,14 @@ public class RegisterActivity extends Activity {
 
     private void savePassword(String password){
         userToBeRegistered.setUserPasswordAdmin(password);
-        userDao.saveUser(userToBeRegistered);
+        if(userToBeRegistered.verifyFirstTimeAccess(getApplicationContext())){
+            userDao.saveUser(userToBeRegistered);
+        }else{
+            userDao.editUserInformations(userToBeRegistered);
+        }
+
     }
 
-    //TextUtils.isEmpty(email)
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
