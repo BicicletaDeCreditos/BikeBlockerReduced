@@ -8,6 +8,10 @@ import java.io.Serializable;
 import bikeblocker.bikeblocker.Database.UserAdminDAO;
 
 public class UserAdmin implements Serializable {
+    private final int NO_ADMIN = 1;
+    private final int INCORRECT = 2;
+    private final int OK = 0;
+
     private final String userNameAdmin = "admin";
     private String userPasswordAdmin;
 
@@ -33,23 +37,22 @@ public class UserAdmin implements Serializable {
         userDAO = userDAO.getInstance(context);
         UserAdmin admin = userDAO.selectUserAdmin(this.userNameAdmin);
 
-        if (admin.getUserNameAdmin() == null){
+        if (admin.getUserPasswordAdmin() == null || admin == null){
             return true;
         }
         return false;
     }
 
-    public UserAdmin verifyAdminPassword(String userPasswordAdmin, Context context){
+    public int verifyAdminPassword(String userPasswordAdmin, Context context){
         userDAO = userDAO.getInstance(context);
         UserAdmin admin = userDAO.selectUserAdmin(this.userNameAdmin);
-        System.out.println("ADMIN = "+ admin.getUserPasswordAdmin() +"  "+ admin.getUserNameAdmin());
-
-        if(admin == null){
-            return null;
-        }else if (admin.getUserPasswordAdmin().equals(userPasswordAdmin) ){
-            return admin;
+        System.out.println("user from database= " + admin.getUserNameAdmin() + "senha " + admin.getUserPasswordAdmin() );
+        if((admin.getUserPasswordAdmin() == null) || admin == null){
+            return NO_ADMIN;
+        }else if ( admin.getUserPasswordAdmin().equals(userPasswordAdmin)){
+            return OK;
         }else {
-            return null;
+            return INCORRECT;
         }
     }
 
