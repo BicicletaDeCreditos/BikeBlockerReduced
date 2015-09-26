@@ -15,13 +15,6 @@ public class UserAdminDAO {
     public static final String USERNAME_COLUMN = "useradmin";
     public static final String USERPASSWORD_COLUMN = "adminpassword";
 
-    public static String SCRIPT_COMMAND_CREATION_TABLE = "CREATE TABLE "
-            + TABLE_NAME + " (" + USERNAME_COLUMN
-            + " VARCHAR(255) NOT NULL PRIMARY KEY," + USERPASSWORD_COLUMN + ");";
-
-    public static final String SCRIPT_COMMAND_DELETION_TABLE = "DROP TABLE IF EXISTS"
-            + TABLE_NAME;
-
     private SQLiteDatabase database = null;
     private static UserAdminDAO userDAO = null;
 
