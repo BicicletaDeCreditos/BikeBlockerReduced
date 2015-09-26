@@ -16,7 +16,7 @@
             android:name=".Control.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +33,23 @@
             android:label="@string/title_activity_register"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
-        <!-- Force Landscape-->
+        <!-- Force Landscape -->
+        <activity
+            android:name=".Control.ListUsersActivity"
+            android:label="@string/title_activity_list_users" >
+        </activity>
+        <activity
+            android:name=".Control.AddNewUserActivity"
+            android:label="@string/title_activity_add_new_user" >
+        </activity>
+        <activity
+            android:name=".Control.ViewUserActivity"
+            android:label="@string/title_activity_view_user" >
+        </activity>
+        <activity
+            android:name=".Control.WelcomeActivity"
+            android:label="@string/title_activity_welcome" >
+        </activity>
     </application>
 
 </manifest>

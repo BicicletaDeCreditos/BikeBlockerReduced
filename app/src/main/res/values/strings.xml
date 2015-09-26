@@ -11,5 +11,20 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="password_error">"Passwords does not match. Password must have from 8 to 15 characters!"</string>
     <string name="register_change_password">"Register new password"</string>
+    <string name="title_activity_list_users">ListUsersActivity</string>
 
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add_new_user">AddNewUserActivity</string>
+    <string name="title_activity_view_user">ViewUserActivity</string>
+    <string name="usernameLabel">Username: </string>
+    <string name="creditsLabel">Credits:</string>
+    <string name="confirmTitle">Are You Sure?</string>
+    <string name="confirmMessage">This will permanently delete this user.</string>
+    <string name="button_delete">Delete</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_username">Username</string>
+    <string name="saveUser">Save</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
 </resources>

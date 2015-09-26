@@ -76,9 +76,8 @@ public class SettingsAuthActivity extends Activity {
             focusView = mPasswordView;
             cancel = true;
         } else {
-            //Start an activity after successful login TO DO
             Intent intent = new Intent();
-            intent.setClass(this, MainActivity.class);
+            intent.setClass(this, WelcomeActivity.class);
             startActivity(intent);
         }
 

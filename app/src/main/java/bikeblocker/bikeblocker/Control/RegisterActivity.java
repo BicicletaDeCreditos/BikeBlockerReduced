@@ -123,7 +123,7 @@ public class RegisterActivity extends Activity {
             savePassword(passwordValue);
             //TO DO: change it to the actual next activity
             Intent intent = new Intent();
-            intent.setClass(this, MainActivity.class);
+            intent.setClass(this, WelcomeActivity.class);
             startActivity(intent);
         }
     }
