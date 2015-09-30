@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="@drawable/homescreen_background"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:clickable="true">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -10,21 +11,20 @@
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
-        android:fitsSystemWindows="false">
+        android:fitsSystemWindows="false"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:background="@drawable/homescreen_logo">
 
         <LinearLayout android:id="@+id/fullscreen_content_controls" style="?metaButtonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            tools:ignore="UselessParent"
+            android:clickable="true"
+            android:contextClickable="true">
 
         </LinearLayout>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/logo_image"
-            android:src="@drawable/homescreen_logo"
-            android:layout_gravity="center"/>
 
         <ImageButton
             android:layout_width="100dp"
@@ -32,7 +32,11 @@
             android:id="@+id/perfisButton"
             android:layout_gravity="left|bottom"
             android:clickable="true"
-            android:contentDescription="perfis" />
+            android:contentDescription="perfis"
+            android:layout_marginLeft="50dp"
+            android:layout_marginBottom="20dp"
+            android:scaleType="fitCenter"
+            android:visibility="visible" />
 
         <ImageButton
             android:layout_width="100dp"
@@ -41,7 +45,11 @@
             android:layout_gravity="right|bottom"
             android:clickable="true"
             android:onClick="startSettingsAuthActivity"
-            android:contentDescription="settings" />
+            android:contentDescription="settings"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:scaleType="fitCenter"
+            android:contextClickable="true" />
     </FrameLayout>
 
 </FrameLayout>

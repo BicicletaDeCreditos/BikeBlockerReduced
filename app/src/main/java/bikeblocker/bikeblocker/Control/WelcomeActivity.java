@@ -3,8 +3,6 @@ package bikeblocker.bikeblocker.Control;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import bikeblocker.bikeblocker.R;
@@ -28,6 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void startChangePasswordActivity(View view){
-
+        Intent intent = new Intent(this, RegisterPasswordActivity.class);
+        startActivity(intent);
     }
 }

@@ -64,7 +64,7 @@ public class SettingsAuthActivity extends Activity {
 
         if (loginResult == NO_ADMIN) {
             Intent intent = new Intent();
-            intent.setClass(this, RegisterActivity.class);
+            intent.setClass(this, RegisterPasswordActivity.class);
             startActivity(intent);
 
             CharSequence text = "Primeiro acesso! Cadastre uma senha";
@@ -86,11 +86,6 @@ public class SettingsAuthActivity extends Activity {
         } else {
             showProgress(true);
         }
-    }
-
-    public void startRegisterNewPasswordActivity(View view){
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
     }
 
     /**
@@ -123,4 +118,5 @@ public class SettingsAuthActivity extends Activity {
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
 }

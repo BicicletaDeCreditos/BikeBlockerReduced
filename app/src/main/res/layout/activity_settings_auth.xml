@@ -15,7 +15,8 @@
     <LinearLayout android:id="@+id/login_form" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:orientation="vertical"
         android:baselineAligned="false"
-        android:layout_gravity="center_vertical">
+        android:layout_gravity="center_vertical"
+        android:weightSum="1">
 
         <EditText android:id="@+id/password" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:hint="@string/prompt_password"
@@ -31,19 +32,6 @@
             android:textStyle="bold"
             android:layout_gravity="center_horizontal"
             android:contentDescription="signIn" />
-
-        <Button
-            style="?android:textAppearanceSmall"
-            android:id="@+id/register_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/register_change_password"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:onClick="startRegisterNewPasswordActivity"
-            android:contentDescription="registerNewPassword" />
 
     </LinearLayout>
 

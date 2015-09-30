@@ -9,7 +9,7 @@
     <string name="insert_password">Insert Password</string>
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="password_error">"Passwords does not match. Password must have from 8 to 15 characters!"</string>
+    <string name="password_error">"Passwords does not match. Password must have minimum 6 caracters"</string>
     <string name="register_change_password">"Register new password"</string>
     <string name="title_activity_list_users">ListUsersActivity</string>
 
