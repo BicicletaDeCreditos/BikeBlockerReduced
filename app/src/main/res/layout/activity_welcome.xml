@@ -14,10 +14,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:onClick="startListUsersActivity"
-        android:contentDescription="listUsers" />
+        android:contentDescription="listUsers"
+        android:clickable="true" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add User"
@@ -25,7 +25,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:onClick="startAddNewUserActivity"
-        android:contentDescription="addUser" />
+        android:contentDescription="addUser"
+        android:clickable="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,5 +37,7 @@
         android:layout_alignParentStart="true"
         android:enabled="true"
         android:onClick="startChangePasswordActivity"
-        android:contentDescription="changeAdminPassword" />
+        android:contentDescription="changeAdminPassword"
+        android:clickable="true" />
+
 </RelativeLayout>

@@ -69,7 +69,7 @@ public class AddNewUserActivity extends Activity {
         /**TO DO: verificar de se ja nao existe um usuario*/
         if (TextUtils.isEmpty(username) || username == null){
             usernameEditText.setError("You must enter a username.");
-            focusView = nameEditText;
+            focusView = usernameEditText;
             cancel = true;
         }else{
             user.setUsername(name);
