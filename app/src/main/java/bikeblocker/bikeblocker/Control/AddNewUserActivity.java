@@ -46,6 +46,8 @@ public class AddNewUserActivity extends Activity {
     }
 
     private void registerUser(){
+        CharSequence text;
+        Toast toast;
         nameEditText.setError(null);
         usernameEditText.setError(null);
         passwordEditText.setError(null);
@@ -66,7 +68,6 @@ public class AddNewUserActivity extends Activity {
         }else{
             user.setName(name);
         }
-        /**TO DO: verificar de se ja nao existe um usuario*/
         if (TextUtils.isEmpty(username) || username == null){
             usernameEditText.setError("You must enter a username.");
             focusView = usernameEditText;
@@ -90,24 +91,24 @@ public class AddNewUserActivity extends Activity {
             user.setPassword(password);
         }
 
-
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            saveUser(user);
-            //TO DO: change it to the actual next activity
+            if(userdao.selectUser(user.getUsername()) != null){
+                text = "Usuario ja existe!";
+                toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
+            }else{
+                text = "Usuario salvo com sucesso!";
+                saveUser(user);
+                toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
+            }
             Intent intent = new Intent();
             intent.setClass(this, WelcomeActivity.class);
             intent.putExtra("user_name", name);
             startActivity(intent);
 
-            CharSequence text = "Usuario salvo com sucesso!";
-            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             toast.show();
         }
-
     }
     private void saveUser(User user){
         userdao.saveUser(user);
@@ -131,26 +132,18 @@ public class AddNewUserActivity extends Activity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_add_new_user, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
