@@ -13,9 +13,9 @@ import org.junit.BeforeClass;
 
 public class ChangePasswordTest extends InstrumentationTestCase {
     private UiDevice device;
-    UiObject password;
-    UiObject confirmPassword;
-    UiObject registerButton;
+    private UiObject password;
+    private UiObject confirmPassword;
+    private UiObject registerButton;
     @Override
     @BeforeClass
     public void setUp() throws Exception {

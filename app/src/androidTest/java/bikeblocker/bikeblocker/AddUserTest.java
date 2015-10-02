@@ -9,6 +9,11 @@ import android.test.InstrumentationTestCase;
 
 import org.junit.After;
 
+/**
+ * TO DO: testar se pode ser inserido um usuario com o mesmo username de um ja existente
+ * Na classe "ViewUserDetailsTest": criar teste de selecao de usuario na lista e visualizacao do usuario selecionado.
+ * */
+
 public class AddUserTest extends InstrumentationTestCase {
     private UiDevice device;
     @Override
