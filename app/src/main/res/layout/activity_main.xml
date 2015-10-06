@@ -32,7 +32,8 @@
             android:id="@+id/perfisButton"
             android:layout_gravity="left|bottom"
             android:clickable="true"
-            android:src="@drawable/bike_icon"/>
+            android:src="@drawable/bike_icon"
+            android:background="@drawable/roundedbutton" />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -41,7 +42,12 @@
             android:layout_gravity="right|bottom"
             android:clickable="true"
             android:onClick="startSettingsAuthActivity"
-            android:src="@drawable/gear_icon" />
+            android:src="@drawable/gear_icon"
+            android:background="@drawable/roundedbutton"
+
+
+            />
+
     </FrameLayout>
 
 </FrameLayout>
