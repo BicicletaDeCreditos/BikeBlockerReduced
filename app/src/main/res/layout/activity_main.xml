@@ -27,19 +27,21 @@
             android:layout_gravity="center"/>
 
         <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/perfisButton"
             android:layout_gravity="left|bottom"
-            android:clickable="true" />
+            android:clickable="true"
+            android:src="@drawable/bike_icon"/>
 
         <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/settingsButton"
             android:layout_gravity="right|bottom"
             android:clickable="true"
-            android:onClick="startSettingsAuthActivity" />
+            android:onClick="startSettingsAuthActivity"
+            android:src="@drawable/gear_icon" />
     </FrameLayout>
 
 </FrameLayout>
