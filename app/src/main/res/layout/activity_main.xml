@@ -27,8 +27,8 @@
         </LinearLayout>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/perfisButton"
             android:layout_gravity="left|bottom"
             android:clickable="true"
@@ -41,8 +41,8 @@
             android:background="@drawable/roundedbutton" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/settingsButton"
             android:layout_gravity="right|bottom"
             android:clickable="true"
