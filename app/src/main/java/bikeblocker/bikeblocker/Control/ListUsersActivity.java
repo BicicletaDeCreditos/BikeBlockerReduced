@@ -8,7 +8,6 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.R;
@@ -26,6 +25,7 @@ public class ListUsersActivity extends ListActivity {
 
         contactListView = getListView();
 
+        setContentView(R.layout.activity_list_users);
         setListAdapter(getListUsers());
     }
 
@@ -38,11 +38,11 @@ public class ListUsersActivity extends ListActivity {
     public SimpleAdapter getListUsers(){
         String[] from ={"name"};
         int[] to = { R.id.user_name };
-        if(userdao.selectAllUsers().isEmpty()){
-            return new SimpleAdapter(this, null, R.layout.activity_list_no_users, null, null);
-        }else {
+//        if(userdao.selectAllUsers().isEmpty()){
+//            return new SimpleAdapter(this, null, R.layout.activity_list_no_users, null, null);
+//        }else {
             return new SimpleAdapter(this, userdao.selectAllUsers(), R.layout.activity_list_users, from, to);
-        }
+//        }
     }
 
     public void startViewUserActivity(View view){

@@ -109,7 +109,7 @@ public class RegisterPasswordActivity extends Activity {
             showProgress(true);
             savePassword(passwordValue);
             Intent intent = new Intent();
-            intent.setClass(this, ListUsersActivity.class);
+            intent.setClass(this, WelcomeActivity.class);
             startActivity(intent);
         }
     }
