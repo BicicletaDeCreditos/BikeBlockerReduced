@@ -59,4 +59,19 @@ public class ListUsersActivity extends ListActivity {
         viewUser.putExtra(USER_NAME, ((TextView) view).getText());
         startActivity(viewUser);
     }
+
+    public void startAddNewUserActivity(View view){
+        Intent intent = new Intent(this, AddNewUserActivity.class);
+        startActivity(intent);
+    }
+
+    public void startListUsersActivity(View view){
+        Intent intent = new Intent(this, ListUsersActivity.class);
+        startActivity(intent);
+    }
+
+    public void startChangePasswordActivity(View view){
+        Intent intent = new Intent(this, RegisterPasswordActivity.class);
+        startActivity(intent);
+    }
 }
