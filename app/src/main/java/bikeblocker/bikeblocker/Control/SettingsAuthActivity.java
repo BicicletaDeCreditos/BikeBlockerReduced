@@ -24,7 +24,6 @@ public class SettingsAuthActivity extends Activity {
     private final int NO_ADMIN = 1;
     private final int INCORRECT = 2;
     private final int OK = 0;
-    // UI references.
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -38,7 +37,6 @@ public class SettingsAuthActivity extends Activity {
 
         userToBeLogged = new UserAdmin();
 
-        //solicita apenas senha
         mPasswordView = (EditText) findViewById(R.id.password);
 
         Button mSignInButton = (Button) findViewById(R.id.sign_in_button);
@@ -67,7 +65,7 @@ public class SettingsAuthActivity extends Activity {
             intent.setClass(this, RegisterPasswordActivity.class);
             startActivity(intent);
 
-            CharSequence text = "Primeiro acesso! Cadastre uma senha";
+            CharSequence text = "First access! Register a password";
             Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             toast.show();
         } else if (loginResult == INCORRECT) {
@@ -88,9 +86,6 @@ public class SettingsAuthActivity extends Activity {
         }
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {

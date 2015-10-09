@@ -74,9 +74,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, VERSION);
     }
 
-    /*
-    * Obter uma instancia de DatabaseHelper para facilitar insercao, delecao e consultas ao banco
-    */
     public static DatabaseHelper getInstance(Context context){
         if (databaseHelper == null){
             databaseHelper = new DatabaseHelper(context.getApplicationContext());
@@ -84,9 +81,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         return databaseHelper;
     }
 
-    /*
-    * Metodo responsavel por executar o comando SQL para criacao das tabelas do banco
-    * */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(this.SCRIPT_COMMAND_DELETION_DATABASE);
@@ -94,9 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(SCRIPT_COMMAND_CREATION_USERTABLE);
     }
 
-    /*
-    Metodo responsavel por atualizar o banco.
-     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
        db.execSQL(this.SCRIPT_COMMAND_DELETION_DATABASE);

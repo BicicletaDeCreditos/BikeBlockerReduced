@@ -21,7 +21,6 @@ public class UserAdmin implements Serializable {
 
     }
 
-    /*Username Admin is always "admin". There is no need do set this attribute."*/
     public String getUserNameAdmin(){
         return userNameAdmin;
     }
@@ -46,7 +45,6 @@ public class UserAdmin implements Serializable {
     public int verifyAdminPassword(String userPasswordAdmin, Context context){
         userDAO = userDAO.getInstance(context);
         UserAdmin admin = userDAO.selectUserAdmin(this.userNameAdmin);
-        //System.out.println("user from database= " + admin.getUserNameAdmin() + "senha " + admin.getUserPasswordAdmin() );
         if((admin.getUserPasswordAdmin() == null) || admin == null){
             return NO_ADMIN;
         }else if ( admin.getUserPasswordAdmin().equals(userPasswordAdmin)){
@@ -55,5 +53,4 @@ public class UserAdmin implements Serializable {
             return INCORRECT;
         }
     }
-
 }
