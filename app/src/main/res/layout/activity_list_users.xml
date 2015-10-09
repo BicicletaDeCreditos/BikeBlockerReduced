@@ -1,6 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background=""
+    android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:clickable="true">
 
@@ -47,15 +47,22 @@
         android:background="@drawable/roundedbutton"
         />
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/user_name" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:padding="8dp"
-        android:textSize="20sp" android:textColor="@android:color/black"
-        android:minHeight="?android:attr/listPreferredItemHeight"
-        android:gravity="center_vertical"
-        android:clickable="true"
-        android:onClick="startViewUserActivity"
-        android:contentDescription="userRow" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="717dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|top">
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/user_name" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:padding="8dp"
+            android:textSize="20sp" android:textColor="@android:color/black"
+            android:minHeight="?android:attr/listPreferredItemHeight"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:onClick="startViewUserActivity"
+            android:contentDescription="userRow" />
+    </LinearLayout>
 
 </FrameLayout>
 
