@@ -36,8 +36,8 @@ public class AddNewUserActivity extends Activity {
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
 
-        Button saveuserButton = (Button) findViewById(R.id.saveUserButton);
-        saveuserButton.setOnClickListener(new View.OnClickListener() {
+        Button saveUserButton = (Button) findViewById(R.id.saveUserButton);
+        saveUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerUser();
@@ -76,7 +76,7 @@ public class AddNewUserActivity extends Activity {
             user.setUsername(name);
         }
         if (TextUtils.isEmpty(password) || password == null || !validatePassword()){
-            passwordEditText.setError("You must enter a password with 6 to 15 characters.");
+            passwordEditText.setError("You must enter a password with more than 4 characters.");
             focusView = passwordEditText;
             cancel = true;
         }else if (TextUtils.isEmpty(confirmPassword) || confirmPassword == null){
@@ -94,11 +94,11 @@ public class AddNewUserActivity extends Activity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            if(userdao.selectUser(user.getUsername()) != null){
-                text = "Usuario ja existe!";
+            if(userdao.selectUser(user.getName()) != null){
+                text = "User already exits!";
                 toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             }else{
-                text = "Usuario salvo com sucesso!";
+                text = "User saved successfully!";
                 saveUser(user);
                 toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             }
@@ -116,7 +116,7 @@ public class AddNewUserActivity extends Activity {
 
     private boolean validatePassword() {
         String password = passwordEditText.getText().toString();
-        if((password != null) && (password.length() >= 6) && (password.length() <= 15)) {
+        if((password != null) && (password.length() >= 4)) {
             return true;
         } else {
             return false;

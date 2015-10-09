@@ -55,7 +55,6 @@ public class User implements Serializable {
     public int getAuthentication(String username, String password, Context context){
         userDAO = userDAO.getInstance(context);
         User user = userDAO.selectUser(this.username);
-        //System.out.println("user from database= " + admin.getUserNameAdmin() + "senha " + admin.getUserPasswordAdmin() );
         if((user.getUsername() == null) || user == null) {
             return NO_USERNAME;
         }else if (user.getPassword().equals(password)){

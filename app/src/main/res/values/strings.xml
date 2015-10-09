@@ -9,7 +9,7 @@
     <string name="insert_password">Insert Password</string>
     <string name="register">Register</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="password_error">"Passwords does not match. Password must have minimum 6 caracters"</string>
+    <string name="password_error">"Passwords does not match. Password must have minimum 4 caracters"</string>
     <string name="register_change_password">"Register new password"</string>
     <string name="title_activity_list_users">ListUsersActivity</string>
 
@@ -27,4 +27,5 @@
     <string name="hint_username">Username</string>
     <string name="saveUser">Save</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="noUsersMessage">No users registered!</string>
 </resources>

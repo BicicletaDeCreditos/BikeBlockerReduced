@@ -34,9 +34,6 @@ public class UserDAO {
         database = persistenceHelper.getWritableDatabase();
     }
 
-    /*
-    Metodo para obter instancia de UserAdminDAO para acesso as rotinas de manipulacao de dados
-     */
     public static UserDAO getInstance(Context context) {
         if (userDAO == null) {
             userDAO = new UserDAO(context.getApplicationContext());
@@ -44,45 +41,27 @@ public class UserDAO {
         return userDAO;
     }
 
-    /*
-     * Método responsável por salvar um usuário.
-     */
     public void saveUser(User user) {
         ContentValues values = generateContentValuesUser(user);
         database.insert(TABLE_NAME, null, values);
     }
 
-    /*
-     * Método responsável por deletar um usuário.
-     */
     public void deleteUser(User user) {
         String[] valuesToReplace = {String.valueOf(user.getUsername())};
         database.delete(TABLE_NAME, USERNAME_COLUMN + " = ?", valuesToReplace);
     }
 
-    /*
-     * Método responsável por editar informações de um determinado
-     * usuário.
-     */
     public void editUserInformations(User user) {
         ContentValues values = generateContentValuesUser(user);
         database.update(TABLE_NAME, values, USERNAME_COLUMN + " = " + user.getUsername(), null);
     }
 
-    /*
-     * Método responsável por encerrar a conexão com
-     * o banco de dados.
-     */
     public void closeDatabaseConnection() {
         if ((database != null) && (database.isOpen())) {
             database.close();
         }
     }
 
-    /*
-     * Método responsável por relacionar cada atributo da instância de User
-     * a uma determinada coluna de uma entrada da base de dados.
-     */
     public ContentValues generateContentValuesUser(User user) {
         ContentValues contentValues = new ContentValues();
 
@@ -94,28 +73,25 @@ public class UserDAO {
         return contentValues;
     }
 
-    /*
-    Metodo responsavel por recuperar o User do banco de dados
-     */
     public User selectUser(String name) {
         String queryUser = "SELECT * FROM " + TABLE_NAME + " where "
                 + NAME_COLUMN + " = ?";
 
         Cursor cursor = database.rawQuery(queryUser, new String[]{name});
 
-        User user = new User();
+        User user = null;
 
         if (cursor.moveToFirst()) {
+            user = new User();
             ContentValues contentValues = new ContentValues();
             DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
             user = contentValuesUser(contentValues);
         }
-        System.out.println("Nome " + user.getName());
         return user;
 
     }
 
-    public List<HashMap<String, String>> selectAllUsersNEW() {
+    public List<HashMap<String, String>> selectAllUsers() {
         User user;
         user_list = new ArrayList<HashMap<String, String>>();
 
@@ -127,22 +103,19 @@ public class UserDAO {
                 map.put("name", cursor.getString(cursor.getColumnIndex("name")));
                 map.put("user", cursor.getString(cursor.getColumnIndex("username")));
                 user_list.add(map);
+                System.out.println("Exception on get all users. Tamanho do Cursor: " + cursor.getCount());
             }
         }catch (Exception e){
             System.out.println("Exception on get all users.");
+
         }
         return user_list;
     }
 
     public Cursor getOneUser(String name){
-        // parameters: table, null = return all columns, where clause without where,  ... other SQL SELECT statement stuff
         return database.query(TABLE_NAME, null, "name=" + name, null, null, null, null);
     }
 
-    /*
-     * Método responsável por preencher uma instância de User
-     * contentValues = instância da Classe ContentValues
-     */
     public User contentValuesUser(ContentValues contentValues) {
         User user = new User();
 
@@ -153,5 +126,4 @@ public class UserDAO {
 
         return user;
     }
-
 }

@@ -61,7 +61,7 @@ public class AddUserTest extends InstrumentationTestCase {
     public void testAddNewUserNoPassword() throws Exception {
         device.wait(Until.hasObject(By.text("Save")), 5000);
         device.findObject(new UiSelector().description("userName")).setText("Jose");
-        device.findObject(new UiSelector().description("userUsername")).setText("jose");;
+        device.findObject(new UiSelector().description("userUsername")).setText("jose");
         device.pressBack();
         device.findObject(new UiSelector().text("Save")).click();
 

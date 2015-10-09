@@ -55,7 +55,6 @@ public class RegisterPasswordActivity extends Activity {
         this.context = getApplicationContext();
         this.userDao = UserAdminDAO.getInstance(getApplicationContext());
 
-        //Get data from view
         this.password = (EditText) findViewById(R.id.insert_password);
         this.confirmPassword = (EditText) findViewById(R.id.confirm_password);
 
@@ -72,7 +71,7 @@ public class RegisterPasswordActivity extends Activity {
     }
 
     public static boolean validatePassword(String password) {
-        if((password != null) && (password.length() >= 6)) {
+        if((password != null) && (password.length() >= 4)) {
             return true;
         } else {
             return false;
@@ -89,23 +88,15 @@ public class RegisterPasswordActivity extends Activity {
 
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     public void registerPassword() {
-        // Reset errors.
         confirmPassword.setError(null);
 
-        // Store values at the time of the login attempt.
         String passwordValue = password.getText().toString();
         String confirmPasswordValue = confirmPassword.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(confirmPasswordValue) || !validatePassword(passwordValue) || !passwordValue.equals(confirmPasswordValue)) {
             password.setError(getString(R.string.password_error));
             focusView = password;
@@ -113,29 +104,18 @@ public class RegisterPasswordActivity extends Activity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             showProgress(true);
             savePassword(passwordValue);
-            //TO DO: change it to the actual next activity
             Intent intent = new Intent();
             intent.setClass(this, WelcomeActivity.class);
             startActivity(intent);
         }
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -157,11 +137,8 @@ public class RegisterPasswordActivity extends Activity {
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 }
-

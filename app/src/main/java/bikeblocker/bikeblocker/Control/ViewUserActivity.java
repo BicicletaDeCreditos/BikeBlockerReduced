@@ -15,7 +15,7 @@ import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
 
 public class ViewUserActivity extends Activity {
-    private String user_name; // selected user's username
+    private String user_name;
     private TextView nameTextView;
     private TextView usernameTextView;
     private TextView creditsTextView;
@@ -42,7 +42,6 @@ public class ViewUserActivity extends Activity {
         });
     }
 
-    //executes each time the Activity regains the focus (including the first time) after being partially or fully hidden
     @Override
     protected void onResume(){
         super.onResume();
@@ -50,20 +49,17 @@ public class ViewUserActivity extends Activity {
 
         User user = userdao.selectUser(user_name);
 
-        // fill TextViews with the retrieved data
         nameTextView.setText(user.getName());
         usernameTextView.setText(user.getUsername());
         creditsTextView.setText(Integer.toString(user.getCredits()));
     }
 
-    // delete a contact
     private void deleteUser(){
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewUserActivity.this);
 
         builder.setTitle(R.string.confirmTitle);
         builder.setMessage(R.string.confirmMessage);
 
-        // provide an OK button that deletes asynchronously while dismissing the dialog
         builder.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int button) {
@@ -73,13 +69,12 @@ public class ViewUserActivity extends Activity {
                 Intent intent = new Intent(ViewUserActivity.this, ListUsersActivity.class);
                 startActivity(intent);
             }
-        } // end anonymous inner class that defines an instantiates the listener for positive button clicks
+        }
 
-        ); // end listener ref declaration
+        );
 
         builder.setNegativeButton(R.string.button_cancel, null); //just dismiss dialog box (no delete)
 
         builder.show();
-    } // end method deleteContact
-
+    }
 }
