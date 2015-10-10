@@ -31,7 +31,7 @@ public class ViewUserActivity extends Activity {
         creditsTextView = (TextView) findViewById(R.id.creditsTextView);
 
         Bundle extras = getIntent().getExtras();
-        user_name = extras.getString(ListUsersActivity.USER_NAME);
+        user_name = extras.getString("name");
 
         ImageButton deleteUserButton = (ImageButton) findViewById(R.id.deleteUserButton);
         deleteUserButton.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,7 @@ public class ViewUserActivity extends Activity {
 
         );
 
-        builder.setNegativeButton(R.string.button_cancel, null); //just dismiss dialog box (no delete)
+        builder.setNegativeButton(R.string.button_cancel, null);
 
         builder.show();
     }
