@@ -27,6 +27,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +110,9 @@ public class RegisterPasswordActivity extends Activity {
             showProgress(true);
             savePassword(passwordValue);
             Intent intent = new Intent();
-            intent.setClass(this, WelcomeActivity.class);
+            intent.setClass(this, ListUsersActivity.class);
             startActivity(intent);
+            Toast.makeText(getApplicationContext(), "Password saved successfully!", Toast.LENGTH_LONG).show();
         }
     }
 

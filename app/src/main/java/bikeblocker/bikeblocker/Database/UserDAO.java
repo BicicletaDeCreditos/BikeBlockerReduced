@@ -103,7 +103,6 @@ public class UserDAO {
                 map.put("name", cursor.getString(cursor.getColumnIndex("name")));
                 map.put("user", cursor.getString(cursor.getColumnIndex("username")));
                 user_list.add(map);
-                System.out.println("Exception on get all users. Tamanho do Cursor: " + cursor.getCount());
             }
         }catch (Exception e){
             System.out.println("Exception on get all users.");

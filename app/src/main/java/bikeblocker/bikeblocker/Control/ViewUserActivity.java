@@ -31,7 +31,7 @@ public class ViewUserActivity extends Activity {
         creditsTextView = (TextView) findViewById(R.id.creditsTextView);
 
         Bundle extras = getIntent().getExtras();
-        user_name = extras.getString("name");
+        user_name = extras.getString("user_name");
 
         ImageButton deleteUserButton = (ImageButton) findViewById(R.id.deleteUserButton);
         deleteUserButton.setOnClickListener(new View.OnClickListener() {

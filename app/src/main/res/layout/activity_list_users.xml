@@ -52,7 +52,9 @@
         android:id="@+id/listViewUsers"
         android:layout_marginLeft="150dp"
         android:layout_marginRight="150dp"
-        android:clickable="true" />
+        android:clickable="true"
+        android:headerDividersEnabled="false"
+        android:layout_gravity="center" />
 
 </FrameLayout>
 

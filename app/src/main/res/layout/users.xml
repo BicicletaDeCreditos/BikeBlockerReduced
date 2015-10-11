@@ -10,10 +10,10 @@
         android:minHeight="?android:attr/listPreferredItemHeight"
         android:gravity="center_vertical"
         android:clickable="true"
-        android:onClick="startViewUserActivity"
         android:contentDescription="userRow"
         android:layout_gravity="top|left|center_vertical"
-        android:layout_marginLeft="0dp" />
+        android:layout_marginLeft="0dp"
+        android:onClick="startViewUserActivity" />
 
 </LinearLayout>
 

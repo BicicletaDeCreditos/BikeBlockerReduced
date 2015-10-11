@@ -103,10 +103,9 @@ public class AddNewUserActivity extends Activity {
                 toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             }
             Intent intent = new Intent();
-            intent.setClass(this, WelcomeActivity.class);
+            intent.setClass(this, ListUsersActivity.class);
             intent.putExtra("user_name", name);
             startActivity(intent);
-
             toast.show();
         }
     }
@@ -130,20 +129,5 @@ public class AddNewUserActivity extends Activity {
         }else{
             return false;
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add_new_user, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
