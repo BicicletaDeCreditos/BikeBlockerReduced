@@ -94,11 +94,9 @@ public class ChangePasswordTest extends InstrumentationTestCase {
         registerButton.click();
 
         device.wait(Until.hasObject(By.desc("listUsers")), 5000);
-        UiObject listUsersButton = device.findObject(new UiSelector().description("listUsers"));
         UiObject addUserButton = device.findObject(new UiSelector().description("addUser"));
         UiObject changeAdminPasswordButton = device.findObject(new UiSelector().description("changeAdminPassword"));
 
-        assertTrue(listUsersButton.exists());
         assertTrue(addUserButton.exists());
         assertTrue(changeAdminPasswordButton.exists());
     }

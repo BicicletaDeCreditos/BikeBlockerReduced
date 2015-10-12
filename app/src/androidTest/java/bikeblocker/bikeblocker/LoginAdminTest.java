@@ -23,6 +23,7 @@ public class LoginAdminTest extends InstrumentationTestCase {
         device.wait(Until.hasObject(By.desc("settings")), 5000);
         UiObject2 settings = device.findObject(By.desc("settings"));
         settings.click();
+        device.wait(Until.hasObject(By.desc("signIn")), 5000);
     }
 
     @Override
@@ -32,6 +33,7 @@ public class LoginAdminTest extends InstrumentationTestCase {
     }
 
     public void testFirstLoginAdminSuccessfully() throws Exception {
+        device.findObject(new UiSelector().description("signIn")).click();
         device.wait(Until.hasObject(By.desc("confirmRegister")), 5000);
         UiObject password = device.findObject(new UiSelector().description("insertAdminPassword"));
         UiObject confirmPassword = device.findObject(new UiSelector().description("confirmAdminPassword"));
@@ -41,12 +43,10 @@ public class LoginAdminTest extends InstrumentationTestCase {
         confirmPassword.setText("123456");
         registerButton.click();
 
-        device.wait(Until.hasObject(By.desc("listUsers")), 5000);
-        UiObject listUsersButton = device.findObject(new UiSelector().description("listUsers"));
+        device.wait(Until.hasObject(By.desc("addUser")), 5000);
         UiObject addUserButton = device.findObject(new UiSelector().description("addUser"));
         UiObject changeAdminPasswordButton = device.findObject(new UiSelector().description("changeAdminPassword"));
 
-        assertTrue(listUsersButton.exists());
         assertTrue(addUserButton.exists());
         assertTrue(changeAdminPasswordButton.exists());
     }
@@ -57,12 +57,10 @@ public class LoginAdminTest extends InstrumentationTestCase {
         device.findObject(By.desc("adminPassword")).setText("123456");
         device.findObject(By.desc("signIn")).click();
 
-        device.wait(Until.hasObject(By.desc("listUsers")), 5000);
-        UiObject listUsersButton = device.findObject(new UiSelector().description("listUsers"));
+        device.wait(Until.hasObject(By.desc("addUser")), 5000);
         UiObject addUserButton = device.findObject(new UiSelector().description("addUser"));
         UiObject changeAdminPasswordButton = device.findObject(new UiSelector().description("changeAdminPassword"));
 
-        assertTrue(listUsersButton.exists());
         assertTrue(addUserButton.exists());
         assertTrue(changeAdminPasswordButton.exists());
     }
@@ -75,6 +73,4 @@ public class LoginAdminTest extends InstrumentationTestCase {
 
         assertTrue(password.exists());
     }
-
-
 }

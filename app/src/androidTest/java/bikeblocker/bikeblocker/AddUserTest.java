@@ -51,8 +51,6 @@ public class AddUserTest extends InstrumentationTestCase {
         device.pressBack();
         device.findObject(new UiSelector().text("Save")).click();
 
-        device.wait(Until.hasObject(By.desc("listUsers")), 5000);
-        device.findObject(new UiSelector().description("listUsers")).click();
         device.wait(Until.hasObject(By.desc("userRow")), 5000);
 
         assertTrue(device.findObject(new UiSelector().text("Jose")).exists());
@@ -101,5 +99,4 @@ public class AddUserTest extends InstrumentationTestCase {
 
         assertTrue(device.findObject(new UiSelector().description("userUsername")).isFocused());
     }
-
 }
