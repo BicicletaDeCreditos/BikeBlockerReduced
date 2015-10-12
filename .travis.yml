@@ -2,18 +2,18 @@ language: android
 jdk: oraclejdk7
 android:
   components:
-  # - platform-tools
-  # - tools
-  - build-tools-23.0.1
-  - android-23
-  - addon-google_apis-google-23
+  - platform-tools
+  - tools
+  # - build-tools-23.0.1
+  - android-22
+  - addon-google_apis-google-22
   - extra-google-m2repository
   - extra-android-m2repository
-  - sys-img-armeabi-v7a-addon-google_apis-google-23
+  - sys-img-armeabi-v7a-addon-google_apis-google-22
   # - sys-img-armeabi-v7a-android-23
   # - sys-img-x86-android-23
 before_install:
-  - echo no | android create avd --force -n test -t "Google Inc.:Google APIs:23" --abi google_apis/armeabi-v7a
+  - echo no | android create avd --force -n test -t "Google Inc.:Google APIs:22" --abi google_apis/armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window -gpu off &
 
 before_script:
