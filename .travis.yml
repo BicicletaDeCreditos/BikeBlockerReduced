@@ -2,8 +2,10 @@ language: android
 jdk: oraclejdk7
 android:
   components:
-  - build-tools-23.0.1
-  - android-23
+  - platform-tools
+  - tools
+  #- build-tools-23.0.1
+  #- android-23
   - extra-google-m2repository
   - extra-android-m2repository
   - extra-google-google_play_services
@@ -17,6 +19,6 @@ before_script:
   - adb shell input keyevent 82 &
   - android update project -p .
   
-script: ./gradlew build connectedAndroidTest
+script: ./gradlew connectedAndroidTest
 #script: gradle build bikeblocker #(TO DO: CHANGE connectedCheck TO builtProjectname)
 
