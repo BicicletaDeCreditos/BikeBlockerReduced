@@ -107,6 +107,7 @@ public class AddNewUserActivity extends Activity {
             intent.putExtra("user_name", name);
             startActivity(intent);
             toast.show();
+            finish();
         }
     }
     private void saveUser(User user){

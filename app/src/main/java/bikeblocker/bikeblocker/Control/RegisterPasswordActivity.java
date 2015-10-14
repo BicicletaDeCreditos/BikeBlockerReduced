@@ -113,6 +113,7 @@ public class RegisterPasswordActivity extends Activity {
             intent.setClass(this, ListUsersActivity.class);
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "Password saved successfully!", Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 

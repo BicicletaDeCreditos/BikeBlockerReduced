@@ -13,7 +13,6 @@ import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.R;
 
 public class ListUsersActivity extends Activity {
-    //public static final String USER_NAME = "user_name";
     private ListView usersListView;
     UserDAO userdao;
 

@@ -77,6 +77,7 @@ public class SettingsAuthActivity extends Activity {
             Intent intent = new Intent();
             intent.setClass(this, ListUsersActivity.class);
             startActivity(intent);
+            finish();
         }
 
         if (cancel) {

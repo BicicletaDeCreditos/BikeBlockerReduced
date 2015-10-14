@@ -68,6 +68,7 @@ public class ViewUserActivity extends Activity {
                 userdao.deleteUser(userdao.selectUser(username));
                 Intent intent = new Intent(ViewUserActivity.this, ListUsersActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
 
