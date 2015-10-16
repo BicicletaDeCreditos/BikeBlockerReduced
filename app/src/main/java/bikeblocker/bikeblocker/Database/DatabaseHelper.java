@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     public static final String DATABASE_NAME = "BIKEBLOCKER";
-    public static final int VERSION = 2;
+    public static final int VERSION = 3;
     protected static final String SCRIPT_COMMAND_CREATION_ADMINTABLE = "CREATE TABLE IF NOT EXISTS userAdmin (" +
             "  useradmin VARCHAR(6) NOT NULL PRIMARY KEY," +
             "  adminpassword VARCHAR(15));";
@@ -17,7 +17,18 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             "  password VARCHAR(15) NOT NULL," +
             "  name VARCHAR(15) NOT NULL," +
             "  credits INT NULL);";
-    protected  static final String SCRIPT_CREATION=
+    protected static final String SCRIPT_COMMAND_CREATION_APPSTABLE =
+            "CREATE TABLE apps (" +
+                    "  app_id INT NOT NULL PRIMARY KEY," +
+                    "  app_name VARCHAR(15) NOT NULL," +
+                    "  credits_hour INT NOT NULL," +
+                    "  user_username VARCHAR(15) NOT NULL," +
+                    "  CONSTRAINT fk_apps_user" +
+                    "    FOREIGN KEY (user_username)" +
+                    "    REFERENCES user (username)" +
+                    "    ON DELETE NO ACTION" +
+                    "    ON UPDATE NO ACTION);";
+    protected static final String SCRIPT_CREATION=
             "CREATE TABLE webpages (" +
             "  webpages_id INT NOT NULL PRIMARY KEY," +
             "  webpage_name VARCHAR(15) NULL," +
@@ -25,16 +36,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             "  credits_hour INT NULL," +
             "  user_username MEDIUMTEXT NOT NULL," +
             "  CONSTRAINT fk_webpages_user1" +
-            "    FOREIGN KEY (user_username)" +
-            "    REFERENCES user (username)" +
-            "    ON DELETE NO ACTION" +
-            "    ON UPDATE NO ACTION);" +
-            "CREATE TABLE apps (" +
-            "  app_id INT NOT NULL PRIMARY KEY," +
-            "  app_name VARCHAR(15) NULL," +
-            "  credits_hour INT NULL," +
-            "  user_username VARCHAR(15) NOT NULL," +
-            "  CONSTRAINT fk_apps_user" +
             "    FOREIGN KEY (user_username)" +
             "    REFERENCES user (username)" +
             "    ON DELETE NO ACTION" +
@@ -86,6 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(this.SCRIPT_COMMAND_DELETION_DATABASE);
         db.execSQL(SCRIPT_COMMAND_CREATION_ADMINTABLE);
         db.execSQL(SCRIPT_COMMAND_CREATION_USERTABLE);
+        db.execSQL(SCRIPT_COMMAND_CREATION_APPSTABLE);
     }
 
     @Override

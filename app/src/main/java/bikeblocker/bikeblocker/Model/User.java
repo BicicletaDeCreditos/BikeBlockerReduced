@@ -22,7 +22,7 @@ public class User implements Serializable {
     public User(){
 
     }
-    /*Username Admin is always "admin". There is no need do set this attribute."*/
+
     public String getUsername(){
         return username;
     }

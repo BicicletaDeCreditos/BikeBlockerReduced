@@ -45,6 +45,10 @@
             android:name=".Control.ViewUserActivity"
             android:label="@string/title_activity_view_user" >
         </activity>
+        <activity
+            android:name=".Control.UserAppsList"
+            android:label="@string/title_activity_user_apps_list" >
+        </activity>
     </application>
 
 </manifest>

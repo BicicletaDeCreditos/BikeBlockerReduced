@@ -111,10 +111,6 @@ public class UserDAO {
         return user_list;
     }
 
-    public Cursor getOneUser(String name){
-        return database.query(TABLE_NAME, null, "name=" + name, null, null, null, null);
-    }
-
     public User contentValuesUser(ContentValues contentValues) {
         User user = new User();
 

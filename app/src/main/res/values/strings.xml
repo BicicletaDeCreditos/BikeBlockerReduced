@@ -28,4 +28,5 @@
     <string name="saveUser">Save</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="noUsersMessage">No users registered!</string>
+    <string name="title_activity_user_apps_list">UserAppsList</string>
 </resources>
