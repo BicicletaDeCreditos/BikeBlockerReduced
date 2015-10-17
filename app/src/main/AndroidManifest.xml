@@ -46,8 +46,12 @@
             android:label="@string/title_activity_view_user" >
         </activity>
         <activity
-            android:name=".Control.UserAppsList"
+            android:name=".Control.UserAppsListActivity"
             android:label="@string/title_activity_user_apps_list" >
+        </activity>
+        <activity
+            android:name=".Control.AddUserAppActivity"
+            android:label="@string/title_activity_add_user_app" >
         </activity>
     </application>
 

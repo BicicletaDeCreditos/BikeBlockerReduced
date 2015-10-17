@@ -29,4 +29,6 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="noUsersMessage">No users registered!</string>
     <string name="title_activity_user_apps_list">UserAppsList</string>
+    <string name="title_activity_add_new_app_to_user">AddNewAppToUserActivity</string>
+    <string name="title_activity_add_user_app">AddUserAppActivity</string>
 </resources>

@@ -61,16 +61,16 @@ public class ViewUserActivity extends Activity {
         builder.setMessage(R.string.confirmMessage);
 
         builder.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int button) {
-                userdao = UserDAO.getInstance(ViewUserActivity.this);
-                String username = usernameTextView.getText().toString();
-                userdao.deleteUser(userdao.selectUser(username));
-                Intent intent = new Intent(ViewUserActivity.this, ListUsersActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                        userdao = UserDAO.getInstance(ViewUserActivity.this);
+                        String username = usernameTextView.getText().toString();
+                        userdao.deleteUser(userdao.selectUser(username));
+                        Intent intent = new Intent(ViewUserActivity.this, ListUsersActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
 
         );
 
@@ -78,4 +78,12 @@ public class ViewUserActivity extends Activity {
 
         builder.show();
     }
+
+    public void startListAppsActivity(View view){
+        Intent intent = new Intent(this, UserAppsListActivity.class);
+        intent.putExtra("user_username", userdao.selectUser(user_name).getUsername());
+        startActivity(intent);
+    }
+
+
 }

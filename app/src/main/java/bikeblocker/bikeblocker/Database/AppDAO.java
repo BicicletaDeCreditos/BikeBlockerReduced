@@ -13,7 +13,7 @@ import java.util.List;
 import bikeblocker.bikeblocker.Model.App;
 
 public class AppDAO {
-    public static final String TABLE_NAME = "apps";
+    public static final String TABLE_NAME = "user_apps";
     public static final String APPID_COLUMN = "app_id";
     public static final String APPNAME_COLUMN = "app_name";
     public static final String CREDITSHOUR_COLUMN = "credits_hour";
@@ -60,7 +60,6 @@ public class AppDAO {
     public ContentValues generateContentValuesApp(App app) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(APPID_COLUMN, app.getAppID());
         contentValues.put(APPNAME_COLUMN, app.getAppName());
         contentValues.put(CREDITSHOUR_COLUMN, app.getCreditsPerHour());
         contentValues.put(USER_COLUMN, app.getUser());
@@ -102,8 +101,7 @@ public class AppDAO {
                 app_list.add(map);
             }
         }catch (Exception e){
-            System.out.println("Exception on get apps.");
-
+            System.out.println("Exception on get user_apps.");
         }
         return app_list;
     }
@@ -111,14 +109,11 @@ public class AppDAO {
     public App contentValuesApp(ContentValues contentValues) {
         App app = new App();
 
-        app.setAppID(contentValues.getAsInteger(APPID_COLUMN));
         app.setAppName(contentValues.getAsString(APPNAME_COLUMN));
         app.setCreditsPerHour(contentValues.getAsInteger(CREDITSHOUR_COLUMN));
         app.setUser(contentValues.getAsString(USER_COLUMN));
 
         return app;
     }
-
-
 
 }

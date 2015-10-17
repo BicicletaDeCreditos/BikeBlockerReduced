@@ -3,10 +3,10 @@ package bikeblocker.bikeblocker.Model;
 import java.io.Serializable;
 
 public class App implements Serializable{
-    private int appID;
     private String appName;
     private int creditsPerHour;
     private String user_username;
+    private int appID;
 
     public App(){
 
@@ -29,10 +29,9 @@ public class App implements Serializable{
         this.appName = appName;
     }
 
-    public void setAppID(int id){
+    public void setAppID(int id) {
         this.appID = id;
     }
-
     public void setCreditsPerHour(int creditsPerHour){
         this.creditsPerHour = creditsPerHour;
     }

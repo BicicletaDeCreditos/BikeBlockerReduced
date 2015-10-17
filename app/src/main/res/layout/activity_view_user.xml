@@ -71,7 +71,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/tableLayout"
         android:clickable="true"
-        android:contentDescription="apps" />
+        android:contentDescription="apps"
+        android:onClick="startListAppsActivity" />
 
     <ImageButton
         android:layout_width="50dp"

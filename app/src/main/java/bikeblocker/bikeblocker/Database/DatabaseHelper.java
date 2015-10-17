@@ -18,8 +18,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             "  name VARCHAR(15) NOT NULL," +
             "  credits INT NULL);";
     protected static final String SCRIPT_COMMAND_CREATION_APPSTABLE =
-            "CREATE TABLE apps (" +
-                    "  app_id INT NOT NULL PRIMARY KEY," +
+            "CREATE TABLE user_apps (" +
+                    "  app_id integer primary key autoincrement," +
                     "  app_name VARCHAR(15) NOT NULL," +
                     "  credits_hour INT NOT NULL," +
                     "  user_username VARCHAR(15) NOT NULL," +
@@ -57,7 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             "  apps_app_id INT NOT NULL," +
             "  CONSTRAINT fk_session_app_apps1" +
             "    FOREIGN KEY (apps_app_id)" +
-            "    REFERENCES apps (app_id)" +
+            "    REFERENCES user_apps (app_id)" +
             "    ON DELETE NO ACTION" +
             "    ON UPDATE NO ACTION);";
 
@@ -65,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             "DROP TABLE IF EXISTS user ;";
     protected  static final String SCRIPT_DELETION =
             "DROP TABLE IF EXISTS webpages ;" +
-            "DROP TABLE IF EXISTS apps ;" +
+            "DROP TABLE IF EXISTS user_apps ;" +
             "DROP TABLE IF EXISTS session_app ;" +
             "DROP TABLE IF EXISTS session_web ;";
 
