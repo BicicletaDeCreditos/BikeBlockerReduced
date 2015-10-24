@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     protected static final String SCRIPT_COMMAND_CREATION_APPSTABLE =
             "CREATE TABLE user_apps (" +
                     "  app_id integer primary key autoincrement," +
-                    "  app_name VARCHAR(15) NOT NULL," +
+                    "  app_name text unique NOT NULL," +
                     "  credits_hour INT NOT NULL," +
                     "  user_username VARCHAR(15) NOT NULL," +
                     "  CONSTRAINT fk_apps_user" +
@@ -29,27 +29,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
                     "    ON DELETE NO ACTION" +
                     "    ON UPDATE NO ACTION);";
     protected static final String SCRIPT_CREATION=
-            "CREATE TABLE webpages (" +
-            "  webpages_id INT NOT NULL PRIMARY KEY," +
-            "  webpage_name VARCHAR(15) NULL," +
-            "  url VARCHAR(100) NULL," +
-            "  credits_hour INT NULL," +
-            "  user_username MEDIUMTEXT NOT NULL," +
-            "  CONSTRAINT fk_webpages_user1" +
-            "    FOREIGN KEY (user_username)" +
-            "    REFERENCES user (username)" +
-            "    ON DELETE NO ACTION" +
-            "    ON UPDATE NO ACTION);" +
-            "CREATE TABLE session_web (" +
-            "  sessionweb_id INT NOT NULL PRIMARY KEY," +
-            "  spent_credits INT NULL," +
-            "  duration INT NULL," +
-            "  webpages_webpages_id INT NOT NULL," +
-            "  CONSTRAINT fk_session_web_webpages1" +
-            "    FOREIGN KEY (webpages_webpages_id)" +
-            "    REFERENCES webpages (webpages_id)" +
-            "    ON DELETE NO ACTION" +
-            "    ON UPDATE NO ACTION);" +
             "CREATE TABLE session_app (" +
             "  sessionapp_id INT NOT NULL PRIMARY KEY," +
             "  spent_credits INT NULL," +
@@ -62,12 +41,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             "    ON UPDATE NO ACTION);";
 
     protected static final String SCRIPT_COMMAND_DELETION_DATABASE = "DROP TABLE IF EXISTS userAdmin ;" +
-            "DROP TABLE IF EXISTS user ;";
+            "DROP TABLE IF EXISTS user ;" +
+            "DROP TABLE IF EXISTS user_apps ;";
     protected  static final String SCRIPT_DELETION =
-            "DROP TABLE IF EXISTS webpages ;" +
-            "DROP TABLE IF EXISTS user_apps ;" +
-            "DROP TABLE IF EXISTS session_app ;" +
-            "DROP TABLE IF EXISTS session_web ;";
+            "DROP TABLE IF EXISTS session_app ;";
 
     private static DatabaseHelper databaseHelper = null;
 
@@ -84,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(this.SCRIPT_COMMAND_DELETION_DATABASE);
+        db.execSQL(SCRIPT_COMMAND_DELETION_DATABASE);
         db.execSQL(SCRIPT_COMMAND_CREATION_ADMINTABLE);
         db.execSQL(SCRIPT_COMMAND_CREATION_USERTABLE);
         db.execSQL(SCRIPT_COMMAND_CREATION_APPSTABLE);

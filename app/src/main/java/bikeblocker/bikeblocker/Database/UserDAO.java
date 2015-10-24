@@ -74,18 +74,20 @@ public class UserDAO {
     }
 
     public User selectUser(String name) {
-        String queryUser = "SELECT * FROM " + TABLE_NAME + " where "
-                + NAME_COLUMN + " = ?";
-
-        Cursor cursor = database.rawQuery(queryUser, new String[]{name});
+        String queryUser = "SELECT * FROM " + TABLE_NAME + " where " + NAME_COLUMN + " = ?";
 
         User user = null;
+        try{
+            Cursor cursor = database.rawQuery(queryUser, new String[]{name});
 
-        if (cursor.moveToFirst()) {
-            user = new User();
-            ContentValues contentValues = new ContentValues();
-            DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
-            user = contentValuesUser(contentValues);
+            if (cursor.moveToFirst()) {
+                user = new User();
+                ContentValues contentValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
+                user = contentValuesUser(contentValues);
+            }
+        }catch (Exception e){
+            System.out.println("Exeption on get one user.");
         }
         return user;
 

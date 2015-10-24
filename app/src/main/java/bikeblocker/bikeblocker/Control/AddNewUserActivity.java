@@ -73,7 +73,7 @@ public class AddNewUserActivity extends Activity {
             focusView = usernameEditText;
             cancel = true;
         }else{
-            user.setUsername(name);
+            user.setUsername(username);
         }
         if (TextUtils.isEmpty(password) || password == null || !validatePassword()){
             passwordEditText.setError("You must enter a password with more than 4 characters.");
@@ -104,7 +104,6 @@ public class AddNewUserActivity extends Activity {
             }
             Intent intent = new Intent();
             intent.setClass(this, ListUsersActivity.class);
-            intent.putExtra("user_name", name);
             startActivity(intent);
             toast.show();
             finish();

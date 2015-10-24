@@ -24,8 +24,7 @@ public class AppDAO {
     List<HashMap<String, String>> app_list;
 
     private AppDAO(Context context) {
-        DatabaseHelper persistenceHelper = DatabaseHelper
-                .getInstance(context);
+        DatabaseHelper persistenceHelper = DatabaseHelper.getInstance(context);
         database = persistenceHelper.getWritableDatabase();
     }
 
@@ -36,14 +35,15 @@ public class AppDAO {
         return appDAO;
     }
 
+    public void closeDatabaseConnection() {
+        if ((database != null) && (database.isOpen())) {
+            database.close();
+        }
+    }
+
     public void saveApp(App app) {
         ContentValues values = generateContentValuesApp(app);
         database.insert(TABLE_NAME, null, values);
-    }
-
-    public void deleteApp(App app) {
-        String[] valuesToReplace = {String.valueOf(app.getAppID())};
-        database.delete(TABLE_NAME, APPID_COLUMN + " = ?", valuesToReplace);
     }
 
     public void editAppInformations(App app) {
@@ -51,10 +51,8 @@ public class AppDAO {
         database.update(TABLE_NAME, values, APPID_COLUMN + " = " + app.getAppID(), null);
     }
 
-    public void closeDatabaseConnection() {
-        if ((database != null) && (database.isOpen())) {
-            database.close();
-        }
+    public void deleteApp(App app) {
+        database.delete(TABLE_NAME, APPID_COLUMN + " = " + app.getAppID(), null);
     }
 
     public ContentValues generateContentValuesApp(App app) {
@@ -67,53 +65,55 @@ public class AppDAO {
         return contentValues;
     }
 
-    public App selectApp(String appID) {
-        String queryApp = "SELECT * FROM " + TABLE_NAME + " where "
-                + APPID_COLUMN + " = ?";
+    public List<HashMap<String, String>> selectAllApps(String user) {
+        String queryAllApps = "SELECT * FROM " + TABLE_NAME + " where " + USER_COLUMN + " = ?";
 
-        Cursor cursor = database.rawQuery(queryApp, new String[]{appID});
-
-        App app = null;
-
-        if (cursor.moveToFirst()) {
-            app = new App();
-            ContentValues contentValues = new ContentValues();
-            DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
-            app = contentValuesApp(contentValues);
-        }
-        return app;
-
-    }
-
-    public List<HashMap<String, String>> selectAllApps(String username) {
-        String queryAllApps = "SELECT * FROM " + TABLE_NAME + " where "
-                + USER_COLUMN + " = ?";
-        App app;
         app_list = new ArrayList<HashMap<String, String>>();
 
         try {
-            Cursor cursor = database.rawQuery(queryAllApps, new String[]{username});
+            Cursor cursor = database.rawQuery(queryAllApps, new String[]{user});
 
             while (cursor.moveToNext()){
                 HashMap map = new HashMap();
-                map.put("appName", cursor.getString(cursor.getColumnIndex("app_name")));
-                map.put("credits_hour", cursor.getString(cursor.getColumnIndex("credits_hour")));
+                map.put("app_name", cursor.getString(cursor.getColumnIndex(APPNAME_COLUMN)));
+                map.put("credits_hour", cursor.getString(cursor.getColumnIndex(CREDITSHOUR_COLUMN)));
                 app_list.add(map);
             }
         }catch (Exception e){
-            System.out.println("Exception on get user_apps.");
+            System.out.println("Exception on get user_apps." + e.toString());
         }
         return app_list;
+    }
+
+    public App selectApp(String app_name, String user_username) {
+        String queryApp = "SELECT * FROM " + TABLE_NAME + " where " + APPNAME_COLUMN + " = ? AND "
+                + USER_COLUMN + " = ? ";
+
+        App app = null;
+        try{
+            Cursor cursor = database.rawQuery(queryApp, new String[]{app_name, user_username});
+
+            if (cursor.moveToFirst()) {
+                app = new App();
+                ContentValues contentValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
+                app = contentValuesApp(contentValues);
+            }
+        }catch (Exception e){
+            System.out.println("Exeption on get the app.");
+        }
+        return app;
+
     }
 
     public App contentValuesApp(ContentValues contentValues) {
         App app = new App();
 
+        app.setAppID(contentValues.getAsInteger(APPID_COLUMN));
         app.setAppName(contentValues.getAsString(APPNAME_COLUMN));
-        app.setCreditsPerHour(contentValues.getAsInteger(CREDITSHOUR_COLUMN));
         app.setUser(contentValues.getAsString(USER_COLUMN));
+        app.setCreditsPerHour(contentValues.getAsInteger(CREDITSHOUR_COLUMN));
 
         return app;
     }
-
 }

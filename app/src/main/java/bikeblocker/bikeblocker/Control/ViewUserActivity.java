@@ -58,7 +58,7 @@ public class ViewUserActivity extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewUserActivity.this);
 
         builder.setTitle(R.string.confirmTitle);
-        builder.setMessage(R.string.confirmMessage);
+        builder.setMessage(R.string.confirmMessageUser);
 
         builder.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
                     @Override
@@ -71,7 +71,6 @@ public class ViewUserActivity extends Activity {
                         finish();
                     }
                 }
-
         );
 
         builder.setNegativeButton(R.string.button_cancel, null);
@@ -81,7 +80,7 @@ public class ViewUserActivity extends Activity {
 
     public void startListAppsActivity(View view){
         Intent intent = new Intent(this, UserAppsListActivity.class);
-        intent.putExtra("user_username", userdao.selectUser(user_name).getUsername());
+        intent.putExtra("user_username", usernameTextView.getText().toString());
         startActivity(intent);
     }
 
