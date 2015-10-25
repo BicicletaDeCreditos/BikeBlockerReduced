@@ -96,14 +96,14 @@ public class AddUserAppActivity extends Activity {
     public void startAskForCredits(final View view){
         final CharSequence[] credits_options = {"10", "20", "30"};
         AlertDialog.Builder builder = new AlertDialog.Builder(AddUserAppActivity.this);
+        final String app_name = ((TextView) view).getText().toString();
 
-        builder.setTitle(R.string.creditsMessage);
+        builder.setTitle(app_name.toUpperCase() + "\nSelect the number of credits needed to access this app for 1 hour.");
 
         builder.setSingleChoiceItems(credits_options, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 selected_credits_amount_string = credits_options[item].toString();
-                System.out.println("On click: " + credits_options[item].toString());
             }
         });
 
@@ -114,7 +114,7 @@ public class AddUserAppActivity extends Activity {
                         appDAO = AppDAO.getInstance(AddUserAppActivity.this);
                         newApp.setCreditsPerHour(Integer.parseInt(selected_credits_amount_string));
                         newApp.setUser(user_username);
-                        newApp.setAppName(((TextView) view).getText().toString());
+                        newApp.setAppName(app_name);
                         appDAO.saveApp(newApp);
                         Intent intent = new Intent(AddUserAppActivity.this, UserAppsListActivity.class);
                         intent.putExtra("user_username", user_username);

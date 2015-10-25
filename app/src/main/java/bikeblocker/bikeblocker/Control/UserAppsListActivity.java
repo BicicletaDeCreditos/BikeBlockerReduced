@@ -21,6 +21,7 @@ public class UserAppsListActivity extends Activity {
     private ListView appsUserList;
     private AppDAO appDAO;
     private String user_username;
+    private static String credits_amount_string = "10";
     AlertDialog.Builder builder;
 
     @Override
@@ -56,13 +57,17 @@ public class UserAppsListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 builder = new AlertDialog.Builder(UserAppsListActivity.this);
+
+                String infos = parent.getItemAtPosition(position).toString();
+                String app_name = infos.substring(27, (infos.length() - 1));
+                final App app = appDAO.selectApp(app_name, user_username);
+
                 builder.setTitle("Choose one option");
-                //App app = appDAO.selectApp(view.toString(), user_username);
 
                 builder.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int button) {
-                                //delete_app(app);
+                                delete_app(app);
                             }
                         }
                 );
@@ -70,7 +75,7 @@ public class UserAppsListActivity extends Activity {
                 builder.setNegativeButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //edit_app(app);
+                        edit_app(app);
                     }
                 });
 
@@ -81,7 +86,7 @@ public class UserAppsListActivity extends Activity {
         };
     }
 
-    public void delete_app(){
+    public void delete_app(final App app){
         builder = new AlertDialog.Builder(UserAppsListActivity.this);
         builder.setTitle(R.string.confirmTitle);
         builder.setMessage(R.string.confirmMessageApp);
@@ -89,8 +94,11 @@ public class UserAppsListActivity extends Activity {
         builder.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
-                        //appDAO.deleteApp();
-
+                        appDAO.deleteApp(app);
+                        finish();
+                        Intent intent = new Intent(UserAppsListActivity.this, UserAppsListActivity.class);
+                        intent.putExtra("user_username", user_username);
+                        startActivity(intent);
                     }
                 }
         );
@@ -100,7 +108,39 @@ public class UserAppsListActivity extends Activity {
         builder.show();
     }
 
-    public void edit_app(){
+    public void edit_app(final App app){
+        final CharSequence[] credits_options = {"10", "20", "30"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserAppsListActivity.this);
+
+        builder.setTitle(app.getAppName().toUpperCase() + "\nSelect the number of credits needed to access this app for 1 hour.");
+
+        builder.setSingleChoiceItems(credits_options, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                credits_amount_string = credits_options[item].toString();
+            }
+        });
+
+        builder.setPositiveButton(R.string.button_OK, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                        App newApp = new App();
+                        newApp.setCreditsPerHour(Integer.parseInt(credits_amount_string));
+                        newApp.setUser(app.getUser());
+                        newApp.setAppName(app.getAppName());
+                        newApp.setAppID(app.getAppID());
+                        appDAO.editAppInformations(newApp);
+                        finish();
+                        Intent intent = new Intent(UserAppsListActivity.this, UserAppsListActivity.class);
+                        intent.putExtra("user_username", user_username);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        builder.setNegativeButton(R.string.button_cancel, null);
+
+        builder.show();
 
     }
 

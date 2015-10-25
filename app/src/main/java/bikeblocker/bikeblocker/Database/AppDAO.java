@@ -89,21 +89,19 @@ public class AppDAO {
         String queryApp = "SELECT * FROM " + TABLE_NAME + " where " + APPNAME_COLUMN + " = ? AND "
                 + USER_COLUMN + " = ? ";
 
-        App app = null;
+        App app = new App();
         try{
             Cursor cursor = database.rawQuery(queryApp, new String[]{app_name, user_username});
 
             if (cursor.moveToFirst()) {
-                app = new App();
                 ContentValues contentValues = new ContentValues();
                 DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
                 app = contentValuesApp(contentValues);
             }
         }catch (Exception e){
-            System.out.println("Exeption on get the app.");
+            System.out.println("Exception on get the app.");
         }
         return app;
-
     }
 
     public App contentValuesApp(ContentValues contentValues) {
