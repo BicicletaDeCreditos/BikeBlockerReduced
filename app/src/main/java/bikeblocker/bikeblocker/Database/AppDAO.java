@@ -89,7 +89,7 @@ public class AppDAO {
         String queryApp = "SELECT * FROM " + TABLE_NAME + " where " + APPNAME_COLUMN + " = ? AND "
                 + USER_COLUMN + " = ? ";
 
-        App app = new App();
+        App app = null;
         try{
             Cursor cursor = database.rawQuery(queryApp, new String[]{app_name, user_username});
 

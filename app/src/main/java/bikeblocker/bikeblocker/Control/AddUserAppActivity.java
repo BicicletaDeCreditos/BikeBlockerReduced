@@ -110,12 +110,16 @@ public class AddUserAppActivity extends Activity {
         builder.setPositiveButton(R.string.button_OK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
-                        App newApp = new App();
                         appDAO = AppDAO.getInstance(AddUserAppActivity.this);
-                        newApp.setCreditsPerHour(Integer.parseInt(selected_credits_amount_string));
-                        newApp.setUser(user_username);
-                        newApp.setAppName(app_name);
-                        appDAO.saveApp(newApp);
+                        if (appDAO.selectApp(app_name, user_username) == null) {
+                            App newApp = new App();
+                            newApp.setCreditsPerHour(Integer.parseInt(selected_credits_amount_string));
+                            newApp.setUser(user_username);
+                            newApp.setAppName(app_name);
+                            appDAO.saveApp(newApp);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "You already have this app on your list.", Toast.LENGTH_LONG).show();
+                        }
                         Intent intent = new Intent(AddUserAppActivity.this, UserAppsListActivity.class);
                         intent.putExtra("user_username", user_username);
                         startActivity(intent);
