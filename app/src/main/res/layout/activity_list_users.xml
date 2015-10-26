@@ -9,6 +9,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             tools:ignore="UselessParent"
+            android:fitsSystemWindows="false"
             android:clickable="true"
             android:contextClickable="true"
             android:background="@drawable/user_background">
@@ -47,14 +48,18 @@
         />
 
     <ListView
-        android:layout_width="294dp"
-        android:layout_height="279dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/listViewUsers"
         android:layout_marginLeft="150dp"
         android:layout_marginRight="150dp"
         android:clickable="true"
         android:headerDividersEnabled="false"
-        android:layout_gravity="center" />
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/background_material_light"
+        android:backgroundTintMode="screen"
+        android:fastScrollEnabled="false"
+        android:layout_marginTop="100dp" />
 
 </FrameLayout>
 

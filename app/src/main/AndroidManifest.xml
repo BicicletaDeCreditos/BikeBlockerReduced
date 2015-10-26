@@ -25,17 +25,23 @@
         <activity
             android:name=".Control.SettingsAuthActivity"
             android:label="@string/title_activity_settings_auth"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Control.RegisterPasswordActivity"
             android:label="@string/title_activity_register"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:windowSoftInputMode="adjustResize|stateVisible"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <!-- Force Landscape -->
         <activity
             android:name=".Control.ListUsersActivity"
-            android:label="@string/title_activity_list_users" >
+            android:label="@string/title_activity_list_users"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Control.AddNewUserActivity"
