@@ -32,6 +32,13 @@ public class ListUsersActivity extends Activity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        return;
+    }
+
+    @Override
     protected void onResume(){
         super.onResume();
         usersListView.setAdapter(getListUsers());
