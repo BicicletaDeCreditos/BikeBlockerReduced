@@ -18,7 +18,7 @@
     <string name="title_activity_add_new_user">AddNewUserActivity</string>
     <string name="title_activity_view_user">ViewUserActivity</string>
     <string name="usernameLabel">Username: </string>
-    <string name="creditsLabel">Credits:</string>
+    <string name="creditsLabel">Credits</string>
     <string name="confirmTitle">Are You Sure?</string>
     <string name="confirmMessage">This will permanently delete this user.</string>
     <string name="button_delete">Delete</string>
