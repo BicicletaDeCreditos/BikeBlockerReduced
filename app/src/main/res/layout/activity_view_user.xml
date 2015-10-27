@@ -14,11 +14,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="120dp"
         android:id="@+id/tableLayout">
-        <TableRow android:id="@+id/nameTableRow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -35,31 +31,17 @@
     </TableLayout>
 
     <ImageButton
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:id="@+id/webButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/tableLayout"
-        android:clickable="true"
-        android:contentDescription="websites" />
-
-    <ImageButton
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/appsButton"
+        android:layout_gravity="right|bottom"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/tableLayout"
         android:clickable="true"
-        android:contentDescription="apps" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:id="@+id/deleteUserButton"
-        android:layout_alignTop="@+id/tableLayout"
-        android:layout_alignParentEnd="true"
-        android:clickable="true"
-        android:contentDescription="deleteUser" />
+        android:contentDescription="apps"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/blockapp_icon"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp" />
 
     <GridLayout
         android:layout_width="match_parent"
@@ -71,17 +53,37 @@
             android:layout_height="110dp"
             android:layout_row="0"
             android:layout_column="0"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:focusableInTouchMode="false"
+            android:background="@drawable/profile_title">
 
             <TextView android:id="@+id/nameTextView"
-                android:textSize="40dp"
+                android:textSize="80dp"
                 android:textStyle="bold"
                 android:contentDescription="userNameTextView"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="#000000"
+                android:layout_marginLeft="184dp" />
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:id="@+id/deleteUserButton"
+                android:layout_alignTop="@+id/tableLayout"
+                android:layout_alignParentEnd="true"
+                android:clickable="true"
+                android:contentDescription="deleteUser"
+                android:background="@drawable/removeprofile_icon"
+                android:layout_alignBottom="@+id/tableLayout"
+                android:layout_alignStart="@+id/appsButton"
+                android:layout_marginStart="104dp"
+                android:layout_marginBottom="256dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp" />
         </GridLayout>
 
         <GridLayout
-            android:layout_width="482dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_row="1"
             android:layout_column="0"
@@ -91,35 +93,48 @@
                 android:text="@string/usernameLabel"
                 android:textSize="25dp"
                 android:textStyle="bold"
-                android:contentDescription="usernameLabel" />
+                android:contentDescription="usernameLabel"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="20dp"
+                android:textColor="#ffffff" />
 
             <TextView android:id="@+id/usernameTextView"
-                android:contentDescription="usernameText" />
+                android:contentDescription="usernameText"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ffffff" />
 
         </GridLayout>
 
         <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="76dp"
+            android:layout_height="135dp"
             android:layout_row="2"
             android:layout_column="0"
             android:layout_gravity="center_horizontal">
+
+            <TextView android:id="@+id/creditsTextView"
+                android:contentDescription="creditsText"
+                android:layout_gravity="center_horizontal"
+                android:textSize="80dp"
+                android:textColor="#ffffff" />
+
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_row="3"
+            android:layout_column="0">
 
             <TextView android:id="@+id/creditsLabelTextView"
                 android:text="@string/creditsLabel"
                 android:textSize="25dp"
                 android:textStyle="bold"
-                android:contentDescription="creditsLabel" />
-
-            <TextView android:id="@+id/creditsTextView"
-                android:contentDescription="creditsText" />
+                android:contentDescription="creditsLabel"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ffffff" />
         </GridLayout>
 
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="133dp"
-            android:layout_row="3"
-            android:layout_column="0"></GridLayout>
     </GridLayout>
 
 </RelativeLayout>
