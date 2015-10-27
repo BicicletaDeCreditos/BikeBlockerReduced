@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -25,6 +26,11 @@ public class ViewUserActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user);
+
+        Typeface profileTitleFace = Typeface.createFromAsset(getAssets(),"MJF Zhafira Demo.ttf");
+        TextView profileTitleText = (TextView)findViewById(R.id.nameTextView);
+        profileTitleText.setTypeface(profileTitleFace);
+
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
