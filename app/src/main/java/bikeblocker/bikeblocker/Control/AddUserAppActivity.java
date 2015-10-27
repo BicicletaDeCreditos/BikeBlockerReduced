@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,12 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import bikeblocker.bikeblocker.Database.AppDAO;
 import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.App;
 import bikeblocker.bikeblocker.R;
+import bikeblocker.bikeblocker.AppsComparator;
 
 public class AddUserAppActivity extends Activity {
 
@@ -38,6 +42,7 @@ public class AddUserAppActivity extends Activity {
         allInstalledAppsList = (ListView) findViewById(R.id.allInstalledAppsList);
         allInstalledAppsList.setAdapter(getInstalledAppsAdapter());
         allInstalledAppsList.setOnItemClickListener(listener());
+        allInstalledAppsList.setAdapter(getInstalledAppIconAdapter());
 
         Bundle extras = getIntent().getExtras();
         user_username = extras.getString("user_username");
@@ -56,32 +61,61 @@ public class AddUserAppActivity extends Activity {
         }
     }
 
+
     public ArrayAdapter<String> getInstalledAppsAdapter(){
         String[] from ={"app_name"};
         int[] to = new int[]{ R.id.installedApp };
-        return new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getApps());
+        return new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getAppsNames());
     }
 
-    public ArrayList<String> getApps(){
-        String[] apps_to_display = new String[]{"YouTube", "Gmail", "Instagram", "Google+", "Email","Messenger", "Facebook", "Twitter"};
-        ArrayList<String> all_apps = getInstalledAppsName();
+    public ArrayAdapter<Drawable> getInstalledAppIconAdapter(){
+        String[] from ={"app_icon"};
+        int[] to = new int[]{ R.id.app_icon };
+        return new ArrayAdapter<Drawable>(this, R.layout.installed_apps, getAppsIcon());
+    }
+
+
+    public ArrayList<String> getAppsNames(){
+        ArrayList<ApplicationInfo> all_apps = getInstalledAppsInfo();
         ArrayList<String> apps = new ArrayList<String>();
-        for(int i = 0; i < apps_to_display.length; i++){
-            if(all_apps.contains(apps_to_display[i])){
-                apps.add(apps_to_display[i]);
-            }
-        }
+        ApplicationInfo[] apps_list = all_apps.toArray(new ApplicationInfo[(all_apps.size())]);
+        for(int i = 0; i < apps_list.length; i++){
+
+            apps.add(apps_list[i].loadLabel(getPackageManager()).toString());
+           }
         return apps;
     }
 
-    public ArrayList<String> getInstalledAppsName(){
-        PackageManager manager = getPackageManager();
-        List<ApplicationInfo> list_apps = manager.getInstalledApplications(PackageManager.GET_META_DATA);
-        ArrayList<String> installed_apps_name = new ArrayList<String>();
-        for(int i = 0; i < list_apps.size(); i++){
-            installed_apps_name.add((String) list_apps.get(i).loadLabel(manager));
+    public ArrayList<Drawable> getAppsIcon(){
+        ArrayList<ApplicationInfo> all_apps = getInstalledAppsInfo();
+        ArrayList<Drawable> app_icons = new ArrayList<Drawable>();
+        ApplicationInfo[] apps_list = all_apps.toArray(new ApplicationInfo[(all_apps.size())]);
+
+
+        for(int i = 0; i < apps_list.length; i++){
+            app_icons.add(apps_list[i].loadIcon(getPackageManager()));
         }
-        return installed_apps_name;
+        return app_icons;
+    }
+
+
+    public ArrayList<ApplicationInfo> getInstalledAppsInfo(){
+        PackageManager manager = getPackageManager();
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        List<ApplicationInfo> list_apps = manager.getInstalledApplications(PackageManager.GET_META_DATA);
+        mainIntent.setAction(Intent.ACTION_MAIN);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        List<ResolveInfo> resolveInfos = manager.queryIntentActivities(mainIntent, 0);
+        ArrayList<ApplicationInfo> installed_apps = new ArrayList<ApplicationInfo>();
+;
+
+        for(ResolveInfo info : resolveInfos) {
+            installed_apps.add((ApplicationInfo) info.activityInfo.applicationInfo);
+        }
+
+        Collections.sort(installed_apps, new AppsComparator(manager));
+        return installed_apps;
     }
 
     private AdapterView.OnItemClickListener listener(){
