@@ -45,11 +45,15 @@
         </activity>
         <activity
             android:name=".Control.AddNewUserActivity"
-            android:label="@string/title_activity_add_new_user" >
+            android:label="@string/title_activity_add_new_user"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Control.ViewUserActivity"
-            android:label="@string/title_activity_view_user" >
+            android:label="@string/title_activity_view_user"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
     </application>
 
