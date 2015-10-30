@@ -24,7 +24,7 @@ android {
         exclude 'LICENSE.txt'
     }
     lintOptions {
-        abortOnError false
+        //abortOnError false
         checkReleaseBuilds false
     }
 }
