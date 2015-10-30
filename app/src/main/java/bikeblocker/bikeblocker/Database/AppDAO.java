@@ -74,7 +74,7 @@ public class AppDAO {
             Cursor cursor = database.rawQuery(queryAllApps, new String[]{user});
 
             while (cursor.moveToNext()){
-                HashMap map = new HashMap();
+                HashMap<String,String> map = new HashMap<String,String>();
                 map.put("app_name", cursor.getString(cursor.getColumnIndex(APPNAME_COLUMN)));
                 map.put("credits_hour", cursor.getString(cursor.getColumnIndex(CREDITSHOUR_COLUMN)));
                 app_list.add(map);

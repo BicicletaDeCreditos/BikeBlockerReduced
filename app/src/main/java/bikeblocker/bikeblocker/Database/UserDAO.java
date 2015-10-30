@@ -101,7 +101,7 @@ public class UserDAO {
             Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_NAME + ";", null);
 
             while (cursor.moveToNext()){
-                HashMap map = new HashMap();
+                HashMap<String,String> map = new HashMap<String,String>();
                 map.put("name", cursor.getString(cursor.getColumnIndex("name")));
                 map.put("user", cursor.getString(cursor.getColumnIndex("username")));
                 user_list.add(map);
