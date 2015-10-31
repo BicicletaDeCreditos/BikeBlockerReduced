@@ -12,7 +12,6 @@ public class User implements Serializable {
     private final int INCORRECT = 1;
     private final int NO_USERNAME = 2;
 
-    private String username;
     private String password;
     private String name;
     private static int credits = 0;
@@ -23,9 +22,6 @@ public class User implements Serializable {
 
     }
 
-    public String getUsername(){
-        return username;
-    }
     public String getPassword(){
         return password;
     }
@@ -34,10 +30,6 @@ public class User implements Serializable {
     }
     public int getCredits(){
         return credits;
-    }
-
-    public void setUsername(String username){
-        this.username = username;
     }
 
     public void setPassword(String password){
@@ -54,8 +46,8 @@ public class User implements Serializable {
 
     public int getAuthentication(String username, String password, Context context){
         userDAO = userDAO.getInstance(context);
-        User user = userDAO.selectUser(this.username);
-        if((user.getUsername() == null) || user == null) {
+        User user = userDAO.selectUser(username);
+        if((user.getName() == null) || user == null) {
             return NO_USERNAME;
         }else if (user.getPassword().equals(password)){
             return OK;

@@ -68,6 +68,7 @@ public class SettingsAuthActivity extends Activity {
             CharSequence text = "First access! Register a password";
             Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             toast.show();
+            finish();
         } else if (loginResult == INCORRECT) {
             userToBeLogged = new UserAdmin();
             mPasswordView.setError(getString(R.string.error_incorrect_password));

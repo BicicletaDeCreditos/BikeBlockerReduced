@@ -19,7 +19,6 @@ public class AddNewUserActivity extends Activity {
     private User user;
     private UserDAO userdao;
     private EditText nameEditText;
-    private EditText usernameEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
 
@@ -32,7 +31,6 @@ public class AddNewUserActivity extends Activity {
         userdao = UserDAO.getInstance(getApplicationContext());
 
         nameEditText = (EditText) findViewById(R.id.nameEditText);
-        usernameEditText = (EditText) findViewById(R.id.usernameEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
 
@@ -49,7 +47,6 @@ public class AddNewUserActivity extends Activity {
         CharSequence text;
         Toast toast;
         nameEditText.setError(null);
-        usernameEditText.setError(null);
         passwordEditText.setError(null);
         confirmPasswordEditText.setError(null);
 
@@ -57,7 +54,6 @@ public class AddNewUserActivity extends Activity {
         boolean cancel = false;
 
         String name = nameEditText.getText().toString();
-        String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         String confirmPassword = confirmPasswordEditText.getText().toString();
 
@@ -67,13 +63,6 @@ public class AddNewUserActivity extends Activity {
             cancel = true;
         }else{
             user.setName(name);
-        }
-        if (TextUtils.isEmpty(username) || username == null){
-            usernameEditText.setError("You must enter a username.");
-            focusView = usernameEditText;
-            cancel = true;
-        }else{
-            user.setUsername(username);
         }
         if (TextUtils.isEmpty(password) || password == null || !validatePassword()){
             passwordEditText.setError("You must enter a password with more than 4 characters.");

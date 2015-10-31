@@ -17,7 +17,6 @@ import bikeblocker.bikeblocker.R;
 public class ViewUserActivity extends Activity {
     private String user_name;
     private TextView nameTextView;
-    private TextView usernameTextView;
     private TextView creditsTextView;
     UserDAO userdao;
 
@@ -27,7 +26,6 @@ public class ViewUserActivity extends Activity {
         setContentView(R.layout.activity_view_user);
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
-        usernameTextView = (TextView) findViewById(R.id.usernameTextView);
         creditsTextView = (TextView) findViewById(R.id.creditsTextView);
 
         Bundle extras = getIntent().getExtras();
@@ -50,7 +48,6 @@ public class ViewUserActivity extends Activity {
         User user = userdao.selectUser(user_name);
 
         nameTextView.setText(user.getName());
-        usernameTextView.setText(user.getUsername());
         creditsTextView.setText(Integer.toString(user.getCredits()));
     }
 
@@ -64,8 +61,8 @@ public class ViewUserActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                         userdao = UserDAO.getInstance(ViewUserActivity.this);
-                        String username = usernameTextView.getText().toString();
-                        userdao.deleteUser(userdao.selectUser(username));
+                        String user_name = nameTextView.getText().toString();
+                        userdao.deleteUser(userdao.selectUser(user_name));
                         Intent intent = new Intent(ViewUserActivity.this, ListUsersActivity.class);
                         startActivity(intent);
                         finish();
@@ -80,7 +77,7 @@ public class ViewUserActivity extends Activity {
 
     public void startListAppsActivity(View view){
         Intent intent = new Intent(this, UserAppsListActivity.class);
-        intent.putExtra("user_username", usernameTextView.getText().toString());
+        intent.putExtra("user_user", nameTextView.getText().toString());
         startActivity(intent);
     }
 

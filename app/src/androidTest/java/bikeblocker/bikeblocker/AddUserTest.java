@@ -9,13 +9,15 @@ import android.test.InstrumentationTestCase;
 
 import org.junit.After;
 
-/**
- * TO DO: testar se pode ser inserido um usuario com o mesmo username de um ja existente
- * Na classe "ViewUserDetailsTest": criar teste de selecao de usuario na lista e visualizacao do usuario selecionado.
- * */
+import bikeblocker.bikeblocker.Database.UserDAO;
+import bikeblocker.bikeblocker.Model.User;
+
 
 public class AddUserTest extends InstrumentationTestCase {
     private UiDevice device;
+    User user = new User();
+    UserDAO dao;
+
     @Override
     public void setUp() throws Exception {
         device = UiDevice.getInstance(getInstrumentation());
@@ -45,7 +47,6 @@ public class AddUserTest extends InstrumentationTestCase {
     public void testAddNewUserSuccessfully() throws Exception {
         device.wait(Until.hasObject(By.text("Save")), 5000);
         device.findObject(new UiSelector().description("userName")).setText("Jose");
-        device.findObject(new UiSelector().description("userUsername")).setText("jose");;
         device.findObject(new UiSelector().description("userPassword")).setText("123456");
         device.findObject(new UiSelector().description("userConfirmPassword")).setText("123456");
         device.pressBack();
@@ -59,7 +60,6 @@ public class AddUserTest extends InstrumentationTestCase {
     public void testAddNewUserNoPassword() throws Exception {
         device.wait(Until.hasObject(By.text("Save")), 5000);
         device.findObject(new UiSelector().description("userName")).setText("Jose");
-        device.findObject(new UiSelector().description("userUsername")).setText("jose");
         device.pressBack();
         device.findObject(new UiSelector().text("Save")).click();
 
@@ -69,7 +69,6 @@ public class AddUserTest extends InstrumentationTestCase {
     public void testAddNewUserPasswordDoesNotMatch() throws Exception {
         device.wait(Until.hasObject(By.text("Save")), 5000);
         device.findObject(new UiSelector().description("userName")).setText("Jose");
-        device.findObject(new UiSelector().description("userUsername")).setText("jose");
         device.findObject(new UiSelector().description("userPassword")).setText("123456");
         device.findObject(new UiSelector().description("userConfirmPassword")).setText("1234");
         device.pressBack();
@@ -80,7 +79,6 @@ public class AddUserTest extends InstrumentationTestCase {
 
     public void testAddNewUserNoName() throws Exception {
         device.wait(Until.hasObject(By.text("Save")), 5000);
-        device.findObject(new UiSelector().description("userUsername")).setText("jose");
         device.findObject(new UiSelector().description("userPassword")).setText("123456");
         device.findObject(new UiSelector().description("userConfirmPassword")).setText("123456");
         device.pressBack();
@@ -89,14 +87,25 @@ public class AddUserTest extends InstrumentationTestCase {
         assertTrue(device.findObject(new UiSelector().description("userName")).isFocused());
     }
 
-    public void testAddNewUserNoUsername() throws Exception {
+    public void testAddNewUserWithUsernameAlreadySaved() throws Exception{
+        user.setName("Test");
+        user.setPassword("123456");
+        user.setCredits(0);
+        dao = UserDAO.getInstance(getInstrumentation().getContext().getApplicationContext());
+        dao.saveUser(user);
+
+        //device.wait(2000);
         device.wait(Until.hasObject(By.text("Save")), 5000);
-        device.findObject(new UiSelector().description("userName")).setText("Jose");
+
+        device.findObject(new UiSelector().description("userName")).setText("Test");
         device.findObject(new UiSelector().description("userPassword")).setText("123456");
         device.findObject(new UiSelector().description("userConfirmPassword")).setText("123456");
         device.pressBack();
         device.findObject(new UiSelector().text("Save")).click();
 
-        assertTrue(device.findObject(new UiSelector().description("userUsername")).isFocused());
+        device.wait(Until.hasObject(By.desc("userRow")), 5000);
+
+        /*There is no way to check if there are 2 equal elements*/
+        assertTrue(device.findObject(new UiSelector().text("Test")).exists());
     }
 }

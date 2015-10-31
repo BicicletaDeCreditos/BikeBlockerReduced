@@ -29,7 +29,7 @@ import bikeblocker.bikeblocker.AppsComparator;
 public class AddUserAppActivity extends Activity {
 
     private ListView allInstalledAppsList;
-    private String user_username;
+    private String user_name;
     private static String selected_credits_amount_string = "10";
     private AppDAO appDAO;
 
@@ -45,7 +45,7 @@ public class AddUserAppActivity extends Activity {
         allInstalledAppsList.setAdapter(getInstalledAppIconAdapter());
 
         Bundle extras = getIntent().getExtras();
-        user_username = extras.getString("user_username");
+        user_name = extras.getString("user_name");
 
         if(getInstalledAppsAdapter().isEmpty()){
             Toast.makeText(getApplicationContext(), "No apps", Toast.LENGTH_LONG).show();
@@ -145,17 +145,17 @@ public class AddUserAppActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                         appDAO = AppDAO.getInstance(AddUserAppActivity.this);
-                        if (appDAO.selectApp(app_name, user_username) == null) {
+                        if (appDAO.selectApp(app_name, user_name) == null) {
                             App newApp = new App();
                             newApp.setCreditsPerHour(Integer.parseInt(selected_credits_amount_string));
-                            newApp.setUser(user_username);
+                            newApp.setUser(user_name);
                             newApp.setAppName(app_name);
                             appDAO.saveApp(newApp);
                         } else {
                             Toast.makeText(getApplicationContext(), "You already have this app on your list.", Toast.LENGTH_LONG).show();
                         }
                         Intent intent = new Intent(AddUserAppActivity.this, UserAppsListActivity.class);
-                        intent.putExtra("user_username", user_username);
+                        intent.putExtra("user_username", user_name);
                         startActivity(intent);
                         finish();
                     }

@@ -17,7 +17,7 @@ public class AppDAO {
     public static final String APPID_COLUMN = "app_id";
     public static final String APPNAME_COLUMN = "app_name";
     public static final String CREDITSHOUR_COLUMN = "credits_hour";
-    public static final String USER_COLUMN = "user_username";
+    public static final String USER_COLUMN = "user_name";
 
     private SQLiteDatabase database = null;
     private static AppDAO appDAO = null;

@@ -20,7 +20,7 @@ import bikeblocker.bikeblocker.R;
 public class UserAppsListActivity extends Activity {
     private ListView appsUserList;
     private AppDAO appDAO;
-    private String user_username;
+    private String user_name;
     private static String credits_amount_string = "10";
     AlertDialog.Builder builder;
 
@@ -36,7 +36,7 @@ public class UserAppsListActivity extends Activity {
         appsUserList.setOnItemClickListener(listener());
 
         Bundle extras = getIntent().getExtras();
-        user_username = extras.getString("user_username");
+        user_name = extras.getString("user_name");
 
         if(getUserApps().isEmpty()){
             Toast.makeText(getApplicationContext(), "There is no app registered!", Toast.LENGTH_LONG).show();
@@ -60,7 +60,7 @@ public class UserAppsListActivity extends Activity {
 
                 String infos = parent.getItemAtPosition(position).toString();
                 String app_name = infos.substring(27, (infos.length() - 1));
-                final App app = appDAO.selectApp(app_name, user_username);
+                final App app = appDAO.selectApp(app_name, user_name);
 
                 builder.setTitle("Choose one option");
 
@@ -97,7 +97,7 @@ public class UserAppsListActivity extends Activity {
                         appDAO.deleteApp(app);
                         finish();
                         Intent intent = new Intent(UserAppsListActivity.this, UserAppsListActivity.class);
-                        intent.putExtra("user_username", user_username);
+                        intent.putExtra("user_name", user_name);
                         startActivity(intent);
                     }
                 }
@@ -132,7 +132,7 @@ public class UserAppsListActivity extends Activity {
                         appDAO.editAppInformations(newApp);
                         finish();
                         Intent intent = new Intent(UserAppsListActivity.this, UserAppsListActivity.class);
-                        intent.putExtra("user_username", user_username);
+                        intent.putExtra("user_name", user_name);
                         startActivity(intent);
                     }
                 }
@@ -147,12 +147,12 @@ public class UserAppsListActivity extends Activity {
     public SimpleAdapter getUserApps(){
         String[] from ={"app_name", "credits_hour"};
         int[] to = new int[]{ R.id.appName, R.id.creditsPerHour };
-        return new SimpleAdapter(this, appDAO.selectAllApps(user_username), R.layout.user_apps, from, to);
+        return new SimpleAdapter(this, appDAO.selectAllApps(user_name), R.layout.user_apps, from, to);
     }
 
     public void startAddNewAppToUser(View view){
         Intent intent = new Intent(this, AddUserAppActivity.class);
-        intent.putExtra("user_username", user_username);
+        intent.putExtra("user_name", user_name);
         startActivity(intent);
         finish();
     }
