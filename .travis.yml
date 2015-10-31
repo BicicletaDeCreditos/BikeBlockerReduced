@@ -32,4 +32,4 @@ before_install:
 - echo "sdk.dir=$ANDROID_HOME" > local.properties
 - echo "ndk.dir=$ANDROID_NDK_HOME" >> local.properties
 
-script: gradle build connectedCheck
+script: gradle build -x lint
