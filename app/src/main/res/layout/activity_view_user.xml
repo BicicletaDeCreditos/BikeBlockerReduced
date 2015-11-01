@@ -19,11 +19,6 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/usernameTableRow"></TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/creditsTableRow">
 
         </TableRow>
@@ -41,7 +36,8 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/blockapp_icon"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="50dp" />
+        android:layout_marginRight="50dp"
+        android:onClick="startListAppsActivity" />
 
     <GridLayout
         android:layout_width="match_parent"
@@ -80,29 +76,6 @@
                 android:layout_marginBottom="256dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp" />
-        </GridLayout>
-
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_gravity="center_horizontal">
-
-            <TextView android:id="@+id/usernameLabelTextView"
-                android:text="@string/usernameLabel"
-                android:textSize="25dp"
-                android:textStyle="bold"
-                android:contentDescription="usernameLabel"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginRight="20dp"
-                android:textColor="#ffffff" />
-
-            <TextView android:id="@+id/usernameTextView"
-                android:contentDescription="usernameText"
-                android:layout_gravity="center_horizontal"
-                android:textColor="#ffffff" />
-
         </GridLayout>
 
         <GridLayout
