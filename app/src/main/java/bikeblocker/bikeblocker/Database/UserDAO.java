@@ -17,7 +17,6 @@ import bikeblocker.bikeblocker.Model.User;
 public class UserDAO {
 
     public static final String TABLE_NAME = "user";
-    public static final String USERNAME_COLUMN = "username";
     public static final String PASSWORD_COLUMN = "password";
     public static final String NAME_COLUMN = "name";
     public static final String CREDITS_COLUMN = "credits";
@@ -47,13 +46,13 @@ public class UserDAO {
     }
 
     public void deleteUser(User user) {
-        String[] valuesToReplace = {String.valueOf(user.getUsername())};
-        database.delete(TABLE_NAME, USERNAME_COLUMN + " = ?", valuesToReplace);
+        String[] valuesToReplace = {String.valueOf(user.getName())};
+        database.delete(TABLE_NAME, NAME_COLUMN + " = ?", valuesToReplace);
     }
 
     public void editUserInformations(User user) {
         ContentValues values = generateContentValuesUser(user);
-        database.update(TABLE_NAME, values, USERNAME_COLUMN + " = " + user.getUsername(), null);
+        database.update(TABLE_NAME, values, NAME_COLUMN + " = " + user.getName(), null);
     }
 
     public void closeDatabaseConnection() {
@@ -65,7 +64,6 @@ public class UserDAO {
     public ContentValues generateContentValuesUser(User user) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(USERNAME_COLUMN, user.getUsername());
         contentValues.put(PASSWORD_COLUMN, user.getPassword());
         contentValues.put(NAME_COLUMN, user.getName());
         contentValues.put(CREDITS_COLUMN, user.getCredits());
@@ -74,18 +72,20 @@ public class UserDAO {
     }
 
     public User selectUser(String name) {
-        String queryUser = "SELECT * FROM " + TABLE_NAME + " where "
-                + NAME_COLUMN + " = ?";
-
-        Cursor cursor = database.rawQuery(queryUser, new String[]{name});
+        String queryUser = "SELECT * FROM " + TABLE_NAME + " where " + NAME_COLUMN + " = ?";
 
         User user = null;
+        try{
+            Cursor cursor = database.rawQuery(queryUser, new String[]{name});
 
-        if (cursor.moveToFirst()) {
-            user = new User();
-            ContentValues contentValues = new ContentValues();
-            DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
-            user = contentValuesUser(contentValues);
+            if (cursor.moveToFirst()) {
+                user = new User();
+                ContentValues contentValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
+                user = contentValuesUser(contentValues);
+            }
+        }catch (Exception e){
+            System.out.println("Exeption on get one user.");
         }
         return user;
 
@@ -99,9 +99,9 @@ public class UserDAO {
             Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_NAME + ";", null);
 
             while (cursor.moveToNext()){
-                HashMap map = new HashMap();
+                HashMap<String,String> map = new HashMap<String,String>();
                 map.put("name", cursor.getString(cursor.getColumnIndex("name")));
-                map.put("user", cursor.getString(cursor.getColumnIndex("username")));
+                map.put("user", "");
                 user_list.add(map);
             }
         }catch (Exception e){
@@ -111,15 +111,10 @@ public class UserDAO {
         return user_list;
     }
 
-    public Cursor getOneUser(String name){
-        return database.query(TABLE_NAME, null, "name=" + name, null, null, null, null);
-    }
-
     public User contentValuesUser(ContentValues contentValues) {
         User user = new User();
 
         user.setPassword(contentValues.getAsString(PASSWORD_COLUMN));
-        user.setUsername(contentValues.getAsString(USERNAME_COLUMN));
         user.setName(contentValues.getAsString(NAME_COLUMN));
         user.setCredits(contentValues.getAsInteger(CREDITS_COLUMN));
 

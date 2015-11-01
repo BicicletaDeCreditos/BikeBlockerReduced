@@ -14,16 +14,22 @@ android:
   - build-tools-23.0.1
   - platform-tools
   - tools
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - extra-google-google_play_services
+  - addon-google_apis-google-23
+  - sys-img-armeabi-v7a-android-23
+  - sys-img-x86-android-23
 before_install:
 - export ANDROID_HOME=/usr/local/android-sdk
 - if [ `uname -m` = x86_64 ]; then wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin
   -O ndk.bin; else wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86.bin
   -O ndk.bin; fi
-- 7z x ndk.bin android-ndk-r10d/build/ android-ndk-r10d/ndk-build android-ndk-r10d/platforms/android-21
+- 7z x ndk.bin android-ndk-r10d/build/ android-ndk-r10d/ndk-build android-ndk-r10d/platforms/android-23
   > /dev/null
 - export ANDROID_NDK_HOME=`pwd`/android-ndk-r10d
 - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${ANDROID_NDK_HOME}
 - echo "sdk.dir=$ANDROID_HOME" > local.properties
 - echo "ndk.dir=$ANDROID_NDK_HOME" >> local.properties
 
-script: gradle build connectedCheck
+script: gradle build -x lint

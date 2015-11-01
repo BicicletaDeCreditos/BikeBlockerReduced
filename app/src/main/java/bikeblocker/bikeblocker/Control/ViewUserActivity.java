@@ -18,7 +18,6 @@ import bikeblocker.bikeblocker.R;
 public class ViewUserActivity extends Activity {
     private String user_name;
     private TextView nameTextView;
-    private TextView usernameTextView;
     private TextView creditsTextView;
     UserDAO userdao;
 
@@ -33,7 +32,6 @@ public class ViewUserActivity extends Activity {
 
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
-        usernameTextView = (TextView) findViewById(R.id.usernameTextView);
         creditsTextView = (TextView) findViewById(R.id.creditsTextView);
 
         Bundle extras = getIntent().getExtras();
@@ -56,7 +54,6 @@ public class ViewUserActivity extends Activity {
         User user = userdao.selectUser(user_name);
 
         nameTextView.setText(user.getName());
-        usernameTextView.setText(user.getUsername());
         creditsTextView.setText(Integer.toString(user.getCredits()));
     }
 
@@ -64,24 +61,31 @@ public class ViewUserActivity extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewUserActivity.this);
 
         builder.setTitle(R.string.confirmTitle);
-        builder.setMessage(R.string.confirmMessage);
+        builder.setMessage(R.string.confirmMessageUser);
 
         builder.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int button) {
-                userdao = UserDAO.getInstance(ViewUserActivity.this);
-                String username = usernameTextView.getText().toString();
-                userdao.deleteUser(userdao.selectUser(username));
-                Intent intent = new Intent(ViewUserActivity.this, ListUsersActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
-
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                        userdao = UserDAO.getInstance(ViewUserActivity.this);
+                        String user_name = nameTextView.getText().toString();
+                        userdao.deleteUser(userdao.selectUser(user_name));
+                        Intent intent = new Intent(ViewUserActivity.this, ListUsersActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
         );
 
         builder.setNegativeButton(R.string.button_cancel, null);
 
         builder.show();
     }
+
+    public void startListAppsActivity(View view){
+        Intent intent = new Intent(this, UserAppsListActivity.class);
+        intent.putExtra("user_name", nameTextView.getText().toString());
+        startActivity(intent);
+    }
+
+
 }

@@ -23,6 +23,11 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+    lintOptions {
+        quiet true
+        abortOnError false
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {

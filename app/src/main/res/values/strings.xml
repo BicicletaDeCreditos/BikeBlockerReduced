@@ -20,12 +20,18 @@
     <string name="usernameLabel">Username: </string>
     <string name="creditsLabel">Credits</string>
     <string name="confirmTitle">Are You Sure?</string>
-    <string name="confirmMessage">This will permanently delete this user.</string>
+    <string name="confirmMessageUser">This will permanently delete this user.</string>
+    <string name="confirmMessageApp">This will permanently delete this app from your list.</string>
     <string name="button_delete">Delete</string>
+    <string name="button_OK">OK</string>
     <string name="button_cancel">Cancel</string>
     <string name="hint_name">Name</string>
     <string name="hint_username">Username</string>
     <string name="saveUser">Save</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="noUsersMessage">No users registered!</string>
+    <string name="title_activity_user_apps_list">User apps</string>
+    <string name="title_activity_add_new_app_to_user">AddNewAppToUserActivity</string>
+    <string name="title_activity_add_user_app">AddUserAppActivity</string>
+    <string name="creditsMessage">Select the number of credits needed to access this app for 1 hour.</string>
 </resources>
