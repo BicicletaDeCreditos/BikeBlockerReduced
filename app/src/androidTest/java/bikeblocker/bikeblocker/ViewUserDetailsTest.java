@@ -22,7 +22,6 @@ public class ViewUserDetailsTest extends InstrumentationTestCase {
     private UiDevice device;
     User user = new User();
     UserDAO dao;
-    boolean exists = false;
     @Override
     public void setUp() throws Exception {
         device = UiDevice.getInstance(getInstrumentation());

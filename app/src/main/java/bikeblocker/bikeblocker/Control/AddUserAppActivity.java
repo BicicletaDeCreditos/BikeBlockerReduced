@@ -155,7 +155,7 @@ public class AddUserAppActivity extends Activity {
                             Toast.makeText(getApplicationContext(), "You already have this app on your list.", Toast.LENGTH_LONG).show();
                         }
                         Intent intent = new Intent(AddUserAppActivity.this, UserAppsListActivity.class);
-                        intent.putExtra("user_username", user_name);
+                        intent.putExtra("user_name", user_name);
                         startActivity(intent);
                         finish();
                     }

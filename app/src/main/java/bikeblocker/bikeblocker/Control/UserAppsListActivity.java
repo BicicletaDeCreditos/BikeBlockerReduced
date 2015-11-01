@@ -60,6 +60,7 @@ public class UserAppsListActivity extends Activity {
 
                 String infos = parent.getItemAtPosition(position).toString();
                 String app_name = infos.substring(27, (infos.length() - 1));
+                System.out.println("App name: " + app_name);
                 final App app = appDAO.selectApp(app_name, user_name);
 
                 builder.setTitle("Choose one option");

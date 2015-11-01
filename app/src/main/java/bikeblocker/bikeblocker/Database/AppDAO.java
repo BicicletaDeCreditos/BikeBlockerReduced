@@ -85,13 +85,13 @@ public class AppDAO {
         return app_list;
     }
 
-    public App selectApp(String app_name, String user_username) {
+    public App selectApp(String app_name, String user_name) {
         String queryApp = "SELECT * FROM " + TABLE_NAME + " where " + APPNAME_COLUMN + " = ? AND "
                 + USER_COLUMN + " = ? ";
 
         App app = null;
         try{
-            Cursor cursor = database.rawQuery(queryApp, new String[]{app_name, user_username});
+            Cursor cursor = database.rawQuery(queryApp, new String[]{app_name, user_name});
 
             if (cursor.moveToFirst()) {
                 ContentValues contentValues = new ContentValues();

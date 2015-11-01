@@ -6,7 +6,7 @@ public class App implements Serializable{
     private int appID;
     private String appName;
     private int creditsPerHour;
-    private String user_username;
+    private String user_name;
 
     public App(){
 
@@ -22,7 +22,7 @@ public class App implements Serializable{
         return creditsPerHour;
     }
     public String getUser(){
-        return user_username;
+        return user_name;
     }
 
     public void setAppName(String appName){
@@ -36,8 +36,8 @@ public class App implements Serializable{
         this.creditsPerHour = creditsPerHour;
     }
 
-    public void setUser(String user_username){
-        this.user_username = user_username;
+    public void setUser(String user_name){
+        this.user_name = user_name;
     }
 
 }

@@ -77,7 +77,7 @@ public class ViewUserActivity extends Activity {
 
     public void startListAppsActivity(View view){
         Intent intent = new Intent(this, UserAppsListActivity.class);
-        intent.putExtra("user_user", nameTextView.getText().toString());
+        intent.putExtra("user_name", nameTextView.getText().toString());
         startActivity(intent);
     }
 

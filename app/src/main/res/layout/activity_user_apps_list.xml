@@ -14,7 +14,8 @@
         android:layout_marginRight="150dp"
         android:clickable="true"
         android:headerDividersEnabled="false"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:contentDescription="listUserApps" />
 
     <ImageButton
         android:layout_width="100dp"
