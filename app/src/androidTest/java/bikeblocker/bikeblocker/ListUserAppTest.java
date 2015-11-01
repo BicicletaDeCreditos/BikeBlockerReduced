@@ -82,7 +82,7 @@ public class ListUserAppTest extends InstrumentationTestCase {
 
         device.wait(Until.hasObject(By.desc("listUserApps")), 5000);
 
-        assertEquals(device.findObject(new UiSelector().description("listUserApps")).getChildCount(), 1);
+        assertTrue(device.findObject(new UiSelector().description("listUserApps")).getChildCount() > 0);
         assertTrue(device.findObject(new UiSelector().text("Google+")).exists());
         assertTrue(device.findObject(new UiSelector().text("Credits per hour: ")).exists());
         assertTrue(device.findObject(new UiSelector().text("10")).exists());
