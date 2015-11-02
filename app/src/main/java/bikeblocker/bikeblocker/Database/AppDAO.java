@@ -46,7 +46,7 @@ public class AppDAO {
         database.insert(TABLE_NAME, null, values);
     }
 
-    public void editAppInformations(App app) {
+    public void editAppInformation(App app) {
         ContentValues values = generateContentValuesApp(app);
         database.update(TABLE_NAME, values, APPID_COLUMN + " = " + app.getAppID(), null);
     }
@@ -83,6 +83,27 @@ public class AppDAO {
             System.out.println("Exception on get user_apps." + e.toString());
         }
         return app_list;
+    }
+
+    public List<String> getAppsNameFromDatabase() {
+        List<String> appsNameList = new ArrayList<String>();
+        String queryAll = "SELECT * FROM " + TABLE_NAME;
+
+        try {
+            Cursor cursor = database.rawQuery(queryAll, null);
+            String appName;
+            while (cursor.moveToNext()){
+                ContentValues contentValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, contentValues);
+                appName = contentValues.getAsString(APPNAME_COLUMN);
+                if(!appsNameList.contains(appName)){
+                    appsNameList.add(appName);
+                }
+            }
+        }catch (Exception e){
+            System.out.println("Exception on get all apps name." + e.toString());
+        }
+        return appsNameList;
     }
 
     public App selectApp(String app_name, String user_name) {

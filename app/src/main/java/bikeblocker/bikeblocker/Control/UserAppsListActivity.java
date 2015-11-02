@@ -130,7 +130,7 @@ public class UserAppsListActivity extends Activity {
                         newApp.setUser(app.getUser());
                         newApp.setAppName(app.getAppName());
                         newApp.setAppID(app.getAppID());
-                        appDAO.editAppInformations(newApp);
+                        appDAO.editAppInformation(newApp);
                         finish();
                         Intent intent = new Intent(UserAppsListActivity.this, UserAppsListActivity.class);
                         intent.putExtra("user_name", user_name);

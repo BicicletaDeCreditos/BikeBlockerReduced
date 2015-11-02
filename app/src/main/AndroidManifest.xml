@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:allowBackup="true"
@@ -63,6 +64,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <activity
+            android:name=".Control.CheckUserLoginDialogActivity"
+            android:label="@string/title_activity_check_user_login_dialog"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
     </application>
 
 </manifest>

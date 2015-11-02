@@ -10,7 +10,7 @@ import bikeblocker.bikeblocker.Database.UserDAO;
 public class User implements Serializable {
     private final int OK = 0;
     private final int INCORRECT = 1;
-    private final int NO_USERNAME = 2;
+    private final int NO_USER = 2;
 
     private String password;
     private String name;
@@ -44,11 +44,11 @@ public class User implements Serializable {
         this.credits = credits;
     }
 
-    public int getAuthentication(String username, String password, Context context){
+    public int getAuthentication(String user_name, String password, Context context){
         userDAO = userDAO.getInstance(context);
-        User user = userDAO.selectUser(username);
-        if((user.getName() == null) || user == null) {
-            return NO_USERNAME;
+        User user = userDAO.selectUser(user_name);
+        if(user == null) {
+            return NO_USER;
         }else if (user.getPassword().equals(password)){
             return OK;
         }else {
