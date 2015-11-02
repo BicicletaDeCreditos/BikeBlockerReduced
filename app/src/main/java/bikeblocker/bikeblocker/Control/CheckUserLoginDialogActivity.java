@@ -2,6 +2,7 @@ package bikeblocker.bikeblocker.Control;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -49,14 +50,21 @@ public class CheckUserLoginDialogActivity extends Activity {
         String user = txtUsername.getText().toString();
         String password = txtPassword.getText().toString();
 
-        int loginResult = new User().getAuthentication(user, password, getApplicationContext());
+        int loginResult = new User().getAuthentication(user, password, this.getApplicationContext());
 
         if (loginResult == OK) {
+            //move this toast to another place
             Toast toast = Toast.makeText(getApplicationContext(), "Enjoy you time!", Toast.LENGTH_LONG);
             toast.show();
+            Intent mServiceIntent = new Intent("START_SERVICE");
+            mServiceIntent.putExtra("status", "logged");
+            mServiceIntent.putExtra("user", user);
+            startService(mServiceIntent);
+
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Invalid Credentials", Toast.LENGTH_LONG);
             toast.show();
+            //voltar para home
         }
     }
 }

@@ -18,7 +18,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startService(new Intent("START_SERVICE"));
+
+        Intent mServiceIntent = new Intent("START_SERVICE");
+        mServiceIntent.putExtra("status", "notlogged");
+        mServiceIntent.putExtra("user", "");
+        startService(mServiceIntent);
     }
 
     @Override

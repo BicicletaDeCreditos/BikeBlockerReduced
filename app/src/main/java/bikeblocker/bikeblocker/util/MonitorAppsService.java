@@ -7,20 +7,31 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.Looper;
+import android.widget.Toast;
+
 import java.util.List;
 
 import bikeblocker.bikeblocker.Control.CheckUserLoginDialogActivity;
 import bikeblocker.bikeblocker.Database.AppDAO;
 
 public class MonitorAppsService extends Service implements Runnable {
-
-
-
+    private String status = "";
     @Override
     public void onCreate(){
         super.onCreate();
         Thread aThread = new Thread(this);
         aThread.start();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Toast.makeText(getApplicationContext(), "On start command", Toast.LENGTH_LONG).show();
+
+        status = intent.getStringExtra("status");
+        String user_name = intent.getStringExtra("user");
+
+        return START_STICKY;
+
     }
 
     @Override
@@ -33,11 +44,12 @@ public class MonitorAppsService extends Service implements Runnable {
         Looper.prepare();
         AppDAO  appDAO = AppDAO.getInstance(getApplicationContext());
         List<String> apps;
+        int count = 0;
 
         while (true){
             try{
                 apps = appDAO.getAppsNameFromDatabase();
-                System.out.println("This is my thread running in background");
+                System.out.println("This is my thread running in background " + count++);
                 if(!apps.isEmpty()){
                     checkAppOnForeground(apps);
                 }
@@ -59,8 +71,12 @@ public class MonitorAppsService extends Service implements Runnable {
 
         if(appsNameList.contains(foregroundTaskAppName)){
             System.out.println("Login");
-            loginDialog();
-
+            System.out.println("Status: " +status);
+            if(status.equalsIgnoreCase("notlogged")){
+                loginDialog();
+            }else{
+                System.out.println("Already Logged");
+            }
 
             // login successfull -> checkCredits();
             // tem creditos -> monitorAppUsage();
@@ -68,7 +84,7 @@ public class MonitorAppsService extends Service implements Runnable {
         }
 
 
-        // verifica se o app em foreground pertence a lista
+        // OK verifica se o app em foreground pertence a lista
         // se pertencer, pede senha e login na primeira vez e procura na tabela de apps se o usuario tem aquele app configurado
         // Constantemente
         // verifica se tem creditos suficientes
