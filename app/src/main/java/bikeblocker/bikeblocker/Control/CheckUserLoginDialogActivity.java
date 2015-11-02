@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
 
@@ -51,20 +52,29 @@ public class CheckUserLoginDialogActivity extends Activity {
         String password = txtPassword.getText().toString();
 
         int loginResult = new User().getAuthentication(user, password, this.getApplicationContext());
+        int credits = checkCredits(user);
 
-        if (loginResult == OK) {
+        if ((loginResult == OK ) && (credits > 0)) {
             //move this toast to another place
             Toast toast = Toast.makeText(getApplicationContext(), "Enjoy you time!", Toast.LENGTH_LONG);
             toast.show();
             Intent mServiceIntent = new Intent("START_SERVICE");
             mServiceIntent.putExtra("status", "logged");
             mServiceIntent.putExtra("user", user);
+            mServiceIntent.putExtra("credits", credits);
             startService(mServiceIntent);
-
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "Invalid Credentials", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), "You can't access this app. Check your credits and your credentials", Toast.LENGTH_LONG);
             toast.show();
             //voltar para home
+            Intent homeIntent= new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory(Intent.CATEGORY_HOME);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(homeIntent);
         }
+    }
+
+    private int checkCredits(String user_name){
+        return UserDAO.getInstance(getApplicationContext()).selectUser(user_name).getCredits();
     }
 }

@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
         Intent mServiceIntent = new Intent("START_SERVICE");
         mServiceIntent.putExtra("status", "notlogged");
         mServiceIntent.putExtra("user", "");
+        mServiceIntent.putExtra("credits", 0);
         startService(mServiceIntent);
     }
 

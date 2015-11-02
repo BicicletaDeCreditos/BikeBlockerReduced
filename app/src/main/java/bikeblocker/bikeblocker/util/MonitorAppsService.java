@@ -16,6 +16,8 @@ import bikeblocker.bikeblocker.Database.AppDAO;
 
 public class MonitorAppsService extends Service implements Runnable {
     private String status = "";
+    private String user_name;
+    private int user_credits;
     @Override
     public void onCreate(){
         super.onCreate();
@@ -28,10 +30,9 @@ public class MonitorAppsService extends Service implements Runnable {
         Toast.makeText(getApplicationContext(), "On start command", Toast.LENGTH_LONG).show();
 
         status = intent.getStringExtra("status");
-        String user_name = intent.getStringExtra("user");
-
+        user_name = intent.getStringExtra("user");
+        user_credits = intent.getIntExtra("credits", 0);
         return START_STICKY;
-
     }
 
     @Override
@@ -70,15 +71,15 @@ public class MonitorAppsService extends Service implements Runnable {
         String foregroundTaskAppName = foregroundAppPackageInfo.applicationInfo.loadLabel(pm).toString();
 
         if(appsNameList.contains(foregroundTaskAppName)){
-            System.out.println("Login");
-            System.out.println("Status: " +status);
             if(status.equalsIgnoreCase("notlogged")){
                 loginDialog();
             }else{
                 System.out.println("Already Logged");
+                // check if the user has got credits
+                // tem creditos -> monitorAppUsage(app_name);
+                // nao tem creditos -> showAlertDialog("You dont have enough credits") && nao permite acesso (volta pra home)
             }
 
-            // login successfull -> checkCredits();
             // tem creditos -> monitorAppUsage();
             // nao tem creditos -> showAlertDialog("You dont have enough credits") && nao permite acesso
         }
@@ -89,13 +90,12 @@ public class MonitorAppsService extends Service implements Runnable {
         // Constantemente
         // verifica se tem creditos suficientes
         // se tem creditos, permite o uso
+        // **monitorAppUsage()**
         // contabiliza tempo
-        // se nao tem, exibe mensagem de bloqueio
         // ***CALIBRAR O CONSUMO DE CREDITOS DE ACORDO COM A QUANTIDADE PARA UMA HORA***
         // 10 creditos => 1 credito a cada 6 minutos
         // 20 creditos => 1 credito a cada 3 minutos
         // 30 creditos => 1 credito a cada 2 minutos
-
     }
 
     private void loginDialog() {
