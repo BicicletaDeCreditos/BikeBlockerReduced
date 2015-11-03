@@ -13,11 +13,24 @@ import java.util.List;
 
 import bikeblocker.bikeblocker.Control.CheckUserLoginDialogActivity;
 import bikeblocker.bikeblocker.Database.AppDAO;
+import bikeblocker.bikeblocker.Database.UserDAO;
+import bikeblocker.bikeblocker.Model.App;
+import bikeblocker.bikeblocker.Model.User;
 
 public class MonitorAppsService extends Service implements Runnable {
     private String status = "";
     private String user_name;
-    private int user_credits;
+    private String previousApp = "";
+    private int counter = 0;
+    private int counterPerCredit;// how many times a tread will sleep until one credits is consumed
+    private final int threadsPerMin = 6;// the thread sleep time will be reduced for 5 sec (final value = 12)
+    private final int TEN = 36; // the thread sleep time will be reduced for 5 sec (final value = 72)
+    private final int TWENTY = 18; // the thread sleep time will be reduced for 5 sec (final value = 18)
+    private final int THIRTY = 12; // the thread sleep time will be reduced for 5 sec (final value = 24)
+    private final int HALF_MINUTE = 3;
+    private final int A_MINUTE = 6;
+    private final int TWO_MINUTES = 12;
+
     @Override
     public void onCreate(){
         super.onCreate();
@@ -27,11 +40,8 @@ public class MonitorAppsService extends Service implements Runnable {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(getApplicationContext(), "On start command", Toast.LENGTH_LONG).show();
-
         status = intent.getStringExtra("status");
         user_name = intent.getStringExtra("user");
-        user_credits = intent.getIntExtra("credits", 0);
         return START_STICKY;
     }
 
@@ -51,6 +61,7 @@ public class MonitorAppsService extends Service implements Runnable {
             try{
                 apps = appDAO.getAppsNameFromDatabase();
                 System.out.println("This is my thread running in background " + count++);
+                System.out.println("Status: " + status);
                 if(!apps.isEmpty()){
                     checkAppOnForeground(apps);
                 }
@@ -62,40 +73,19 @@ public class MonitorAppsService extends Service implements Runnable {
     }
 
     private void checkAppOnForeground(List<String> appsNameList) throws Exception{
-        ActivityManager activityManager = (ActivityManager) this.getSystemService( ACTIVITY_SERVICE );
-        ActivityManager.RunningTaskInfo foregroundTaskInfo = activityManager.getRunningTasks(1).get(0);
-
-        String foregroundTaskPackageName = foregroundTaskInfo .topActivity.getPackageName();
-        PackageManager pm = this.getPackageManager();
-        PackageInfo foregroundAppPackageInfo = pm.getPackageInfo(foregroundTaskPackageName, 0);
-        String foregroundTaskAppName = foregroundAppPackageInfo.applicationInfo.loadLabel(pm).toString();
-
+        String foregroundTaskAppName = getForegroundApp();
         if(appsNameList.contains(foregroundTaskAppName)){
             if(status.equalsIgnoreCase("notlogged")){
                 loginDialog();
-            }else{
-                System.out.println("Already Logged");
-                // check if the user has got credits
-                // tem creditos -> monitorAppUsage(app_name);
-                // nao tem creditos -> showAlertDialog("You dont have enough credits") && nao permite acesso (volta pra home)
+                previousApp = foregroundTaskAppName;
+            } else if (status.equalsIgnoreCase("logged")) {//inserir timeout de 1 hora para deslogar o usuario
+                App app = AppDAO.getInstance(getApplicationContext()).selectApp(foregroundTaskAppName, user_name);
+                if(app != null){
+                    System.out.println("User has app");
+                    monitorAppUsage(app.getCreditsPerHour(), app.getAppName());
+                }
             }
-
-            // tem creditos -> monitorAppUsage();
-            // nao tem creditos -> showAlertDialog("You dont have enough credits") && nao permite acesso
         }
-
-
-        // OK verifica se o app em foreground pertence a lista
-        // se pertencer, pede senha e login na primeira vez e procura na tabela de apps se o usuario tem aquele app configurado
-        // Constantemente
-        // verifica se tem creditos suficientes
-        // se tem creditos, permite o uso
-        // **monitorAppUsage()**
-        // contabiliza tempo
-        // ***CALIBRAR O CONSUMO DE CREDITOS DE ACORDO COM A QUANTIDADE PARA UMA HORA***
-        // 10 creditos => 1 credito a cada 6 minutos
-        // 20 creditos => 1 credito a cada 3 minutos
-        // 30 creditos => 1 credito a cada 2 minutos
     }
 
     private void loginDialog() {
@@ -105,8 +95,83 @@ public class MonitorAppsService extends Service implements Runnable {
         startActivity(intent);
     }
 
+    private void monitorAppUsage(int creditsPerHour, String app_name) {
+        if(checkCredits(user_name) > 0){
+            if(app_name.equalsIgnoreCase(previousApp)){ //using the same app after thread sleep
+                counter++;// incrementa contador
+                counterPerCredit = (60/creditsPerHour)*threadsPerMin;
+                if(counter == counterPerCredit){
+                    debit();
+                    counter = 0;
+                }
+            }else{
+                resetParams();
+            }
+        }else{
+            blockApp();
+        }
+        previousApp = app_name;
+    }
+
+    private void resetParams() {
+        switch (counterPerCredit){
+            case TEN:
+                if(counter >= TWO_MINUTES){
+                    debit();
+                }
+                break;
+            case TWENTY:
+                if(counter >= A_MINUTE ){
+                    debit();
+                }
+                break;
+            case THIRTY:
+                if(counter >= HALF_MINUTE){
+                    debit();
+                }
+                break;
+        }
+        status = "notlogged";
+        user_name = "";
+        counter = 0;
+    }
+
+    private void debit() {
+        int actualCredits = checkCredits(user_name);
+        User user = UserDAO.getInstance(getApplicationContext()).selectUser(user_name);
+        user.setCredits(actualCredits - 1);
+        System.out.println("Quantidade atual (nome): " + UserDAO.getInstance(getApplicationContext()).selectUser(user_name).getName());
+        System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser(user_name).getCredits());
+        UserDAO.getInstance(getApplicationContext()).editUserInformation(user);
+        System.out.println("Debitado creditos de usuario. ");
+        System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser(user_name).getCredits());
+    }
 
     private void blockApp(){
+        Toast toast = Toast.makeText(getApplicationContext(), "Sorry! Your credits ran out.", Toast.LENGTH_LONG);
+        toast.show();
+        //voltar para home
+        Intent homeIntent= new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(homeIntent);
+    }
 
+    private String getForegroundApp() throws Exception{
+        ActivityManager activityManager = (ActivityManager) this.getSystemService( ACTIVITY_SERVICE );
+        ActivityManager.RunningTaskInfo foregroundTaskInfo = activityManager.getRunningTasks(1).get(0);
+
+        String foregroundTaskPackageName = foregroundTaskInfo .topActivity.getPackageName();
+        PackageManager pm = this.getPackageManager();
+        PackageInfo foregroundAppPackageInfo = pm.getPackageInfo(foregroundTaskPackageName, 0);
+        return foregroundAppPackageInfo.applicationInfo.loadLabel(pm).toString();
+    }
+
+    private int checkCredits(String user_name){
+        User user = UserDAO.getInstance(getApplicationContext()).selectUser(user_name);
+        if (user == null){
+            return 0;
+        }
+        return user.getCredits();
     }
 }

@@ -14,7 +14,7 @@ public class User implements Serializable {
 
     private String password;
     private String name;
-    private static int credits = 0;
+    private static int credits = 10;
 
     private static UserDAO userDAO;
 

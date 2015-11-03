@@ -50,7 +50,7 @@ public class UserDAO {
         database.delete(TABLE_NAME, NAME_COLUMN + " = ?", valuesToReplace);
     }
 
-    public void editUserInformations(User user) {
+    public void editUserInformation(User user) {
         ContentValues values = generateContentValuesUser(user);
         database.update(TABLE_NAME, values, NAME_COLUMN + " = " + user.getName(), null);
     }

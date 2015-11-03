@@ -15,6 +15,8 @@ import bikeblocker.bikeblocker.R;
 
 public class CheckUserLoginDialogActivity extends Activity {
     private final int OK = 0;
+    private final int INCORRECT = 1;
+    private final int NO_USER = 2;
     private EditText txtUsername;
     private EditText txtPassword;
 
@@ -52,26 +54,49 @@ public class CheckUserLoginDialogActivity extends Activity {
         String password = txtPassword.getText().toString();
 
         int loginResult = new User().getAuthentication(user, password, this.getApplicationContext());
-        int credits = checkCredits(user);
 
-        if ((loginResult == OK ) && (credits > 0)) {
-            //move this toast to another place
-            Toast toast = Toast.makeText(getApplicationContext(), "Enjoy you time!", Toast.LENGTH_LONG);
-            toast.show();
-            Intent mServiceIntent = new Intent("START_SERVICE");
-            mServiceIntent.putExtra("status", "logged");
-            mServiceIntent.putExtra("user", user);
-            mServiceIntent.putExtra("credits", credits);
-            startService(mServiceIntent);
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "You can't access this app. Check your credits and your credentials", Toast.LENGTH_LONG);
-            toast.show();
-            //voltar para home
-            Intent homeIntent= new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory(Intent.CATEGORY_HOME);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(homeIntent);
+        switch (loginResult){
+            case OK:
+                int credits = checkCredits(user);
+                if(credits > 0){
+                    allow(user);
+                }else{
+                    deny();
+                }
+                break;
+            case INCORRECT:
+                deny();
+                break;
+            case NO_USER:
+                notifyNoUser();
         }
+    }
+
+    private void notifyNoUser() {
+        Intent mServiceIntent = new Intent("START_SERVICE");
+        mServiceIntent.putExtra("status", "nouser");
+        mServiceIntent.putExtra("user", "");
+        mServiceIntent.putExtra("credits", 0);
+        startService(mServiceIntent);
+    }
+
+    private void deny() {
+        Toast toast = Toast.makeText(getApplicationContext(), "You can't access this app. Check your credits and your credentials", Toast.LENGTH_LONG);
+        toast.show();
+        //voltar para home
+        Intent homeIntent= new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(homeIntent);
+    }
+
+    private void allow(String user) {
+        Toast toast = Toast.makeText(getApplicationContext(), "Enjoy you time!", Toast.LENGTH_LONG);
+        toast.show();
+        Intent mServiceIntent = new Intent("START_SERVICE");
+        mServiceIntent.putExtra("status", "logged");
+        mServiceIntent.putExtra("user", user);
+        startService(mServiceIntent);
     }
 
     private int checkCredits(String user_name){
