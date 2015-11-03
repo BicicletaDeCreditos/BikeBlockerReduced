@@ -2,18 +2,13 @@ package bikeblocker.bikeblocker;
 
 import android.content.Intent;
 import android.support.test.uiautomator.By;
-import android.support.test.uiautomator.UiCollection;
 import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
 import android.test.InstrumentationTestCase;
-import android.widget.TextView;
 
 import org.junit.After;
 
-import bikeblocker.bikeblocker.Control.ListUsersActivity;
 import bikeblocker.bikeblocker.Control.ViewUserActivity;
 import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.User;

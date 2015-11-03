@@ -4,43 +4,26 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import bikeblocker.bikeblocker.Database.UserAdminDAO;
-import bikeblocker.bikeblocker.Model.UserAdmin;
+import bikeblocker.bikeblocker.Database.UserDAO;
+import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
 
 public class RegisterPasswordActivity extends Activity {
 
-    private static UserAdmin userToBeRegistered;
+    private static User userToBeRegistered;
     private Context context;
-    private UserAdminDAO userDao;
+    private UserDAO userDao;
     private EditText password;
     private EditText confirmPassword;
 
@@ -52,9 +35,9 @@ public class RegisterPasswordActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        userToBeRegistered = new UserAdmin();
+        userToBeRegistered = new User();
         this.context = getApplicationContext();
-        this.userDao = UserAdminDAO.getInstance(getApplicationContext());
+        this.userDao = UserDAO.getInstance(getApplicationContext());
 
         this.password = (EditText) findViewById(R.id.insert_password);
         this.confirmPassword = (EditText) findViewById(R.id.confirm_password);
@@ -80,11 +63,11 @@ public class RegisterPasswordActivity extends Activity {
     }
 
     private void savePassword(String password){
-        userToBeRegistered.setUserPasswordAdmin(password);
+        userToBeRegistered.setPassword(password);
         if(userToBeRegistered.verifyFirstTimeAccess(getApplicationContext())){
             userDao.saveUser(userToBeRegistered);
         }else{
-            userDao.editUserInformations(userToBeRegistered);
+            userDao.editUserInformation(userToBeRegistered);
         }
 
     }
@@ -110,7 +93,7 @@ public class RegisterPasswordActivity extends Activity {
             showProgress(true);
             savePassword(passwordValue);
             Intent intent = new Intent();
-            intent.setClass(this, ListUsersActivity.class);
+            intent.setClass(this, UserAppsListActivity.class);
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "Password saved successfully!", Toast.LENGTH_LONG).show();
             finish();

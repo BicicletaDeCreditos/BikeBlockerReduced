@@ -45,7 +45,7 @@ public class ViewUserActivity extends Activity {
         super.onResume();
         userdao = UserDAO.getInstance(ViewUserActivity.this);
 
-        User user = userdao.selectUser(user_name);
+        User user = userdao.selectUser();
 
         nameTextView.setText(user.getName());
         creditsTextView.setText(Integer.toString(user.getCredits()));
@@ -62,8 +62,8 @@ public class ViewUserActivity extends Activity {
                     public void onClick(DialogInterface dialog, int button) {
                         userdao = UserDAO.getInstance(ViewUserActivity.this);
                         String user_name = nameTextView.getText().toString();
-                        userdao.deleteUser(userdao.selectUser(user_name));
-                        Intent intent = new Intent(ViewUserActivity.this, ListUsersActivity.class);
+                        userdao.deleteUser(userdao.selectUser());
+                        Intent intent = new Intent(ViewUserActivity.this, UserAppsListActivity.class);
                         startActivity(intent);
                         finish();
                     }

@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Control.SettingsAuthActivity"
+            android:name=".Control.LoginActivity"
             android:label="@string/title_activity_settings_auth"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
@@ -34,10 +34,6 @@
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <!-- Force Landscape -->
-        <activity
-            android:name=".Control.ListUsersActivity"
-            android:label="@string/title_activity_list_users" >
-        </activity>
         <activity
             android:name=".Control.AddNewUserActivity"
             android:label="@string/title_activity_add_new_user" >

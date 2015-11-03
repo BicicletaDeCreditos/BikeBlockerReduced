@@ -53,7 +53,7 @@ public class CheckUserLoginDialogActivity extends Activity {
         String user = txtUsername.getText().toString();
         String password = txtPassword.getText().toString();
 
-        int loginResult = new User().getAuthentication(user, password, this.getApplicationContext());
+        int loginResult = new User().getAuthentication( password, this.getApplicationContext());
 
         switch (loginResult){
             case OK:
@@ -100,6 +100,6 @@ public class CheckUserLoginDialogActivity extends Activity {
     }
 
     private int checkCredits(String user_name){
-        return UserDAO.getInstance(getApplicationContext()).selectUser(user_name).getCredits();
+        return UserDAO.getInstance(getApplicationContext()).selectUser().getCredits();
     }
 }

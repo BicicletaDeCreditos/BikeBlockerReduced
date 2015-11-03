@@ -14,29 +14,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import bikeblocker.bikeblocker.Model.UserAdmin;
+import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
 
-/**
- * A login screen that offers login via password.
- */
-public class SettingsAuthActivity extends Activity {
-    private final int NO_ADMIN = 1;
-    private final int INCORRECT = 2;
+public class LoginActivity extends Activity {
     private final int OK = 0;
+    private final int INCORRECT = 1;
+    private final int NO_USER = 2;
     private EditText mPasswordView;
+    private EditText mUsernameView;
     private View mProgressView;
     private View mLoginFormView;
 
-    private UserAdmin userToBeLogged;
+    private User userToBeLogged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings_auth);
+        setContentView(R.layout.login);
 
-        userToBeLogged = new UserAdmin();
+        userToBeLogged = new User();
 
+        mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
 
         Button mSignInButton = (Button) findViewById(R.id.sign_in_button);
@@ -51,34 +50,41 @@ public class SettingsAuthActivity extends Activity {
         mProgressView = findViewById(R.id.login_progress);
     }
     public void attemptLogin() {
-
+        Intent intent;
         boolean cancel = false;
         View focusView = null;
 
         mPasswordView.setError(null);
+        mUsernameView.setError(null);
 
+        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
-        int loginResult = userToBeLogged.verifyAdminPassword(password, getApplicationContext());
 
-        if (loginResult == NO_ADMIN) {
-            Intent intent = new Intent();
-            intent.setClass(this, RegisterPasswordActivity.class);
-            startActivity(intent);
+        int loginResult = userToBeLogged.getAuthentication(password,getApplicationContext());
 
-            CharSequence text = "First access! Register a password";
-            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-            toast.show();
-            finish();
-        } else if (loginResult == INCORRECT) {
-            userToBeLogged = new UserAdmin();
-            mPasswordView.setError(getString(R.string.error_incorrect_password));
-            focusView = mPasswordView;
-            cancel = true;
-        } else {
-            Intent intent = new Intent();
-            intent.setClass(this, ListUsersActivity.class);
-            startActivity(intent);
-            finish();
+        switch (loginResult){
+            case OK:
+                intent = new Intent();
+                intent.setClass(this, UserAppsListActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case INCORRECT:
+                userToBeLogged = new User();
+                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                focusView = mPasswordView;
+                cancel = true;
+                break;
+            default:
+                intent = new Intent();
+                intent.setClass(this, AddNewUserActivity.class);
+                startActivity(intent);
+
+                CharSequence text = "First access! Register a password";
+                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
+                toast.show();
+                finish();
+                break;
         }
 
         if (cancel) {

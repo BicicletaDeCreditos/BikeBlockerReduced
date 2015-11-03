@@ -138,13 +138,13 @@ public class MonitorAppsService extends Service implements Runnable {
 
     private void debit() {
         int actualCredits = checkCredits(user_name);
-        User user = UserDAO.getInstance(getApplicationContext()).selectUser(user_name);
+        User user = UserDAO.getInstance(getApplicationContext()).selectUser();
         user.setCredits(actualCredits - 1);
-        System.out.println("Quantidade atual (nome): " + UserDAO.getInstance(getApplicationContext()).selectUser(user_name).getName());
-        System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser(user_name).getCredits());
+        System.out.println("Quantidade atual (nome): " + UserDAO.getInstance(getApplicationContext()).selectUser().getName());
+        System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser().getCredits());
         UserDAO.getInstance(getApplicationContext()).editUserInformation(user);
         System.out.println("Debitado creditos de usuario. ");
-        System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser(user_name).getCredits());
+        System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser().getCredits());
     }
 
     private void blockApp(){
@@ -168,7 +168,7 @@ public class MonitorAppsService extends Service implements Runnable {
     }
 
     private int checkCredits(String user_name){
-        User user = UserDAO.getInstance(getApplicationContext()).selectUser(user_name);
+        User user = UserDAO.getInstance(getApplicationContext()).selectUser();
         if (user == null){
             return 0;
         }

@@ -35,8 +35,7 @@ public class UserAppsListActivity extends Activity {
         appsUserList.setAdapter(getUserApps());
         appsUserList.setOnItemClickListener(listener());
 
-        Bundle extras = getIntent().getExtras();
-        user_name = extras.getString("user_name");
+        user_name = "";
 
         if(getUserApps().isEmpty()){
             Toast.makeText(getApplicationContext(), "There is no app registered!", Toast.LENGTH_LONG).show();
