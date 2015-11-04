@@ -79,7 +79,7 @@ public class MonitorAppsService extends Service implements Runnable {
                 loginDialog();
                 previousApp = foregroundTaskAppName;
             } else if (status.equalsIgnoreCase("logged")) {//inserir timeout de 1 hora para deslogar o usuario
-                App app = AppDAO.getInstance(getApplicationContext()).selectApp(foregroundTaskAppName, user_name);
+                App app = AppDAO.getInstance(getApplicationContext()).selectApp(foregroundTaskAppName);
                 if(app != null){
                     System.out.println("User has app");
                     monitorAppUsage(app.getCreditsPerHour(), app.getAppName());

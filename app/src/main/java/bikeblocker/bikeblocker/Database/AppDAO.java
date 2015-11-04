@@ -17,7 +17,6 @@ public class AppDAO {
     public static final String APPID_COLUMN = "app_id";
     public static final String APPNAME_COLUMN = "app_name";
     public static final String CREDITSHOUR_COLUMN = "credits_hour";
-    public static final String USER_COLUMN = "user_name";
 
     private SQLiteDatabase database = null;
     private static AppDAO appDAO = null;
@@ -60,18 +59,15 @@ public class AppDAO {
 
         contentValues.put(APPNAME_COLUMN, app.getAppName());
         contentValues.put(CREDITSHOUR_COLUMN, app.getCreditsPerHour());
-        contentValues.put(USER_COLUMN, app.getUser());
 
         return contentValues;
     }
 
-    public List<HashMap<String, String>> selectAllApps(String user) {
-        String queryAllApps = "SELECT * FROM " + TABLE_NAME + " where " + USER_COLUMN + " = ?";
-
+    public List<HashMap<String, String>> selectAllApps() {
         app_list = new ArrayList<HashMap<String, String>>();
 
         try {
-            Cursor cursor = database.rawQuery(queryAllApps, new String[]{user});
+            Cursor cursor = database.rawQuery("SELECT * FROM " + TABLE_NAME + ";", null);
 
             while (cursor.moveToNext()){
                 HashMap<String,String> map = new HashMap<String,String>();
@@ -106,13 +102,12 @@ public class AppDAO {
         return appsNameList;
     }
 
-    public App selectApp(String app_name, String user_name) {
-        String queryApp = "SELECT * FROM " + TABLE_NAME + " where " + APPNAME_COLUMN + " = ? AND "
-                + USER_COLUMN + " = ? ";
+    public App selectApp(String app_name) {
+        String queryApp = "SELECT * FROM " + TABLE_NAME + " where " + APPNAME_COLUMN + " = ? ";
 
         App app = null;
         try{
-            Cursor cursor = database.rawQuery(queryApp, new String[]{app_name, user_name});
+            Cursor cursor = database.rawQuery(queryApp, new String[]{app_name});
 
             if (cursor.moveToFirst()) {
                 ContentValues contentValues = new ContentValues();
@@ -130,7 +125,6 @@ public class AppDAO {
 
         app.setAppID(contentValues.getAsInteger(APPID_COLUMN));
         app.setAppName(contentValues.getAsString(APPNAME_COLUMN));
-        app.setUser(contentValues.getAsString(USER_COLUMN));
         app.setCreditsPerHour(contentValues.getAsInteger(CREDITSHOUR_COLUMN));
 
         return app;

@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     public static final String DATABASE_NAME = "BIKEBLOCKER";
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
     protected static final String SCRIPT_COMMAND_CREATION_USERTABLE = "CREATE TABLE IF NOT EXISTS user (" +
             "  username VARCHAR(15) NOT NULL PRIMARY KEY," +
             "  password VARCHAR(15) NOT NULL," +
@@ -18,13 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             "CREATE TABLE user_apps (" +
                     "  app_id integer primary key autoincrement," +
                     "  app_name text NOT NULL," +
-                    "  credits_hour INT NOT NULL," +
-                    "  user_username VARCHAR(15) NOT NULL," +
-                    "  CONSTRAINT fk_apps_user" +
-                    "    FOREIGN KEY (user_username)" +
-                    "    REFERENCES user (user_id)" +
-                    "    ON DELETE NO ACTION" +
-                    "    ON UPDATE NO ACTION);";
+                    "  credits_hour INT NOT NULL);";
     protected static final String SCRIPT_CREATION=
             "CREATE TABLE session_app (" +
             "  sessionapp_id INT NOT NULL PRIMARY KEY," +

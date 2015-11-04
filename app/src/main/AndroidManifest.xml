@@ -47,7 +47,7 @@
             android:label="@string/title_activity_user_apps_list" >
         </activity>
         <activity
-            android:name=".Control.AddUserAppActivity"
+            android:name=".Control.AddAppActivity"
             android:label="@string/title_activity_add_user_app" >
         </activity>
 
