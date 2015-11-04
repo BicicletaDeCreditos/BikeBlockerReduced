@@ -18,8 +18,7 @@ import bikeblocker.bikeblocker.Model.App;
 import bikeblocker.bikeblocker.Model.User;
 
 public class MonitorAppsService extends Service implements Runnable {
-    private String status = "";
-    private String user_name;
+    private String status = "notLogged";
     private String previousApp = "";
     private int counter = 0;
     private int counterPerCredit;// how many times a tread will sleep until one credits is consumed
@@ -36,13 +35,6 @@ public class MonitorAppsService extends Service implements Runnable {
         super.onCreate();
         Thread aThread = new Thread(this);
         aThread.start();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        status = intent.getStringExtra("status");
-        user_name = intent.getStringExtra("user");
-        return START_STICKY;
     }
 
     @Override
@@ -75,28 +67,15 @@ public class MonitorAppsService extends Service implements Runnable {
     private void checkAppOnForeground(List<String> appsNameList) throws Exception{
         String foregroundTaskAppName = getForegroundApp();
         if(appsNameList.contains(foregroundTaskAppName)){
-            if(status.equalsIgnoreCase("notlogged")){
-                loginDialog();
-                previousApp = foregroundTaskAppName;
-            } else if (status.equalsIgnoreCase("logged")) {//inserir timeout de 1 hora para deslogar o usuario
-                App app = AppDAO.getInstance(getApplicationContext()).selectApp(foregroundTaskAppName);
-                if(app != null){
-                    System.out.println("User has app");
-                    monitorAppUsage(app.getCreditsPerHour(), app.getAppName());
-                }
-            }
+            previousApp = foregroundTaskAppName;/**check it*/
+            System.out.println("User has app");
+            App app = AppDAO.getInstance(getApplicationContext()).selectApp(foregroundTaskAppName);
+            monitorAppUsage(app.getCreditsPerHour(), app.getAppName());
         }
     }
 
-    private void loginDialog() {
-        Intent intent;
-        intent = new Intent(this, CheckUserLoginDialogActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
     private void monitorAppUsage(int creditsPerHour, String app_name) {
-        if(checkCredits(user_name) > 0){
+        if(checkCredits() > 0){
             if(app_name.equalsIgnoreCase(previousApp)){ //using the same app after thread sleep
                 counter++;// incrementa contador
                 counterPerCredit = (60/creditsPerHour)*threadsPerMin;
@@ -131,13 +110,11 @@ public class MonitorAppsService extends Service implements Runnable {
                 }
                 break;
         }
-        status = "notlogged";
-        user_name = "";
         counter = 0;
     }
 
     private void debit() {
-        int actualCredits = checkCredits(user_name);
+        int actualCredits = checkCredits();
         User user = UserDAO.getInstance(getApplicationContext()).selectUser();
         user.setCredits(actualCredits - 1);
         System.out.println("Quantidade atual (nome): " + UserDAO.getInstance(getApplicationContext()).selectUser().getName());
@@ -167,7 +144,7 @@ public class MonitorAppsService extends Service implements Runnable {
         return foregroundAppPackageInfo.applicationInfo.loadLabel(pm).toString();
     }
 
-    private int checkCredits(String user_name){
+    private int checkCredits(){
         User user = UserDAO.getInstance(getApplicationContext()).selectUser();
         if (user == null){
             return 0;

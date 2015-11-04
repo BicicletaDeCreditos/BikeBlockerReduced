@@ -15,8 +15,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         Intent mServiceIntent = new Intent("START_SERVICE");
-        mServiceIntent.putExtra("status", "notlogged");
-        mServiceIntent.putExtra("user", "");
         startService(mServiceIntent);
     }
 
