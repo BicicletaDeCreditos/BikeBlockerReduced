@@ -73,11 +73,11 @@ public class CheckUserLoginDialogActivity extends Activity {
     }
 
     private void notifyNoUser() {
-        Intent mServiceIntent = new Intent("START_SERVICE");
-        mServiceIntent.putExtra("status", "nouser");
-        mServiceIntent.putExtra("user", "");
-        mServiceIntent.putExtra("credits", 0);
-        startService(mServiceIntent);
+ //       Intent mServiceIntent = new Intent("START_SERVICE");
+//        mServiceIntent.putExtra("status", "nouser");
+//        mServiceIntent.putExtra("user", "");
+//        mServiceIntent.putExtra("credits", 0);
+  //      startService(mServiceIntent);
     }
 
     private void deny() {
@@ -91,12 +91,12 @@ public class CheckUserLoginDialogActivity extends Activity {
     }
 
     private void allow(String user) {
-        Toast toast = Toast.makeText(getApplicationContext(), "Enjoy you time!", Toast.LENGTH_LONG);
-        toast.show();
-        Intent mServiceIntent = new Intent("START_SERVICE");
-        mServiceIntent.putExtra("status", "logged");
-        mServiceIntent.putExtra("user", user);
-        startService(mServiceIntent);
+//        Toast toast = Toast.makeText(getApplicationContext(), "Enjoy you time!", Toast.LENGTH_LONG);
+//        toast.show();
+//        Intent mServiceIntent = new Intent("START_SERVICE");
+//        mServiceIntent.putExtra("status", "logged");
+//        mServiceIntent.putExtra("user", user);
+//        startService(mServiceIntent);
     }
 
     private int checkCredits(String user_name){
