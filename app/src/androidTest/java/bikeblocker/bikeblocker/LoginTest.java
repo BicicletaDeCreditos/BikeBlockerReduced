@@ -103,7 +103,7 @@ public class LoginTest extends InstrumentationTestCase {
         device.wait(Until.hasObject(By.desc("addNewApp")), 5000);
 
         assertTrue(device.findObject(new UiSelector().description("addNewApp")).exists());
-        assertTrue(device.findObject(new UiSelector().description("changePassword")).exists());
+        assertTrue(device.findObject(new UiSelector().description("viewProfile")).exists());
     }
 
     public void testLoginSuccessfully() throws Exception {
@@ -112,9 +112,9 @@ public class LoginTest extends InstrumentationTestCase {
         device.findObject(By.desc("password")).setText("1234");
         device.findObject(By.desc("signIn")).click();
 
-        device.wait(Until.hasObject(By.desc("changePassword")), 5000);
+        device.wait(Until.hasObject(By.desc("viewProfile")), 5000);
 
-        assertTrue(device.findObject(new UiSelector().description("changePassword")).exists());
+        assertTrue(device.findObject(new UiSelector().description("viewProfile")).exists());
         assertTrue(device.findObject(new UiSelector().description("addNewApp")).exists());
     }
 

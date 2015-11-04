@@ -13,7 +13,7 @@ import android.test.InstrumentationTestCase;
 import org.junit.After;
 import org.junit.BeforeClass;
 
-import bikeblocker.bikeblocker.Control.UserAppsListActivity;
+import bikeblocker.bikeblocker.Control.AppsListActivity;
 import bikeblocker.bikeblocker.Database.AppDAO;
 import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.App;
@@ -57,9 +57,9 @@ public class UserAppOnClickTest extends InstrumentationTestCase{
         AppDAO.getInstance(getInstrumentation().getContext()).saveApp(app);
 
 
-        Intent viewUser = new Intent(getInstrumentation().getContext(), UserAppsListActivity.class);
+        Intent viewUser = new Intent(getInstrumentation().getContext(), AppsListActivity.class);
         viewUser.putExtra("user_name", "Test1");
-        launchActivityWithIntent("bikeblocker.bikeblocker", UserAppsListActivity.class, viewUser);
+        launchActivityWithIntent("bikeblocker.bikeblocker", AppsListActivity.class, viewUser);
 
 
     }

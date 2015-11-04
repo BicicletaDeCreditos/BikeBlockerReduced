@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 
 import bikeblocker.bikeblocker.Database.AppDAO;
-import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.App;
 import bikeblocker.bikeblocker.R;
 import bikeblocker.bikeblocker.AppsComparator;
@@ -154,7 +153,7 @@ public class AddUserAppActivity extends Activity {
                         } else {
                             Toast.makeText(getApplicationContext(), "You already have this app on your list.", Toast.LENGTH_LONG).show();
                         }
-                        Intent intent = new Intent(AddUserAppActivity.this, UserAppsListActivity.class);
+                        Intent intent = new Intent(AddUserAppActivity.this, AppsListActivity.class);
                         intent.putExtra("user_name", user_name);
                         startActivity(intent);
                         finish();

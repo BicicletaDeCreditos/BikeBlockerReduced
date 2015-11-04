@@ -21,7 +21,6 @@ import bikeblocker.bikeblocker.R;
 
 public class RegisterPasswordActivity extends Activity {
 
-    private static User userToBeRegistered;
     private Context context;
     private UserDAO userDao;
     private EditText password;
@@ -35,7 +34,6 @@ public class RegisterPasswordActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        userToBeRegistered = new User();
         this.context = getApplicationContext();
         this.userDao = UserDAO.getInstance(getApplicationContext());
 
@@ -63,13 +61,13 @@ public class RegisterPasswordActivity extends Activity {
     }
 
     private void savePassword(String password){
+        User userToBeRegistered = userDao.selectUser();
         userToBeRegistered.setPassword(password);
-        if(userToBeRegistered.verifyFirstTimeAccess(getApplicationContext())){
-            userDao.saveUser(userToBeRegistered);
-        }else{
+        try{
             userDao.editUserInformation(userToBeRegistered);
+        }catch (Exception e){
+            System.out.println("Exception on edit password: " + e.toString());
         }
-
     }
 
     public void registerPassword() {
@@ -93,7 +91,7 @@ public class RegisterPasswordActivity extends Activity {
             showProgress(true);
             savePassword(passwordValue);
             Intent intent = new Intent();
-            intent.setClass(this, UserAppsListActivity.class);
+            intent.setClass(this, AppsListActivity.class);
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "Password saved successfully!", Toast.LENGTH_LONG).show();
             finish();

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,8 +16,8 @@ import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
 
 public class ViewUserActivity extends Activity {
-    private String user_name;
     private TextView nameTextView;
+    private TextView usernameTextView;
     private TextView creditsTextView;
     UserDAO userdao;
 
@@ -25,19 +26,14 @@ public class ViewUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user);
 
+        //Typeface profileTitleFace = Typeface.createFromAsset(getAssets(),"MJF Zhafira Demo.ttf");
+        //TextView profileTitleText = (TextView)findViewById(R.id.nameTextView);
+        //profileTitleText.setTypeface(profileTitleFace);
+
+
         nameTextView = (TextView) findViewById(R.id.nameTextView);
+        usernameTextView = (TextView) findViewById(R.id.usernameTextView);
         creditsTextView = (TextView) findViewById(R.id.creditsTextView);
-
-        Bundle extras = getIntent().getExtras();
-        user_name = extras.getString("user_name");
-
-        ImageButton deleteUserButton = (ImageButton) findViewById(R.id.deleteUserButton);
-        deleteUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteUser();
-            }
-        });
     }
 
     @Override
@@ -48,38 +44,12 @@ public class ViewUserActivity extends Activity {
         User user = userdao.selectUser();
 
         nameTextView.setText(user.getName());
+        usernameTextView.setText(user.getUsername());
         creditsTextView.setText(Integer.toString(user.getCredits()));
     }
 
-    private void deleteUser(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(ViewUserActivity.this);
-
-        builder.setTitle(R.string.confirmTitle);
-        builder.setMessage(R.string.confirmMessageUser);
-
-        builder.setPositiveButton(R.string.button_delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int button) {
-                        userdao = UserDAO.getInstance(ViewUserActivity.this);
-                        String user_name = nameTextView.getText().toString();
-                        userdao.deleteUser(userdao.selectUser());
-                        Intent intent = new Intent(ViewUserActivity.this, UserAppsListActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }
-        );
-
-        builder.setNegativeButton(R.string.button_cancel, null);
-
-        builder.show();
-    }
-
-    public void startListAppsActivity(View view){
-        Intent intent = new Intent(this, UserAppsListActivity.class);
-        intent.putExtra("user_name", nameTextView.getText().toString());
+    public void startRegisterNewPasswordActivity(View view){
+        Intent intent = new Intent(this, RegisterPasswordActivity.class);
         startActivity(intent);
     }
-
-
 }

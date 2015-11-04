@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -105,7 +103,7 @@ public class RegisterUserActivity extends Activity {
                 toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             }
             Intent intent = new Intent();
-            intent.setClass(this, UserAppsListActivity.class);
+            intent.setClass(this, AppsListActivity.class);
             startActivity(intent);
             toast.show();
             finish();

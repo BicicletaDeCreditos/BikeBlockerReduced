@@ -55,9 +55,7 @@ public class LoginActivity extends Activity {
         View focusView = null;
 
         mPasswordView.setError(null);
-        mUsernameView.setError(null);
 
-        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         int loginResult = userToBeLogged.getAuthentication(password,getApplicationContext());
@@ -65,7 +63,7 @@ public class LoginActivity extends Activity {
         switch (loginResult){
             case OK:
                 intent = new Intent();
-                intent.setClass(this, UserAppsListActivity.class);
+                intent.setClass(this, AppsListActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -77,7 +75,7 @@ public class LoginActivity extends Activity {
                 break;
             default:
                 intent = new Intent();
-                intent.setClass(this, AddNewUserActivity.class);
+                intent.setClass(this, RegisterUserActivity.class);
                 startActivity(intent);
 
                 CharSequence text = "First access! Register a password";

@@ -35,7 +35,7 @@
         </activity>
         <!-- Force Landscape -->
         <activity
-            android:name=".Control.AddNewUserActivity"
+            android:name=".Control.RegisterUserActivity"
             android:label="@string/title_activity_add_new_user" >
         </activity>
         <activity
@@ -43,7 +43,7 @@
             android:label="@string/title_activity_view_user" >
         </activity>
         <activity
-            android:name=".Control.UserAppsListActivity"
+            android:name=".Control.AppsListActivity"
             android:label="@string/title_activity_user_apps_list" >
         </activity>
         <activity

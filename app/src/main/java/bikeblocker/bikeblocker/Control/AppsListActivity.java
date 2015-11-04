@@ -154,4 +154,9 @@ public class AppsListActivity extends Activity {
         startActivity(intent);
         finish();
     }
+
+    public void startViewUserActivity(View view) {
+        Intent viewUser = new Intent(this, ViewUserActivity.class);
+        startActivity(viewUser);
+    }
 }

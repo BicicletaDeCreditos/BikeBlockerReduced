@@ -28,10 +28,10 @@
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/changePassword"
+        android:id="@+id/viewProfile"
         android:layout_gravity="left|bottom"
-        android:onClick="startAddNewAppToUser"
-        android:contentDescription="changePassword"
+        android:onClick="startViewUserActivity"
+        android:contentDescription="viewProfile"
         android:contextClickable="false" />
 
 </FrameLayout>
