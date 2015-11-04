@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Control.SettingsAuthActivity"
+            android:name=".Control.LoginActivity"
             android:label="@string/title_activity_settings_auth"
             android:windowSoftInputMode="adjustResize|stateVisible"
             android:screenOrientation="landscape"
@@ -38,14 +39,8 @@
         </activity>
         <!-- Force Landscape -->
         <activity
-            android:name=".Control.ListUsersActivity"
-            android:label="@string/title_activity_list_users"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-        </activity>
-        <activity
-            android:name=".Control.AddNewUserActivity"
-            android:label="@string/title_activity_add_new_user"
+            android:name=".Control.RegisterUserActivity"
+            android:label="@string/title_activity_add_new_user" >
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
@@ -56,12 +51,26 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name=".Control.UserAppsListActivity"
+            android:name=".Control.AppsListActivity"
             android:label="@string/title_activity_user_apps_list" >
         </activity>
         <activity
-            android:name=".Control.AddUserAppActivity"
+            android:name=".Control.AddAppActivity"
             android:label="@string/title_activity_add_user_app" >
+        </activity>
+
+        <service
+            android:name=".util.MonitorAppsService"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="START_SERVICE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <activity
+            android:name=".Control.CheckUserLoginDialogActivity"
+            android:theme="@android:style/Theme.Dialog">
         </activity>
     </application>
 

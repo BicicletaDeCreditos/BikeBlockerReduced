@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +13,11 @@ import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
 
-public class AddNewUserActivity extends Activity {
+public class RegisterUserActivity extends Activity {
     private User user;
     private UserDAO userdao;
     private EditText nameEditText;
+    private EditText usernameEditText;
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
 
@@ -31,6 +30,7 @@ public class AddNewUserActivity extends Activity {
         userdao = UserDAO.getInstance(getApplicationContext());
 
         nameEditText = (EditText) findViewById(R.id.nameEditText);
+        usernameEditText = (EditText) findViewById(R.id.usernameEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirmPasswordEditText);
 
@@ -47,6 +47,7 @@ public class AddNewUserActivity extends Activity {
         CharSequence text;
         Toast toast;
         nameEditText.setError(null);
+        usernameEditText.setError(null);
         passwordEditText.setError(null);
         confirmPasswordEditText.setError(null);
 
@@ -54,21 +55,31 @@ public class AddNewUserActivity extends Activity {
         boolean cancel = false;
 
         String name = nameEditText.getText().toString();
+        String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         String confirmPassword = confirmPasswordEditText.getText().toString();
 
-        if (TextUtils.isEmpty(name) || name == null){
+        if (TextUtils.isEmpty(name)){
             nameEditText.setError("You must enter a name.");
             focusView = nameEditText;
             cancel = true;
         }else{
             user.setName(name);
         }
-        if (TextUtils.isEmpty(password) || password == null || !validatePassword()){
+
+        if (TextUtils.isEmpty(username)){
+            usernameEditText.setError("You must enter a username.");
+            focusView = usernameEditText;
+            cancel = true;
+        }else{
+            user.setUsername(username);
+        }
+
+        if (TextUtils.isEmpty(password) || !validatePassword()){
             passwordEditText.setError("You must enter a password with more than 4 characters.");
             focusView = passwordEditText;
             cancel = true;
-        }else if (TextUtils.isEmpty(confirmPassword) || confirmPassword == null){
+        }else if (TextUtils.isEmpty(confirmPassword)){
             confirmPasswordEditText.setError("Confirm your password.");
             focusView = confirmPasswordEditText;
             cancel = true;
@@ -83,7 +94,7 @@ public class AddNewUserActivity extends Activity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            if(userdao.selectUser(user.getName()) != null){
+            if(userdao.selectUser() != null){
                 text = "User already exits!";
                 toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             }else{
@@ -92,7 +103,7 @@ public class AddNewUserActivity extends Activity {
                 toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
             }
             Intent intent = new Intent();
-            intent.setClass(this, ListUsersActivity.class);
+            intent.setClass(this, AppsListActivity.class);
             startActivity(intent);
             toast.show();
             finish();

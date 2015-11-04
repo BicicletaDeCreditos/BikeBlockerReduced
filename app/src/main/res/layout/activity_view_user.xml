@@ -19,6 +19,11 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/usernameTableRow"></TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/creditsTableRow">
 
         </TableRow>
@@ -28,16 +33,15 @@
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/appsButton"
+        android:id="@+id/changePassword"
         android:layout_gravity="right|bottom"
         android:layout_alignParentBottom="true"
         android:clickable="true"
-        android:contentDescription="apps"
+        android:contentDescription="changePassword"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/blockapp_icon"
         android:layout_alignParentRight="true"
         android:layout_marginRight="50dp"
-        android:onClick="startListAppsActivity" />
+        android:onClick="startRegisterNewPasswordActivity" />
 
     <GridLayout
         android:layout_width="match_parent"
@@ -50,8 +54,7 @@
             android:layout_row="0"
             android:layout_column="0"
             android:layout_gravity="center_horizontal"
-            android:focusableInTouchMode="false"
-            android:background="@drawable/profile_title">
+            android:focusableInTouchMode="false">
 
             <TextView android:id="@+id/nameTextView"
                 android:textSize="80dp"
@@ -61,21 +64,29 @@
                 android:textColor="#000000"
                 android:layout_marginLeft="184dp" />
 
-            <ImageButton
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:id="@+id/deleteUserButton"
-                android:layout_alignTop="@+id/tableLayout"
-                android:layout_alignParentEnd="true"
-                android:clickable="true"
-                android:contentDescription="deleteUser"
-                android:background="@drawable/removeprofile_icon"
-                android:layout_alignBottom="@+id/tableLayout"
-                android:layout_alignStart="@+id/appsButton"
-                android:layout_marginStart="104dp"
-                android:layout_marginBottom="256dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp" />
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal">
+
+            <TextView android:id="@+id/usernameLabelTextView"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:contentDescription="usernameLabel"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="20dp"
+                android:textColor="#ffffff"
+                android:text="@string/prompt_username" />
+
+            <TextView android:id="@+id/usernameTextView"
+                android:contentDescription="usernameText"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ffffff" />
+
         </GridLayout>
 
         <GridLayout
@@ -100,7 +111,6 @@
             android:layout_column="0">
 
             <TextView android:id="@+id/creditsLabelTextView"
-                android:text="@string/creditsLabel"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:contentDescription="creditsLabel"
