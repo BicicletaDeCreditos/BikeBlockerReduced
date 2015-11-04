@@ -15,7 +15,7 @@ import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
 
-public class AddNewUserActivity extends Activity {
+public class RegisterUserActivity extends Activity {
     private User user;
     private UserDAO userdao;
     private EditText nameEditText;

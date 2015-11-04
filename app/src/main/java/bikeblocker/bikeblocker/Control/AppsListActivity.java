@@ -9,15 +9,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import bikeblocker.bikeblocker.Database.AppDAO;
-import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.App;
 import bikeblocker.bikeblocker.R;
 
-public class UserAppsListActivity extends Activity {
+public class AppsListActivity extends Activity {
     private ListView appsUserList;
     private AppDAO appDAO;
     private String user_name;
@@ -55,7 +53,7 @@ public class UserAppsListActivity extends Activity {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                builder = new AlertDialog.Builder(UserAppsListActivity.this);
+                builder = new AlertDialog.Builder(AppsListActivity.this);
 
                 String infos = parent.getItemAtPosition(position).toString();
                 String app_name = infos.substring(27, (infos.length() - 1));
@@ -87,7 +85,7 @@ public class UserAppsListActivity extends Activity {
     }
 
     public void delete_app(final App app){
-        builder = new AlertDialog.Builder(UserAppsListActivity.this);
+        builder = new AlertDialog.Builder(AppsListActivity.this);
         builder.setTitle(R.string.confirmTitle);
         builder.setMessage(R.string.confirmMessageApp);
 
@@ -96,7 +94,7 @@ public class UserAppsListActivity extends Activity {
                     public void onClick(DialogInterface dialog, int button) {
                         appDAO.deleteApp(app);
                         finish();
-                        Intent intent = new Intent(UserAppsListActivity.this, UserAppsListActivity.class);
+                        Intent intent = new Intent(AppsListActivity.this, AppsListActivity.class);
                         intent.putExtra("user_name", user_name);
                         startActivity(intent);
                     }
@@ -110,7 +108,7 @@ public class UserAppsListActivity extends Activity {
 
     public void edit_app(final App app){
         final CharSequence[] credits_options = {"10", "20", "30"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(UserAppsListActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(AppsListActivity.this);
 
         builder.setTitle(app.getAppName().toUpperCase() + "\nSelect the number of credits needed to access this app for 1 hour.");
 
@@ -131,7 +129,7 @@ public class UserAppsListActivity extends Activity {
                         newApp.setAppID(app.getAppID());
                         appDAO.editAppInformation(newApp);
                         finish();
-                        Intent intent = new Intent(UserAppsListActivity.this, UserAppsListActivity.class);
+                        Intent intent = new Intent(AppsListActivity.this, AppsListActivity.class);
                         intent.putExtra("user_name", user_name);
                         startActivity(intent);
                     }
