@@ -31,11 +31,15 @@ public class ChangePasswordTest extends InstrumentationTestCase {
         settings.click();
 
         device.wait(Until.hasObject(By.desc("signIn")), 5000);
-        device.findObject(By.desc("adminPassword")).setText("123456");
+        device.findObject(By.desc("username")).setText("jose");
+        device.findObject(By.desc("password")).setText("1234");
         device.findObject(By.desc("signIn")).click();
 
-        device.wait(Until.hasObject(By.desc("changeAdminPassword")), 5000);
-        device.findObject(new UiSelector().description("changeAdminPassword")).click();
+        device.wait(Until.hasObject(By.desc("viewProfile")), 5000);
+        device.findObject(By.desc("viewProfile")).click();
+
+        device.wait(Until.hasObject(By.desc("changePassword")), 5000);
+        device.findObject(By.desc("changePassword")).click();
     }
 
     @Override
@@ -44,14 +48,14 @@ public class ChangePasswordTest extends InstrumentationTestCase {
         for (int i = 0; i<10; i++) {device.pressBack();}
     }
 
-    public void testFirstLoginAdminNoConfirmPassword() throws Exception {
+    public void testChangePasswordNoConfirmPassword() throws Exception {
 
         device.wait(Until.hasObject(By.desc("confirmRegister")), 5000);
         password = device.findObject(new UiSelector().description("insertAdminPassword"));
         confirmPassword = device.findObject(new UiSelector().description("confirmAdminPassword"));
         registerButton = device.findObject(new UiSelector().description("confirmRegister"));
 
-        password.setText("123456");
+        password.setText("12345");
         registerButton.click();
 
         assertTrue(registerButton.exists());
@@ -89,15 +93,13 @@ public class ChangePasswordTest extends InstrumentationTestCase {
         confirmPassword = device.findObject(new UiSelector().description("confirmAdminPassword"));
         registerButton = device.findObject(new UiSelector().description("confirmRegister"));
 
-        password.setText("123456");
-        confirmPassword.setText("123456");
+        password.setText("1234");
+        confirmPassword.setText("1234");
         registerButton.click();
 
-        device.wait(Until.hasObject(By.desc("listUsers")), 5000);
-        UiObject addUserButton = device.findObject(new UiSelector().description("addUser"));
-        UiObject changeAdminPasswordButton = device.findObject(new UiSelector().description("changeAdminPassword"));
+        device.wait(Until.hasObject(By.desc("viewProfile")), 5000);
 
-        assertTrue(addUserButton.exists());
-        assertTrue(changeAdminPasswordButton.exists());
+        assertTrue(device.findObject(new UiSelector().description("viewProfile")).exists());
+        assertTrue(device.findObject(new UiSelector().description("addNewApp")).exists());
     }
 }
