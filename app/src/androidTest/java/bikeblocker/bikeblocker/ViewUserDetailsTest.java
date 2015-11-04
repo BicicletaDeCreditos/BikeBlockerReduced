@@ -15,8 +15,6 @@ import bikeblocker.bikeblocker.Model.User;
 
 public class ViewUserDetailsTest extends InstrumentationTestCase {
     private UiDevice device;
-    User user = new User();
-    UserDAO dao;
     @Override
     public void setUp() throws Exception {
         device = UiDevice.getInstance(getInstrumentation());
@@ -29,19 +27,13 @@ public class ViewUserDetailsTest extends InstrumentationTestCase {
         device.findObject(By.desc("settings")).click();
 
         device.wait(Until.hasObject(By.desc("signIn")), 5000);
-        device.findObject(By.desc("adminPassword")).setText("123456");
+        device.findObject(By.desc("username")).setText("jose");
+        device.findObject(By.desc("password")).setText("1234");
         device.findObject(By.desc("signIn")).click();
 
-        device.wait(Until.hasObject(By.desc("addUser")), 5000);
-
-        user.setName("Test1");
-        user.setPassword("123456");
-        user.setCredits(0);
-        dao = UserDAO.getInstance(getInstrumentation().getContext().getApplicationContext());
-        dao.saveUser(user);
+        device.wait(Until.hasObject(By.desc("viewProfile")), 5000);
 
         Intent viewUser = new Intent(getInstrumentation().getContext(), ViewUserActivity.class);
-        viewUser.putExtra("user_name", "Test1");
         launchActivityWithIntent("bikeblocker.bikeblocker", ViewUserActivity.class, viewUser);
 
     }
@@ -54,37 +46,12 @@ public class ViewUserDetailsTest extends InstrumentationTestCase {
 
     public void testViewUserDetails() throws Exception {
         assertTrue(device.findObject(new UiSelector().description("userNameTextView")).exists());
+        assertTrue(device.findObject(new UiSelector().description("userNameTextView")).getText().length() > 0);
+        assertTrue(device.findObject(new UiSelector().description("usernameLabel")).exists());
+        assertTrue(device.findObject(new UiSelector().description("usernameText")).exists());
+        assertTrue(device.findObject(new UiSelector().description("usernameText")).getText().length() > 0);
         assertTrue(device.findObject(new UiSelector().description("creditsLabel")).exists());
         assertTrue(device.findObject(new UiSelector().description("creditsText")).exists());
-        assertTrue(device.findObject(new UiSelector().description("deleteUser")).exists());
-        assertTrue(device.findObject(new UiSelector().description("apps")).exists());
-    }
-
-    public void testShowAlertDialogDeleteButtonOnClick() throws Exception{
-        device.wait(Until.hasObject(By.desc("deleteUser")), 5000);
-
-        device.findObject(new UiSelector().description("deleteUser")).click();
-
-        device.wait(Until.hasObject(By.text("Are You Sure?")), 5000);
-
-        assertTrue(device.findObject(new UiSelector().text("Are You Sure?")).exists());
-        assertTrue(device.findObject(new UiSelector().text("This will permanently delete this user.")).exists());
-        assertTrue(device.findObject(new UiSelector().text("Cancel")).exists());
-        assertTrue(device.findObject(new UiSelector().text("Delete")).exists());
-    }
-
-    public void testDeleteUser() throws Exception{
-        device.wait(Until.hasObject(By.desc("deleteUser")), 5000);
-
-        device.findObject(new UiSelector().description("deleteUser")).click();
-
-        device.wait(Until.hasObject(By.text("Are You Sure?")), 5000);
-
-        device.findObject(new UiSelector().text("Delete")).click();
-
-        device.wait(Until.hasObject(By.desc("addUser")), 5000);
-
-        assertTrue(device.findObject(new UiSelector().description("addUser")).exists());
-        assertTrue(device.findObject(new UiSelector().description("changeAdminPassword")).exists());
+        assertTrue(device.findObject(new UiSelector().description("changePassword")).exists());
     }
 }
