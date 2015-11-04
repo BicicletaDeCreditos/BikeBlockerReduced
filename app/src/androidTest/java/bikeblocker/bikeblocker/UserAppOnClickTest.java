@@ -21,8 +21,6 @@ import bikeblocker.bikeblocker.Model.User;
 
 public class UserAppOnClickTest extends InstrumentationTestCase{
     private UiDevice device;
-    User user = new User();
-    UserDAO dao;
 
     @Override
     @BeforeClass
@@ -38,29 +36,15 @@ public class UserAppOnClickTest extends InstrumentationTestCase{
         UiObject2 settings = device.findObject(By.desc("settings"));
         settings.click();
 
-        device.wait(Until.hasObject(By.desc("signIn")), 5000);
-        device.findObject(By.desc("adminPassword")).setText("123456");
-        device.findObject(By.desc("signIn")).click();
-
-        device.wait(Until.hasObject(By.desc("addUser")), 5000);
-
-        user.setName("Test1");
-        user.setPassword("123456");
-        user.setCredits(0);
-        dao = UserDAO.getInstance(getInstrumentation().getContext().getApplicationContext());
-        dao.saveUser(user);
-
         App app = new App();
-        app.setUser("Test1");
         app.setCreditsPerHour(10);
         app.setAppName("Teste");
         AppDAO.getInstance(getInstrumentation().getContext()).saveApp(app);
 
-
-        Intent viewUser = new Intent(getInstrumentation().getContext(), AppsListActivity.class);
-        viewUser.putExtra("user_name", "Test1");
-        launchActivityWithIntent("bikeblocker.bikeblocker", AppsListActivity.class, viewUser);
-
+        device.wait(Until.hasObject(By.desc("signIn")), 5000);
+        device.findObject(By.desc("username")).setText("jose");
+        device.findObject(By.desc("password")).setText("1234");
+        device.findObject(By.desc("signIn")).click();
 
     }
 
