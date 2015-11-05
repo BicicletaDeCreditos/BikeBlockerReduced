@@ -17,12 +17,11 @@ import bikeblocker.bikeblocker.Model.User;
 public class UserDAO {
 
     public static final String TABLE_NAME = "user";
+    public static final String ID_COLUMN = "_id";
     public static final String USERNAME_COLUMN = "username";
     public static final String PASSWORD_COLUMN = "password";
     public static final String NAME_COLUMN = "name";
     public static final String CREDITS_COLUMN = "credits";
-
-    List<HashMap<String, String>> user_list;
 
     private SQLiteDatabase database = null;
     private static UserDAO userDAO = null;
@@ -47,12 +46,12 @@ public class UserDAO {
 
     public void deleteUser(User user) {
         String[] valuesToReplace = {String.valueOf(user.getUsername())};
-        database.delete(TABLE_NAME, NAME_COLUMN + " = ?", valuesToReplace);
+        database.delete(TABLE_NAME, ID_COLUMN + " = ?", valuesToReplace);
     }
 
     public void editUserInformation(User user) {
         ContentValues values = generateContentValuesUser(user);
-        database.update(TABLE_NAME, values, NAME_COLUMN + " = " + user.getUsername(), null);
+        database.update(TABLE_NAME, values, ID_COLUMN + " = " + user.get_id(), null);
     }
 
     public void closeDatabaseConnection() {
@@ -64,10 +63,11 @@ public class UserDAO {
     public ContentValues generateContentValuesUser(User user) {
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put(ID_COLUMN, user.get_id());
         contentValues.put(USERNAME_COLUMN, user.getUsername());
         contentValues.put(PASSWORD_COLUMN, user.getPassword());
         contentValues.put(NAME_COLUMN, user.getName());
-        contentValues.put(CREDITS_COLUMN, user.getCredits());
+        contentValues.put(CREDITS_COLUMN, user.getCredits() - 1);
 
         return contentValues;
     }

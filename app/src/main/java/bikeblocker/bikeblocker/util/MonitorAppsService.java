@@ -18,7 +18,6 @@ import bikeblocker.bikeblocker.Model.App;
 import bikeblocker.bikeblocker.Model.User;
 
 public class MonitorAppsService extends Service implements Runnable {
-    private String status = "notLogged";
     private String previousApp = "";
     private int counter = 0;
     private int counterPerCredit;// how many times a tread will sleep until one credits is consumed
@@ -53,7 +52,6 @@ public class MonitorAppsService extends Service implements Runnable {
             try{
                 apps = appDAO.getAppsNameFromDatabase();
                 System.out.println("This is my thread running in background " + count++);
-                System.out.println("Status: " + status);
                 if(!apps.isEmpty()){
                     checkAppOnForeground(apps);
                 }
@@ -67,7 +65,6 @@ public class MonitorAppsService extends Service implements Runnable {
     private void checkAppOnForeground(List<String> appsNameList) throws Exception{
         String foregroundTaskAppName = getForegroundApp();
         if(appsNameList.contains(foregroundTaskAppName)){
-            previousApp = foregroundTaskAppName;/**check it*/
             System.out.println("User has app");
             App app = AppDAO.getInstance(getApplicationContext()).selectApp(foregroundTaskAppName);
             monitorAppUsage(app.getCreditsPerHour(), app.getAppName());
@@ -125,13 +122,14 @@ public class MonitorAppsService extends Service implements Runnable {
     }
 
     private void blockApp(){
-        Toast toast = Toast.makeText(getApplicationContext(), "Sorry! Your credits ran out.", Toast.LENGTH_LONG);
-        toast.show();
         //voltar para home
         Intent homeIntent= new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory(Intent.CATEGORY_HOME);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(homeIntent);
+
+        Toast toast = Toast.makeText(getApplicationContext(), "Sorry! Your credits ran out.", Toast.LENGTH_LONG);
+        toast.show();
     }
 
     private String getForegroundApp() throws Exception{

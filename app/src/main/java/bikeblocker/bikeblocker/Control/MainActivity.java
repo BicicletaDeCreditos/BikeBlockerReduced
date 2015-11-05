@@ -1,6 +1,7 @@
 package bikeblocker.bikeblocker.Control;
 
 import bikeblocker.bikeblocker.R;
+import bikeblocker.bikeblocker.util.MonitorAppsService;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,8 +15,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent mServiceIntent = new Intent("START_SERVICE");
-        startService(mServiceIntent);
+        Intent mServiceIntent = new Intent(getApplicationContext(), MonitorAppsService.class);
+        getApplicationContext().startService(mServiceIntent);
     }
 
     @Override
