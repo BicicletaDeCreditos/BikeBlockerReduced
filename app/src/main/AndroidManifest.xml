@@ -52,11 +52,15 @@
         </activity>
         <activity
             android:name=".Control.AppsListActivity"
-            android:label="@string/title_activity_user_apps_list" >
+            android:label="@string/title_activity_user_apps_list"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Control.AddAppActivity"
-            android:label="@string/title_activity_add_user_app" >
+            android:label="@string/title_activity_add_user_app"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
 
         <service
