@@ -26,9 +26,9 @@ public class ViewUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user);
 
-        //Typeface profileTitleFace = Typeface.createFromAsset(getAssets(),"MJF Zhafira Demo.ttf");
-        //TextView profileTitleText = (TextView)findViewById(R.id.nameTextView);
-        //profileTitleText.setTypeface(profileTitleFace);
+        Typeface profileTitleFace = Typeface.createFromAsset(getAssets(),"MJF Zhafira Demo.ttf");
+        TextView profileTitleText = (TextView)findViewById(R.id.nameTextView);
+        profileTitleText.setTypeface(profileTitleFace);
 
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
