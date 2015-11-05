@@ -41,7 +41,7 @@
         android:layout_marginRight="50dp"
         android:contentDescription="changePassword"
         android:onClick="startRegisterNewPasswordActivity"
-        android:background="@drawable/gear_icon"
+        android:background="@drawable/editprofile_icon"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="false" />
 
