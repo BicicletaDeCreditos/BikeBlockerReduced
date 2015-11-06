@@ -15,11 +15,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         Intent mServiceIntent = new Intent(getApplicationContext(), MonitorAppsService.class);
         getApplicationContext().startService(mServiceIntent);
-
-
     }
 
     @Override

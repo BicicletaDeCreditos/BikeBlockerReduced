@@ -8,9 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     public static final String DATABASE_NAME = "BIKEBLOCKER";
-    public static final int VERSION = 2;
+    public static final int VERSION = 3;
     protected static final String SCRIPT_COMMAND_CREATION_USERTABLE = "CREATE TABLE IF NOT EXISTS user (" +
-            "  username VARCHAR(15) NOT NULL PRIMARY KEY," +
+            "  _id int NOT NULL PRIMARY KEY," +
+            "  username VARCHAR(15) NOT NULL ," +
             "  password VARCHAR(15) NOT NULL," +
             "  name VARCHAR(15) NOT NULL," +
             "  credits INT NULL);";

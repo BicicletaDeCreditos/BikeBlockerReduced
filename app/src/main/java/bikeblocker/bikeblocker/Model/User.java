@@ -16,11 +16,16 @@ public class User implements Serializable {
     private String username;
     private String password;
     private static int credits = 10;
+    private int _id;
 
     private static UserDAO userDAO;
 
     public User(){
 
+    }
+
+    public int get_id() {
+        return _id;
     }
 
     public String getUsername() {
@@ -35,6 +40,11 @@ public class User implements Serializable {
     public int getCredits(){
         return credits;
     }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
