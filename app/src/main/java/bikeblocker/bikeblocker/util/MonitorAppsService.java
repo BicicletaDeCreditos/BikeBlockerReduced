@@ -1,12 +1,14 @@
 package bikeblocker.bikeblocker.util;
 
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.Looper;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.util.List;
@@ -19,6 +21,8 @@ import bikeblocker.bikeblocker.Model.User;
 
 public class MonitorAppsService extends Service implements Runnable {
     private String previousApp = "";
+    private App app;
+    private User user;
     private int counter = 0;
     private int counterPerCredit;// how many times a tread will sleep until one credits is consumed
     private final int threadsPerMin = 6;// the thread sleep time will be reduced for 5 sec (final value = 12)
@@ -39,6 +43,11 @@ public class MonitorAppsService extends Service implements Runnable {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
     }
 
     @Override
@@ -66,7 +75,7 @@ public class MonitorAppsService extends Service implements Runnable {
         String foregroundTaskAppName = getForegroundApp();
         if(appsNameList.contains(foregroundTaskAppName)){
             System.out.println("User has app");
-            App app = AppDAO.getInstance(getApplicationContext()).selectApp(foregroundTaskAppName);
+            app = AppDAO.getInstance(getApplicationContext()).selectApp(foregroundTaskAppName);
             monitorAppUsage(app.getCreditsPerHour(), app.getAppName());
         }
     }
@@ -122,14 +131,9 @@ public class MonitorAppsService extends Service implements Runnable {
     }
 
     private void blockApp(){
-        //voltar para home
-        Intent homeIntent= new Intent(Intent.ACTION_MAIN);
-        homeIntent.addCategory(Intent.CATEGORY_HOME);
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(homeIntent);
-
-        Toast toast = Toast.makeText(getApplicationContext(), "Sorry! Your credits ran out.", Toast.LENGTH_LONG);
-        toast.show();
+        Intent intent = new Intent(this, CheckUserLoginDialogActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private String getForegroundApp() throws Exception{
@@ -143,7 +147,7 @@ public class MonitorAppsService extends Service implements Runnable {
     }
 
     private int checkCredits(){
-        User user = UserDAO.getInstance(getApplicationContext()).selectUser();
+        user = UserDAO.getInstance(getApplicationContext()).selectUser();
         if (user == null){
             return 0;
         }
