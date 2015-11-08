@@ -29,6 +29,11 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void startConnectBluetoothActivity(View view){
+        Intent intent = new Intent(this, ConnectBluetoothActivity.class);
+        startActivity(intent);
+    }
+
 }
 
 

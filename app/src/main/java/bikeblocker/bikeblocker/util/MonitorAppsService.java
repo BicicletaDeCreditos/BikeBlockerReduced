@@ -1,19 +1,16 @@
 package bikeblocker.bikeblocker.util;
 
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.Looper;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import java.util.List;
 
-import bikeblocker.bikeblocker.Control.CheckUserLoginDialogActivity;
+import bikeblocker.bikeblocker.Control.NoEnoughCreditsDialogActivity;
 import bikeblocker.bikeblocker.Database.AppDAO;
 import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.App;
@@ -131,7 +128,7 @@ public class MonitorAppsService extends Service implements Runnable {
     }
 
     private void blockApp(){
-        Intent intent = new Intent(this, CheckUserLoginDialogActivity.class);
+        Intent intent = new Intent(this, NoEnoughCreditsDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

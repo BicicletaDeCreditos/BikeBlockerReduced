@@ -15,7 +15,7 @@ import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
 
-public class CheckUserLoginDialogActivity extends Activity {
+public class NoEnoughCreditsDialogActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

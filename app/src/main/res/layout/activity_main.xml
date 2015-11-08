@@ -38,7 +38,8 @@
             android:scaleType="fitCenter"
             android:visibility="visible"
             android:src="@drawable/bike_icon"
-            android:background="@drawable/roundedbutton" />
+            android:background="@drawable/roundedbutton"
+            android:onClick="startConnectBluetoothActivity" />
 
         <ImageButton
             android:layout_width="100dp"
