@@ -19,17 +19,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/connect"
-            android:id="@+id/buttonConnect"
-            android:clickable="true"
-            android:nestedScrollingEnabled="false"
-            android:onClick="turnBluetoothOn" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/listDevices"
-            android:id="@+id/buttonListDevices"
+            android:id="@+id/buttonSearchDevices"
             android:onClick="listDevices" />
 
         <Button

@@ -24,7 +24,7 @@ public class ConnectBluetoothActivity extends Activity {
     private BroadcastReceiver mReceiver;
     private ListView devicesListView;
     private ArrayAdapter<String> adapter;
-    private ArrayList<BluetoothDevice> devicesList = new ArrayList<>();
+    private BluetoothDevice bluetoothDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,11 @@ public class ConnectBluetoothActivity extends Activity {
         devicesListView = (ListView) findViewById(R.id.devicesListView);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         devicesListView.setAdapter(adapter);
+
+        turnBluetoothOn();
     }
 
-    public void turnBluetoothOn(View view) {
+    public void turnBluetoothOn() {
         if (!bluetoothAdapter.isEnabled()) {
             Intent getVisible = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
             startActivityForResult(getVisible, 0);
@@ -49,18 +51,20 @@ public class ConnectBluetoothActivity extends Activity {
             Toast.makeText(getApplicationContext(), "Turned on", Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(getApplicationContext(), "Already on", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Bluetooth is already on", Toast.LENGTH_LONG).show();
         }
     }
 
     public void turnBluetoothOff(View view) {
         adapter.clear();
         bluetoothAdapter.disable();
+        bluetoothDevice = null;
         Toast.makeText(getApplicationContext(), "Turned off", Toast.LENGTH_LONG).show();
     }
 
     public void listDevices(View view){
         adapter.clear();
+        bluetoothDevice = null;
         if (bluetoothAdapter.isDiscovering()) {
             bluetoothAdapter.cancelDiscovery();
         }
@@ -72,8 +76,10 @@ public class ConnectBluetoothActivity extends Activity {
                         BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                         String deviceInfo = device.getName() + "\n" + device.getAddress();
                         if(adapter.getPosition(deviceInfo) < 0){
-                            devicesList.add(device);
                             adapter.add(deviceInfo);
+                            if(device.getName().contains("Beatriz")){//change to bikeblocker
+                                bluetoothDevice = device;
+                            }
                         }
                     }
                 }
@@ -81,7 +87,6 @@ public class ConnectBluetoothActivity extends Activity {
             IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(mReceiver, filter);
         }
-
     }
 
     @Override
