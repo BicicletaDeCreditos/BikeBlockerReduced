@@ -3,9 +3,11 @@ package bikeblocker.bikeblocker.Control;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -28,17 +30,33 @@ public class StartConnectionActivity extends Activity {
         startButton = (ImageButton) findViewById(R.id.startButton);
 
         startBluetoothConnection = new StartBluetoothConnection(this);
+
+        askForTurnBikeBlockerOn();
+    }
+
+    private void askForTurnBikeBlockerOn() {
+        AlertDialog.Builder  builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Turn BikeBlocker device on");
+        builder.setMessage("Make sure the device coupled to your bike is turned on.");
+        builder.setPositiveButton("It is turned on", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startBluetoothConnection.turnBluetoothOn();
+            }
+        });
+
+        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
     }
 
     public void connectToBikeBlocker(View view){
-        // ligar bluetooth
         startBluetoothConnection.turnBluetoothOn();
-        // procurar por dispositivo bluetooth da bike
-        // verificar se o dispositivo ja foi pareado alguma vez na vida
-        // SIM: conectar com o dispositivo
-        // NAO: parear com o dispositivo e conectar com o dispositivo
-        // Exibir mensagem que esta tentando estabelecer conexao com a bike enquanto o processo esta rodando
-        // Iniciar uma nova activity quando conexao foi estabelecida
     }
 
     public void askForEnablingBluetooth(String requestEnableString){
@@ -60,4 +78,33 @@ public class StartConnectionActivity extends Activity {
     public void dismissDialog(){
         builder.dismiss();
     }
+
+    public void askForTryAgain(){
+        AlertDialog.Builder  builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Try Again");
+        builder.setMessage("Connect to BikeBlocker Bluetooth device.");
+        builder.setPositiveButton(R.string.connect, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startBluetoothConnection.turnBluetoothOn();
+            }
+        });
+
+        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        startBluetoothConnection.close();
+
+    }
+
 }

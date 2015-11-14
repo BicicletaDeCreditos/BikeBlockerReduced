@@ -6,22 +6,77 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Looper;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
 
 import bikeblocker.bikeblocker.Control.StartConnectionActivity;
 
 public class StartBluetoothConnection {
     private StartConnectionActivity callerActivity;
     private BluetoothConnection bluetoothConnection;
+    private BluetoothDevice bluetoothDevice;
+    private Handler handler;
     private IntentFilter filter;
     private boolean registered = false;
+    private final String MAC_ADDRESS = ""; // mudar device.getName para device.getAddress
 
 
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
 
+            if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)) {
+                callerActivity.showConnectionDialog();
+
+            } else if(action.equals(BluetoothDevice.ACTION_FOUND)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice
+                        .EXTRA_DEVICE);
+                if(device.getName().contains("Beatriz")) {//change here
+                    bluetoothConnection.stopDiscovery();
+                    bluetoothDevice = device;
+                    if(bluetoothConnection.pairWithDevice(bluetoothDevice) == BluetoothConnection.PAIRED) {
+                        callerActivity.showToast("Device was found. You need to connect to it.");
+                        callerActivity.dismissDialog();
+                        if(bluetoothConnection.openSocketConnection(bluetoothDevice, handler,
+                                getConnectNotification(), getExceptionNotification()) != BluetoothConnection.OPENED) {
+                            callerActivity.showToast("Connection failure.");
+                        }
+                    }
+                }
+
+            } else if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+                if(bluetoothDevice == null) {
+                    bluetoothConnection.stopDiscovery();
+                    callerActivity.dismissDialog();
+                    callerActivity.askForTryAgain();
+                }
+
+            } else if(action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {//if it was not paired
+                final int BOND_STATE = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1);
+                final int PREVIOUS_BOND_STATE = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, -1);
+                if(BOND_STATE == BluetoothDevice.BOND_BONDED) {//paired
+                    callerActivity.showToast("Bound state == bounded. Device was found. You need to connect to it.");
+                    callerActivity.dismissDialog();//check it later
+                    if(bluetoothConnection.openSocketConnection(bluetoothDevice, handler,
+                                getConnectNotification(), getExceptionNotification()) != BluetoothConnection.OPENED) {
+                        callerActivity.showToast("Connection failure.");
+                    }
+                } else if((PREVIOUS_BOND_STATE == BluetoothDevice.BOND_BONDING) && (BOND_STATE == BluetoothDevice.BOND_NONE)) {
+                    callerActivity.dismissDialog();
+                }
+            }
+        }
+    };
 
     public StartBluetoothConnection(StartConnectionActivity activity){
+        handler = new Handler(Looper.getMainLooper());
         bluetoothConnection = new BluetoothConnection(BluetoothAdapter.getDefaultAdapter());
         callerActivity = activity;
         filter = new IntentFilter();
+
     }
 
     public void turnBluetoothOn() {
@@ -40,16 +95,50 @@ public class StartBluetoothConnection {
                     filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
 
                     registered= true;
-                    //callerActivity.registerReceiver(btActionReceiver, filter);
+                    callerActivity.registerReceiver(mReceiver, filter);
                 }
-                //bluetoothConnection.startDiscovery();
+                bluetoothConnection.startDiscovery();
                 break;
         }
 
     }
 
+    public Runnable getExceptionNotification() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                bluetoothConnection.openSocketConnection(bluetoothDevice, handler,
+                        getConnectNotification(), getExceptionNotification());
 
+            }
+        };
+    }
 
+    public Runnable getConnectNotification() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                callerActivity.dismissDialog();
+                callerActivity.showToast("Connected to BikeBlocker device.");
+                //Start new Activity witch is responsible for showing data.
+                // A data Handling may be needed by this new activity and this show be instantiated there.
+            }
+        };
+    }
 
+    public void close(){
+        //Close socket here
+        try {
+            if (mReceiver != null) {
+                callerActivity.unregisterReceiver(mReceiver);
+            }
+        } catch (IllegalArgumentException e) {
+            Log.e("ON DESTROY METHOD", "Error: " + e.getMessage());
+        }
+    }
+
+    public void turnBluetoothOff(View view) {
+        bluetoothConnection.turnOff();
+    }
 
 }
