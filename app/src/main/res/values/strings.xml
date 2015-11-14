@@ -38,4 +38,5 @@
     <string name="title_activity_connect_bluetooth">ConnectBluetoothActivity</string>
     <string name="connect">Connect</string>
     <string name="listDevices">Search Devices</string>
+    <string name="title_activity_start_connection">StartConnectionActivity</string>
 </resources>
