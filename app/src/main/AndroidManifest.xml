@@ -77,10 +77,6 @@
             android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
-            android:name=".Control.ConnectBluetoothActivity"
-            android:label="@string/title_activity_connect_bluetooth" >
-        </activity>
-        <activity
             android:name=".Control.StartConnectionActivity"
             android:label="@string/title_activity_start_connection" >
         </activity>

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 import java.util.UUID;
 
@@ -81,7 +82,7 @@ public class BluetoothConnection {
     }
 
 
-    public int openSocketConnection(BluetoothDevice btDevice, final Handler handler,
+    public int openSocketConnection(final BluetoothDevice btDevice, final Handler handler,
                                       final Runnable connectNotification,
                                       final Runnable exceptionNotification) {
         final String mUUID = "717BE010-7507-493B-95BE-A79DC5759B58";
@@ -102,7 +103,14 @@ public class BluetoothConnection {
                             handler.post(connectNotification);
                         }catch (IOException e) {
                             Log.e("ERRO AO CONECTAR", "O erro foi " + e.getMessage());
-                            handler.post(exceptionNotification);
+                            try{
+                                bluetoothSocket =(BluetoothSocket) btDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(btDevice,1);
+                                System.out.println("Im trying to connect...");
+                                handler.post(connectNotification);
+                            } catch (Exception e1) {
+                                Log.e("ERRO AO CONECTAR2", "O erro foi " + e.getMessage());
+                                handler.post(exceptionNotification);
+                            }
                         }
                     }
                 });

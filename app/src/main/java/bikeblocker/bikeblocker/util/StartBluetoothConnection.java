@@ -112,7 +112,6 @@ public class StartBluetoothConnection {
             public void run() {
                 bluetoothConnection.openSocketConnection(bluetoothDevice, handler,
                         getConnectNotification(), getExceptionNotification());
-
             }
         };
     }
