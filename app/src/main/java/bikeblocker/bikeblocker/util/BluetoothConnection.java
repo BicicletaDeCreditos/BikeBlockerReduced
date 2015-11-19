@@ -7,12 +7,15 @@ import android.os.Handler;
 import android.util.Log;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Set;
 import java.util.UUID;
 
 public class BluetoothConnection {
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothSocket bluetoothSocket;
+    private int[] data;
+    private boolean writable = false;
     public static final int ONLINE = 1;
     public static final int OFFLINE = 2;
     public static final int NO_EXISTS = 3;
@@ -81,7 +84,7 @@ public class BluetoothConnection {
     public int openSocketConnection(BluetoothDevice btDevice, final Handler handler,
                                       final Runnable connectNotification,
                                       final Runnable exceptionNotification) {
-        final String mUUID = "00001101-0000-1000-1000-00805A8F38CE";
+        final String mUUID = "717BE010-7507-493B-95BE-A79DC5759B58";
 
         if(btDevice.getBondState() != BluetoothDevice.BOND_BONDED) {
             return UNKNOWN;
@@ -112,6 +115,48 @@ public class BluetoothConnection {
         return OPENED;
     }
 
+    public void closeSocketConnection() throws IOException {
+        if(bluetoothSocket != null){
+            bluetoothSocket.close();
+        }
+    }
 
+    public void readSocket(final int length, final Handler handler,
+                         final Runnable dataReadNote, final Runnable exceptionNotification,
+                         final boolean loop) {
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    setWritable(true);
+                    data = new int[length];
+                    InputStream input = bluetoothSocket.getInputStream();
+                    while (loop) {
+                        if(writable) {
+                            for (int i = 0; i < length; i++) {
+                                data[i] = input.read();
+                            }
+                            setWritable(false);
+                            handler.post(dataReadNote);
+                        }
+                    }
+                    input.close();
+                }catch (IOException ioe) {
+                    ioe.printStackTrace();
+                    handler.post(exceptionNotification);
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public int[] getData(){
+        return data;
+    }
+
+    public void setWritable(boolean bool){
+        writable = bool;
+    }
 
 }

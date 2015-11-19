@@ -11,6 +11,9 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
+import java.io.IOException;
+
+import bikeblocker.bikeblocker.Control.CyclingActivity;
 import bikeblocker.bikeblocker.Control.StartConnectionActivity;
 
 public class StartBluetoothConnection {
@@ -20,7 +23,7 @@ public class StartBluetoothConnection {
     private Handler handler;
     private IntentFilter filter;
     private boolean registered = false;
-    private final String MAC_ADDRESS = ""; // mudar device.getName para device.getAddress
+    private final String MAC_ADDRESS = "64:89:9A:FE:44:88"; // change to the actual mac address
 
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -34,7 +37,7 @@ public class StartBluetoothConnection {
             } else if(action.equals(BluetoothDevice.ACTION_FOUND)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice
                         .EXTRA_DEVICE);
-                if(device.getName().contains("Beatriz")) {//change here
+                if(device.getAddress().equalsIgnoreCase(MAC_ADDRESS)) {
                     bluetoothConnection.stopDiscovery();
                     bluetoothDevice = device;
                     if(bluetoothConnection.pairWithDevice(bluetoothDevice) == BluetoothConnection.PAIRED) {
@@ -120,20 +123,23 @@ public class StartBluetoothConnection {
             public void run() {
                 callerActivity.dismissDialog();
                 callerActivity.showToast("Connected to BikeBlocker device.");
-                //Start new Activity witch is responsible for showing data.
-                // A data Handling may be needed by this new activity and this show be instantiated there.
+                callerActivity.startCyclingActivity();
+                MonitorCyclingData monitor = new MonitorCyclingData(new CyclingActivity(), bluetoothConnection, handler);
+                monitor.startMonitoring();
             }
         };
     }
 
     public void close(){
-        //Close socket here
         try {
             if (mReceiver != null) {
                 callerActivity.unregisterReceiver(mReceiver);
             }
+            bluetoothConnection.closeSocketConnection();
         } catch (IllegalArgumentException e) {
             Log.e("ON DESTROY METHOD", "Error: " + e.getMessage());
+        } catch (IOException e) {
+            Log.e("ON DESTROY METHOD IO", "Error: " + e.getMessage());
         }
     }
 

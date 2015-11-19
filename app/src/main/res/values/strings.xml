@@ -39,4 +39,8 @@
     <string name="connect">Connect</string>
     <string name="listDevices">Search Devices</string>
     <string name="title_activity_start_connection">StartConnectionActivity</string>
+    <string name="title_activity_cycling">CyclingActivity</string>
+    <string name="velocityLabel">Velocity</string>
+    <string name="distanceLabel">Distance</string>
+    <string name="caloriesLabel">Calories</string>
 </resources>

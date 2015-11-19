@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import bikeblocker.bikeblocker.R;
@@ -17,7 +15,6 @@ import bikeblocker.bikeblocker.util.StartBluetoothConnection;
 public class StartConnectionActivity extends Activity {
 
     private BluetoothAdapter bluetoothAdapter; // mudar para bluetoothconnection
-    private ImageButton startButton;
     private StartBluetoothConnection startBluetoothConnection;
     private AlertDialog builder;
     @Override
@@ -26,8 +23,6 @@ public class StartConnectionActivity extends Activity {
         setContentView(R.layout.activity_start_connection);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        startButton = (ImageButton) findViewById(R.id.startButton);
 
         startBluetoothConnection = new StartBluetoothConnection(this);
 
@@ -100,11 +95,15 @@ public class StartConnectionActivity extends Activity {
         builder.show();
     }
 
+    public void startCyclingActivity(){
+        Intent intent = new Intent(this, CyclingActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         startBluetoothConnection.close();
-
     }
 
 }
