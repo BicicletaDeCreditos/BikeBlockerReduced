@@ -143,7 +143,8 @@ public class BluetoothConnection {
                     while (loop) {
                         if(writable) {
                             for (int i = 0; i < length; i++) {
-                                data[i] = input.read();
+                                //data[i] = input.read();
+                                data[i] = 1;
                             }
                             setWritable(false);
                             handler.post(dataReadNote);

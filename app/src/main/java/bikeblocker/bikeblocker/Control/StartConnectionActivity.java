@@ -112,7 +112,7 @@ public class StartConnectionActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        startBluetoothConnection.close();
+        startBluetoothConnection.closeResources();
     }
 
 }

@@ -1,19 +1,24 @@
 package bikeblocker.bikeblocker.Control;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-//import android.widget.ImageButton;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import bikeblocker.bikeblocker.Database.UserDAO;
+import bikeblocker.bikeblocker.Model.User;
 import bikeblocker.bikeblocker.R;
+import bikeblocker.bikeblocker.util.MonitorCyclingData;
+import bikeblocker.bikeblocker.util.StartBluetoothConnection;
 
 public class CyclingActivity extends Activity {
     private TextView creditsTextView;
     private TextView velocityTextView;
     private TextView caloriesTextView;
     private TextView distanceTextView;
-    //private ImageButton finishCyclingButton;
+    private ImageButton finishCyclingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,28 +30,65 @@ public class CyclingActivity extends Activity {
         caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
         distanceTextView = (TextView) findViewById(R.id.distanceTextView);
 
-        //finishCyclingButton = (ImageButton) findViewById(R.id.finishCyclingButton);
+        finishCyclingButton = (ImageButton) findViewById(R.id.finishCyclingButton);
+        finishCyclingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelCycling();
+            }
+        });
+
+        startMonitor();
     }
 
     public void setCreditsTextView(String credits){
         creditsTextView.setText(credits);
+        System.out.println("Credits: " + credits);
     }
 
     public void setVelocityTextView(String velocity){
         velocityTextView.setText(velocity);
+        System.out.println("Velocity: " + velocity);
     }
 
     public void setCaloriesTextView(String calories){
         caloriesTextView.setText(calories);
-        System.out.println("Dado recebido: " + calories);
+        System.out.println("Calorias: " + calories);
     }
 
     public void setDistanceTextView(String distance){
         distanceTextView.setText(distance);
+        System.out.println("Distance: " + distance);
     }
 
-    public Context returnApplicationContext(){
-        return this;
+    public void cancelCycling(){
+        updateCredits();
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        cancelCycling();
+        super.onBackPressed();
+    }
+
+    private void updateCredits(){
+        User user = UserDAO.getInstance(getApplicationContext()).selectUser();
+        if (user == null){
+            Toast.makeText(getApplicationContext(), "There's no registered user. Credits not saved.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int actualCredits = user.getCredits();
+        user.setCredits(actualCredits + Integer.parseInt(creditsTextView.getText().toString()));
+        UserDAO.getInstance(getApplicationContext()).editUserInformation(user);
+        System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser().getCredits());
+    }
+
+    public void startMonitor(){
+        MonitorCyclingData monitor = new MonitorCyclingData(this, StartBluetoothConnection.getBluetoothConnection(),
+                StartBluetoothConnection.getHandler());
+        monitor.startMonitoring();
     }
 
 }

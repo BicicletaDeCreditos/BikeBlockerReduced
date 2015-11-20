@@ -18,9 +18,9 @@ import bikeblocker.bikeblocker.Control.StartConnectionActivity;
 
 public class StartBluetoothConnection {
     private StartConnectionActivity callerActivity;
-    private BluetoothConnection bluetoothConnection;
+    private static BluetoothConnection bluetoothConnection;
     private BluetoothDevice bluetoothDevice;
-    private Handler handler;
+    private static Handler handler;
     private IntentFilter filter;
     private boolean registered = false;
     private final String MAC_ADDRESS = "64:89:9A:FE:44:88"; // change to the actual mac address
@@ -62,7 +62,7 @@ public class StartBluetoothConnection {
                 final int PREVIOUS_BOND_STATE = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, -1);
                 if(BOND_STATE == BluetoothDevice.BOND_BONDED) {//paired
                     callerActivity.showToast("Bound state == bounded. Device was found. You need to connect to it.");
-                    callerActivity.dismissDialog();//check it later
+                    callerActivity.dismissDialog();
                     if(bluetoothConnection.openSocketConnection(bluetoothDevice, handler,
                                 getConnectNotification(), getExceptionNotification()) != BluetoothConnection.OPENED) {
                         callerActivity.showToast("Connection failure.");
@@ -123,13 +123,20 @@ public class StartBluetoothConnection {
                 callerActivity.dismissDialog();
                 callerActivity.showToast("Connected to BikeBlocker device.");
                 callerActivity.startCyclingActivity();
-                MonitorCyclingData monitor = new MonitorCyclingData(new CyclingActivity(), bluetoothConnection, handler);
-                monitor.startMonitoring();
             }
         };
     }
 
-    public void close(){
+    public static BluetoothConnection getBluetoothConnection(){
+        return bluetoothConnection;
+    }
+
+    public static Handler getHandler(){
+        return handler;
+    }
+
+    public void closeResources(){
+        bluetoothConnection.stopDiscovery();
         try {
             if (mReceiver != null) {
                 callerActivity.unregisterReceiver(mReceiver);
@@ -140,9 +147,10 @@ public class StartBluetoothConnection {
         } catch (IOException e) {
             Log.e("ON DESTROY METHOD IO", "Error: " + e.getMessage());
         }
+        turnBluetoothOff();
     }
 
-    public void turnBluetoothOff(View view) {
+    public void turnBluetoothOff() {
         bluetoothConnection.turnOff();
     }
 
