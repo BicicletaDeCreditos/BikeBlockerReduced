@@ -17,6 +17,7 @@ public class StartConnectionActivity extends Activity {
     private BluetoothAdapter bluetoothAdapter; // mudar para bluetoothconnection
     private StartBluetoothConnection startBluetoothConnection;
     private AlertDialog builder;
+    private boolean alertmessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,24 +76,32 @@ public class StartConnectionActivity extends Activity {
     }
 
     public void askForTryAgain(){
-        AlertDialog.Builder  builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Try Again");
-        builder.setMessage("Connect to BikeBlocker Bluetooth device.");
-        builder.setPositiveButton(R.string.connect, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startBluetoothConnection.turnBluetoothOn();
-            }
-        });
+        if(!alertmessage) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Try Again");
+            builder.setMessage("Connect to BikeBlocker Bluetooth device.");
 
-        builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-        builder.show();
+            builder.setPositiveButton(R.string.connect, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertmessage = false;
+                    startBluetoothConnection.turnBluetoothOn();
+
+                }
+            });
+
+            builder.setNegativeButton(R.string.button_cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertmessage = false;
+                    finish();
+
+                }
+            });
+            alertmessage = true;
+            builder.show();
+        }
     }
 
     public void startCyclingActivity(){
