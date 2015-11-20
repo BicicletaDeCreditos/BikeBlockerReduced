@@ -75,7 +75,7 @@ public class AddAppActivity extends Activity {
         ArrayList<String> apps = new ArrayList<String>();
         ApplicationInfo[] apps_list = all_apps.toArray(new ApplicationInfo[(all_apps.size())]);
         for(int i = 0; i < apps_list.length; i++){
-
+            if(!apps_list[i].loadLabel(getPackageManager()).toString().equals("BikeBlocker"))
             apps.add(apps_list[i].loadLabel(getPackageManager()).toString());
            }
         return apps;
@@ -88,6 +88,7 @@ public class AddAppActivity extends Activity {
 
 
         for(int i = 0; i < apps_list.length; i++){
+            if(!apps_list[i].loadLabel(getPackageManager()).toString().equals("BikeBlocker"))
             app_icons.add(apps_list[i].loadIcon(getPackageManager()));
         }
         return app_icons;
