@@ -38,7 +38,11 @@ public class CyclingActivity extends Activity {
             }
         });
 
-        startMonitor();
+        try {
+            startMonitor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setCreditsTextView(String credits){
@@ -85,7 +89,7 @@ public class CyclingActivity extends Activity {
         System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser().getCredits());
     }
 
-    public void startMonitor(){
+    public void startMonitor() throws InterruptedException {
         MonitorCyclingData monitor = new MonitorCyclingData(this, StartBluetoothConnection.getBluetoothConnection(),
                 StartBluetoothConnection.getHandler());
         monitor.startMonitoring();

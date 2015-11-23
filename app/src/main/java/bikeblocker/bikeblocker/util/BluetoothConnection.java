@@ -105,6 +105,7 @@ public class BluetoothConnection {
                             Log.e("ERRO AO CONECTAR", "O erro foi " + e.getMessage());
                             try{
                                 bluetoothSocket =(BluetoothSocket) btDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(btDevice,1);
+                                bluetoothSocket.connect();
                                 System.out.println("Im trying to connect...");
                                 handler.post(connectNotification);
                             } catch (Exception e1) {
@@ -131,7 +132,7 @@ public class BluetoothConnection {
 
     public void readSocket(final int length, final Handler handler,
                          final Runnable dataReadNote, final Runnable exceptionNotification,
-                         final boolean loop) {
+                         final boolean loop) throws InterruptedException {
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -143,8 +144,11 @@ public class BluetoothConnection {
                     while (loop) {
                         if(writable) {
                             for (int i = 0; i < length; i++) {
-                                //data[i] = input.read();
-                                data[i] = 1;
+                                try{
+                                    data[i] = input.read();
+                                }catch (NullPointerException e){
+                                    data[i] = 0;
+                                }
                             }
                             setWritable(false);
                             handler.post(dataReadNote);

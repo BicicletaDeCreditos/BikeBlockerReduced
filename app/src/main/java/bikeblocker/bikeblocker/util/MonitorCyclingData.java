@@ -17,7 +17,7 @@ public class MonitorCyclingData {
         handler = mHandler;
     }
 
-    public void startMonitoring() {
+    public void startMonitoring() throws InterruptedException {
         Runnable readingNotes = new Runnable() {
             @Override
             public void run() {
@@ -26,6 +26,7 @@ public class MonitorCyclingData {
                 int highByte = data[1] << 8;
                 bluetoothConnection.setWritable(true);
                 int readData = highByte | lowByte;
+
                 cyclingActivity.setCreditsTextView(String.valueOf(readData));
             }
         } ;

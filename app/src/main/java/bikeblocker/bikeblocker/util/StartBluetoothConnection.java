@@ -23,7 +23,7 @@ public class StartBluetoothConnection {
     private static Handler handler;
     private IntentFilter filter;
     private boolean registered = false;
-    private final String MAC_ADDRESS = "64:89:9A:FE:44:88"; // change to the actual mac address
+    private final String MAC_ADDRESS = "20:15:06:10:11:75"; // change to the actual mac address
 
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
