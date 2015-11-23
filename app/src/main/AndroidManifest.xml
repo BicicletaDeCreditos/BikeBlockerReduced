@@ -54,11 +54,15 @@
         </activity>
         <activity
             android:name=".Control.AppsListActivity"
-            android:label="@string/title_activity_user_apps_list" >
+            android:label="@string/title_activity_user_apps_list"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Control.AddAppActivity"
-            android:label="@string/title_activity_add_user_app" >
+            android:label="@string/title_activity_add_user_app"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
 
         <service
@@ -74,15 +78,20 @@
 
         <activity
             android:name=".Control.NoEnoughCreditsDialogActivity"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Dialog"
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name=".Control.StartConnectionActivity"
-            android:label="@string/title_activity_start_connection" >
+            android:label="@string/title_activity_start_connection"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Control.CyclingActivity"
-            android:label="@string/title_activity_cycling" >
+            android:label="@string/title_activity_cycling"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
     </application>
 
