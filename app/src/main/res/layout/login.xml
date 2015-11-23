@@ -1,12 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent" android:gravity="center_horizontal"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="horizontal"
-    tools:context="bikeblocker.bikeblocker.Control.LoginActivity">
+    tools:context="bikeblocker.bikeblocker.Control.LoginActivity"
+    android:background="@drawable/user_background">
 
     <!-- Login progress -->
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
@@ -18,6 +20,14 @@
         android:baselineAligned="false"
         android:layout_gravity="center_vertical"
         android:weightSum="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:background="@drawable/bikeblocker_logo"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp" />
 
         <EditText android:id="@+id/username" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:hint="@string/prompt_username"
@@ -35,12 +45,27 @@
             android:maxLines="1" android:singleLine="true"
             android:contentDescription="password" />
 
-        <Button android:id="@+id/sign_in_button" style="?android:textAppearanceSmall"
-            android:layout_width="201dp" android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" android:text="@string/action_sign_in_short"
-            android:textStyle="bold"
+        <!--<Button android:id="@+id/sign_in_button"-->
+            <!--android:layout_width="201dp" android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="16dp" android:text="@string/action_sign_in_short"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:contentDescription="signIn"-->
+            <!--style="?android:textAppearanceSmall" />-->
+
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minHeight="40dp"
+            android:minWidth="200dp"
+            android:text="Sign in"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="signIn" />
+            android:textColor="@android:color/white"
+            fbutton:buttonColor="@color/fbutton_color_turquoise"
+            fbutton:shadowEnabled="true" />
 
     </LinearLayout>
 
