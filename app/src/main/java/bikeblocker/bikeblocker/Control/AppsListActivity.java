@@ -40,6 +40,7 @@ public class AppsListActivity extends Activity {
     @Override
     protected void onResume(){
         super.onResume();
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         appsUserList.setAdapter(getUserApps());
         if(getUserApps().isEmpty()){
             Toast.makeText(getApplicationContext(), "There is no app registered!", Toast.LENGTH_LONG).show();
@@ -137,12 +138,15 @@ public class AppsListActivity extends Activity {
     }
 
     public SimpleAdapter getUserApps(){
+
         String[] from ={"app_name", "credits_hour"};
         int[] to = new int[]{ R.id.appName, R.id.creditsPerHour };
         return new SimpleAdapter(this, appDAO.selectAllApps(), R.layout.user_apps, from, to);
+
     }
 
     public void startAddNewAppToUser(View view){
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, AddAppActivity.class);
         startActivity(intent);
     }
