@@ -6,6 +6,10 @@ import android.os.Handler;
 
 public class MonitorCyclingData {
 
+    private static final int SPEED = 1;
+    private static final int DISTANCE = 2;
+    private static final int CREDITS = 3;
+    private static final int CALORIES = 4;
     private CyclingActivity cyclingActivity;
     private BluetoothConnection bluetoothConnection;
     private Handler handler;
@@ -22,12 +26,23 @@ public class MonitorCyclingData {
             @Override
             public void run() {
                 int[] data = bluetoothConnection.getData();
-                int lowByte = data[0];
-                int highByte = data[1] << 8;
+                int infoType = data[0];
+                int readData = data[1];
                 bluetoothConnection.setWritable(true);
-                int readData = highByte | lowByte;
 
-                cyclingActivity.setCreditsTextView(String.valueOf(readData));
+                switch (infoType){
+                    case SPEED:
+                        cyclingActivity.setVelocityTextView(String.valueOf(readData));
+                        break;
+                    case DISTANCE:
+                        cyclingActivity.setDistanceTextView(String.valueOf(readData));
+                        break;
+                    case CREDITS:
+                        cyclingActivity.setCreditsTextView(String.valueOf(readData));
+                        break;
+                    case CALORIES:
+                        cyclingActivity.setCaloriesTextView(String.valueOf(readData));
+                }
             }
         } ;
         bluetoothConnection.readSocket(2, handler, readingNotes, null, true);

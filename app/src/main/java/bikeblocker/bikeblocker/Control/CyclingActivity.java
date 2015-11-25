@@ -30,6 +30,11 @@ public class CyclingActivity extends Activity {
         caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
         distanceTextView = (TextView) findViewById(R.id.distanceTextView);
 
+        creditsTextView.setText("0");
+        velocityTextView.setText("0");
+        caloriesTextView.setText("0");
+        distanceTextView.setText("0");
+
         finishCyclingButton = (ImageButton) findViewById(R.id.finishCyclingButton);
         finishCyclingButton.setOnClickListener(new View.OnClickListener() {
             @Override
