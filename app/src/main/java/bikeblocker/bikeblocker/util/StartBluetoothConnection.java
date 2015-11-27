@@ -1,5 +1,6 @@
 package bikeblocker.bikeblocker.util;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -8,12 +9,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Looper;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
 
 import bikeblocker.bikeblocker.Control.CyclingActivity;
+import bikeblocker.bikeblocker.Control.MainActivity;
 import bikeblocker.bikeblocker.Control.StartConnectionActivity;
 
 public class StartBluetoothConnection {
@@ -24,7 +28,9 @@ public class StartBluetoothConnection {
     private IntentFilter filter;
     private boolean registered = false;
     private final String MAC_ADDRESS = "20:15:06:10:11:75";
+    //"20:15:06:10:11:75"; // arduino
     //"64:89:9A:FE:44:88"; // change to the actual mac address
+
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -32,12 +38,16 @@ public class StartBluetoothConnection {
             String action = intent.getAction();
 
             if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)) {
+                System.out.println("action discovery!");
                 callerActivity.showConnectionDialog();
 
+
             } else if(action.equals(BluetoothDevice.ACTION_FOUND)) {
+                System.out.println("action found!");
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice
                         .EXTRA_DEVICE);
                 if(device.getAddress().equalsIgnoreCase(MAC_ADDRESS)) {
+                    System.out.println("mesmo mac address!");
                     bluetoothConnection.stopDiscovery();
                     bluetoothDevice = device;
                     if(bluetoothConnection.pairWithDevice(bluetoothDevice) == BluetoothConnection.PAIRED) {
@@ -96,6 +106,7 @@ public class StartBluetoothConnection {
                     filter.addAction(BluetoothDevice.ACTION_FOUND);
                     filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
                     filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+                    System.out.println("bluetooth ligado");
 
                     registered= true;
                     callerActivity.registerReceiver(mReceiver, filter);
