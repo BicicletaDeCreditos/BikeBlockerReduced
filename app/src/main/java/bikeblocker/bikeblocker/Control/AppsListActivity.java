@@ -52,8 +52,9 @@ public class AppsListActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 builder = new AlertDialog.Builder(AppsListActivity.this);
 
-                String infos = parent.getItemAtPosition(position).toString();
-                String app_name = infos.substring(27, (infos.length() - 1));
+                String[] infos = parent.getItemAtPosition(position).toString().split(",");
+                System.out.println(infos[0]);
+                String app_name = infos[0].substring(10, (infos[0].length()));
                 System.out.println("App name: " + app_name);
                 final App app = appDAO.selectApp(app_name);
 
