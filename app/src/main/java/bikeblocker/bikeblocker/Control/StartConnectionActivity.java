@@ -1,11 +1,15 @@
 package bikeblocker.bikeblocker.Control;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,6 +22,8 @@ public class StartConnectionActivity extends Activity {
     private StartBluetoothConnection startBluetoothConnection;
     private AlertDialog builder;
     private boolean alertmessage;
+    public static final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION_PERMISSIONS = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,7 @@ public class StartConnectionActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startBluetoothConnection.turnBluetoothOn();
+                askpermission();
             }
         });
 
@@ -51,6 +58,35 @@ public class StartConnectionActivity extends Activity {
         builder.show();
     }
 
+    public void askpermission()
+    {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(StartConnectionActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(StartConnectionActivity.this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(StartConnectionActivity.this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_COARSE_LOCATION_PERMISSIONS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+    }
     public void connectToBikeBlocker(View view){
         startBluetoothConnection.turnBluetoothOn();
     }
