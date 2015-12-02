@@ -7,10 +7,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import bikeblocker.bikeblocker.R;
@@ -28,6 +30,10 @@ public class StartConnectionActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_connection);
+
+        Typeface clickToStartFace = Typeface.createFromAsset(getAssets(),"MJF Zhafira Demo.ttf");
+        TextView clickToStartText = (TextView)findViewById(R.id.clickToStartText);
+        clickToStartText.setTypeface(clickToStartFace);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
