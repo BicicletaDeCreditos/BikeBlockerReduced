@@ -15,5 +15,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:onClick="connectToBikeBlocker"
-        android:background="@drawable/bike_icon" />
+        android:background="@drawable/bike_icon"
+        android:clickable="true"
+        android:contentDescription="startbiking" />
 </RelativeLayout>
