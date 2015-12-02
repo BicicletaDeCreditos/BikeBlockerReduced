@@ -18,4 +18,17 @@
         android:background="@drawable/bike_icon"
         android:clickable="true"
         android:contentDescription="startbiking" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Click to Start"
+        android:textSize="40dp"
+        android:id="@+id/clickToStartText"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffff"
+        android:contentDescription="clicktostartText"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
