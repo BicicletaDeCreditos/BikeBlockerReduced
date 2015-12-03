@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="horizontal"
-    android:background="@drawable/user_background"
+    android:background="@drawable/background_cycling"
     tools:context="bikeblocker.bikeblocker.Control.CyclingActivity">
 
 
@@ -21,8 +21,8 @@
         android:layout_height="100dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/creditsTextView"
-        android:layout_below="@+id/chronometer"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/chronometer" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,9 +39,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/velocityLabel"
         android:id="@+id/velocityLabel"
-        android:layout_below="@+id/creditsLabelTextView"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="38dp" />
+        android:layout_marginBottom="100dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,7 +59,10 @@
         android:text="@string/caloriesLabel"
         android:id="@+id/caloriesLabel"
         android:layout_alignBottom="@+id/distanceLabel"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,7 +86,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/caloriesTextView"
         android:layout_below="@+id/caloriesLabel"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp" />
 
     <ImageButton
         android:layout_width="100dp"
