@@ -1,8 +1,10 @@
 package bikeblocker.bikeblocker.Control;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,17 @@ public class CyclingActivity extends Activity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        startChronometer();
+
+    }
+
+    public void startChronometer() {
+        ((Chronometer) findViewById(R.id.chronometer)).start();
+    }
+
+    public void stopChronometer() {
+        ((Chronometer) findViewById(R.id.chronometer)).stop();
     }
 
     public void setCreditsTextView(String credits){
@@ -72,14 +85,20 @@ public class CyclingActivity extends Activity {
 
     public void cancelCycling(){
         updateCredits();
+        stopChronometer();
         finish();
+
     }
 
     @Override
     public void onBackPressed() {
         cancelCycling();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         super.onBackPressed();
+
     }
+
 
     private void updateCredits(){
         User user = UserDAO.getInstance(getApplicationContext()).selectUser();
