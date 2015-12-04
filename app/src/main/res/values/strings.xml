@@ -40,7 +40,7 @@
     <string name="listDevices">Search Devices</string>
     <string name="title_activity_start_connection">StartConnectionActivity</string>
     <string name="title_activity_cycling">CyclingActivity</string>
-    <string name="velocityLabel">Velocity</string>
-    <string name="distanceLabel">Distance</string>
-    <string name="caloriesLabel">Calories</string>
+    <string name="velocityLabel">Velocity (km/h)</string>
+    <string name="distanceLabel">Distance (meters)</string>
+    <string name="caloriesLabel">Calories (kcal)</string>
 </resources>
