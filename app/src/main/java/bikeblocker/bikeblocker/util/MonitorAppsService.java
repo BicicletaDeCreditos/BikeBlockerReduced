@@ -58,6 +58,7 @@ public class MonitorAppsService extends Service implements Runnable {
             try{
                 apps = appDAO.getAppsNameFromDatabase();
                 System.out.println("This is my thread running in background " + count++);
+
                 if(!apps.isEmpty()){
                     checkAppOnForeground(apps);
                 }
@@ -140,6 +141,7 @@ public class MonitorAppsService extends Service implements Runnable {
         String foregroundTaskPackageName = foregroundTaskInfo .topActivity.getPackageName();
         PackageManager pm = this.getPackageManager();
         PackageInfo foregroundAppPackageInfo = pm.getPackageInfo(foregroundTaskPackageName, 0);
+        System.out.println(foregroundAppPackageInfo.applicationInfo.loadLabel(pm).toString());
         return foregroundAppPackageInfo.applicationInfo.loadLabel(pm).toString();
     }
 
