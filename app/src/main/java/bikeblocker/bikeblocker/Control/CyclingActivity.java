@@ -2,12 +2,15 @@ package bikeblocker.bikeblocker.Control;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.User;
@@ -21,6 +24,10 @@ public class CyclingActivity extends Activity {
     private TextView caloriesTextView;
     private TextView distanceTextView;
     private ImageButton finishCyclingButton;
+    private TextView creditsLabelTextView;
+    private TextView caloriesLabelTextView;
+    private TextView velocityLabelTextView;
+    private TextView distanceLabelTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +39,24 @@ public class CyclingActivity extends Activity {
         caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
         distanceTextView = (TextView) findViewById(R.id.distanceTextView);
 
+        creditsLabelTextView = (TextView) findViewById((R.id.creditsLabelTextView));
+        velocityLabelTextView = (TextView) findViewById(R.id.velocityLabel);
+        caloriesLabelTextView = (TextView) findViewById(R.id.caloriesLabel);
+        distanceLabelTextView = (TextView) findViewById(R.id.distanceLabel);
+
+
         creditsTextView.setText("0");
         velocityTextView.setText("0");
         caloriesTextView.setText("0");
         distanceTextView.setText("0");
+
+        Typeface newTitleFace = Typeface.createFromAsset(getAssets(),"MJF Zhafira Demo.ttf");
+        creditsTextView.setTypeface(newTitleFace);
+        creditsLabelTextView.setTypeface(newTitleFace);
+        velocityLabelTextView.setTypeface(newTitleFace);
+        caloriesLabelTextView.setTypeface(newTitleFace);
+        distanceLabelTextView.setTypeface(newTitleFace);
+
 
         finishCyclingButton = (ImageButton) findViewById(R.id.finishCyclingButton);
         finishCyclingButton.setOnClickListener(new View.OnClickListener() {
