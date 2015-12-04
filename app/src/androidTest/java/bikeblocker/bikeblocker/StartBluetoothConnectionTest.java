@@ -61,7 +61,7 @@ public class StartBluetoothConnectionTest extends InstrumentationTestCase {
 
         device.wait(Until.hasObject(By.desc("Deny")), 5000);
 
-        assertTrue(device.findObject(new UiSelector().clickable(true)).exists());
+        assertTrue(device.findObject(new UiSelector().description("Deny")).exists());
 
 
     }
