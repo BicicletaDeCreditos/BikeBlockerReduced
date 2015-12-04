@@ -38,6 +38,13 @@ public class AppsListActivity extends Activity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        return;
+    }
+
+    @Override
     protected void onResume(){
         super.onResume();
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
