@@ -35,4 +35,12 @@
     <string name="title_activity_add_user_app">AddUserAppActivity</string>
     <string name="creditsMessage">Select the number of credits needed to access this app for 1 hour.</string>
     <string name="title_activity_check_user_login_dialog">CheckUserLoginDialogActivity</string>
+    <string name="title_activity_connect_bluetooth">ConnectBluetoothActivity</string>
+    <string name="connect">Connect</string>
+    <string name="listDevices">Search Devices</string>
+    <string name="title_activity_start_connection">StartConnectionActivity</string>
+    <string name="title_activity_cycling">CyclingActivity</string>
+    <string name="velocityLabel">Velocity (km/h)</string>
+    <string name="distanceLabel">Distance (meters)</string>
+    <string name="caloriesLabel">Calories (kcal)</string>
 </resources>

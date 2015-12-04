@@ -16,7 +16,12 @@
         android:clickable="true"
         android:headerDividersEnabled="false"
         android:layout_gravity="center"
-        android:contentDescription="listUserApps" />
+        android:divider="#00000000"
+        android:dividerHeight="10.0sp"
+        android:contentDescription="listUserApps"
+        android:backgroundTint="@color/background_material_light"
+        android:backgroundTintMode="screen"
+         />
 
     <ImageButton
         android:layout_marginLeft="50dp"
@@ -47,4 +52,19 @@
         android:src="@drawable/profile_icon"
         android:background="@drawable/roundedbutton"/>
 
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:backgroundTint="@color/abc_primary_text_material_dark">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </RelativeLayout>
+
+
 </FrameLayout>
+

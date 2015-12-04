@@ -38,8 +38,16 @@ public class AppsListActivity extends Activity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        return;
+    }
+
+    @Override
     protected void onResume(){
         super.onResume();
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         appsUserList.setAdapter(getUserApps());
         if(getUserApps().isEmpty()){
             Toast.makeText(getApplicationContext(), "There is no app registered!", Toast.LENGTH_LONG).show();
@@ -52,8 +60,9 @@ public class AppsListActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 builder = new AlertDialog.Builder(AppsListActivity.this);
 
-                String infos = parent.getItemAtPosition(position).toString();
-                String app_name = infos.substring(27, (infos.length() - 1));
+                String[] infos = parent.getItemAtPosition(position).toString().split(",");
+                System.out.println(infos[0]);
+                String app_name = infos[0].substring(10, (infos[0].length()));
                 System.out.println("App name: " + app_name);
                 final App app = appDAO.selectApp(app_name);
 
@@ -137,12 +146,15 @@ public class AppsListActivity extends Activity {
     }
 
     public SimpleAdapter getUserApps(){
+
         String[] from ={"app_name", "credits_hour"};
         int[] to = new int[]{ R.id.appName, R.id.creditsPerHour };
         return new SimpleAdapter(this, appDAO.selectAllApps(), R.layout.user_apps, from, to);
+
     }
 
     public void startAddNewAppToUser(View view){
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, AddAppActivity.class);
         startActivity(intent);
     }

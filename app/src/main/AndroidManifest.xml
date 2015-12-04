@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,16 +31,16 @@
         <activity
             android:name=".Control.LoginActivity"
             android:label="@string/title_activity_settings_auth"
-            android:windowSoftInputMode="adjustResize|stateVisible"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
             android:name=".Control.RegisterPasswordActivity"
             android:label="@string/title_activity_register"
-            android:windowSoftInputMode="adjustResize|stateVisible"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <!-- Force Landscape -->
         <activity
@@ -69,12 +74,27 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="START_SERVICE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+
         <activity
-            android:name=".Control.CheckUserLoginDialogActivity"
-            android:theme="@android:style/Theme.Dialog">
+            android:name=".Control.NoEnoughCreditsDialogActivity"
+            android:theme="@android:style/Theme.Dialog"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".Control.StartConnectionActivity"
+            android:label="@string/title_activity_start_connection"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".Control.CyclingActivity"
+            android:label="@string/title_activity_cycling"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
     </application>
 
