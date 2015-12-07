@@ -93,6 +93,7 @@ public class MonitorAppsService extends Service implements Runnable {
 
     private void monitorAppUsage(int creditsPerHour, String app_name) {
         if(checkCredits() > 0){
+            System.out.println("monitor app usage");
             if(app_name.equalsIgnoreCase(previousApp)){ //using the same app after thread sleep
                 counter++;// incrementa contador
                 counterPerCredit = (60/creditsPerHour)*threadsPerMin;
@@ -146,30 +147,26 @@ public class MonitorAppsService extends Service implements Runnable {
         contentTextString = "";
 
         if (credits > 1) {
-            contentTitleString = "You just used 1 of" + credits + "total credits";
-            contentTextString = name + ", You still have " + credits + "credits";
+            contentTitleString = "You just used 1 of " + credits + " total credits";
+            contentTextString = name + ", You still have " + credits + " credits to use.";
         } else if (credits == 1) {
             contentTitleString = "You have only 1 credit";
-            contentTextString = name + ", This is you last credit";
+            contentTextString = name + ", This is you last credit. Your application will be shutdown after this credit use.";
         }
         int mId = 1;
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.bike_icon)
+                            .setSmallIcon(R.drawable.notification_icon)
                             .setContentTitle(contentTitleString)
                             .setContentText(contentTextString);
 
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(this, ViewUserActivity.class);
 
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
+                Intent resultIntent = new Intent(this, MainActivity.class);
+
                 TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        // Adds the back stack for the Intent (but not the Intent itself)
+
                 stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
+
                 stackBuilder.addNextIntent(resultIntent);
                 PendingIntent resultPendingIntent =
                         stackBuilder.getPendingIntent(
@@ -177,7 +174,7 @@ public class MonitorAppsService extends Service implements Runnable {
                                 PendingIntent.FLAG_UPDATE_CURRENT
                         );
                 mBuilder.setContentIntent(resultPendingIntent);
-                NotificationManager mNotificationManager =
+               NotificationManager mNotificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
                 mNotificationManager.notify(mId, mBuilder.build());
