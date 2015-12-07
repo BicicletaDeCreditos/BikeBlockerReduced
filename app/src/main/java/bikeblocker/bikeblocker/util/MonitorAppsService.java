@@ -1,20 +1,28 @@
 package bikeblocker.bikeblocker.util;
 
 import android.app.ActivityManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 
 import java.util.List;
 
+import bikeblocker.bikeblocker.Control.MainActivity;
 import bikeblocker.bikeblocker.Control.NoEnoughCreditsDialogActivity;
+import bikeblocker.bikeblocker.Control.ViewUserActivity;
 import bikeblocker.bikeblocker.Database.AppDAO;
 import bikeblocker.bikeblocker.Database.UserDAO;
 import bikeblocker.bikeblocker.Model.App;
 import bikeblocker.bikeblocker.Model.User;
+import bikeblocker.bikeblocker.R;
 
 public class MonitorAppsService extends Service implements Runnable {
     private String previousApp = "";
@@ -29,6 +37,11 @@ public class MonitorAppsService extends Service implements Runnable {
     private final int HALF_MINUTE = 3;
     private final int A_MINUTE = 6;
     private final int TWO_MINUTES = 12;
+
+    private String contentTitleString = "";
+    private String contentTextString = "";
+    private int credits;
+    private String name;
 
     @Override
     public void onCreate(){
@@ -80,6 +93,7 @@ public class MonitorAppsService extends Service implements Runnable {
 
     private void monitorAppUsage(int creditsPerHour, String app_name) {
         if(checkCredits() > 0){
+            System.out.println("monitor app usage");
             if(app_name.equalsIgnoreCase(previousApp)){ //using the same app after thread sleep
                 counter++;// incrementa contador
                 counterPerCredit = (60/creditsPerHour)*threadsPerMin;
@@ -126,6 +140,44 @@ public class MonitorAppsService extends Service implements Runnable {
         UserDAO.getInstance(getApplicationContext()).editUserInformation(user);
         System.out.println("Debitado creditos de usuario. ");
         System.out.println("Quantidade atual: " + UserDAO.getInstance(getApplicationContext()).selectUser().getCredits());
+
+        credits = UserDAO.getInstance(getApplicationContext()).selectUser().getCredits();
+        name = UserDAO.getInstance(getApplicationContext()).selectUser().getName();
+        contentTitleString = "";
+        contentTextString = "";
+
+        if (credits > 1) {
+            contentTitleString = "You just used 1 of " + credits + " total credits";
+            contentTextString = name + ", You still have " + credits + " credits to use.";
+        } else if (credits == 1) {
+            contentTitleString = "You have only 1 credit";
+            contentTextString = name + ", This is you last credit. Your application will be shutdown after this credit use.";
+        }
+        int mId = 1;
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.notification_icon)
+                            .setContentTitle(contentTitleString)
+                            .setContentText(contentTextString);
+
+
+                Intent resultIntent = new Intent(this, MainActivity.class);
+
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+
+                stackBuilder.addParentStack(MainActivity.class);
+
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+               NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+                mNotificationManager.notify(mId, mBuilder.build());
     }
 
     private void blockApp(){
