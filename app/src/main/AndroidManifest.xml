@@ -45,7 +45,7 @@
         <!-- Force Landscape -->
         <activity
             android:name=".Control.RegisterUserActivity"
-            android:label="@string/title_activity_add_new_user" >
+            android:label="@string/title_activity_add_new_user" 
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
@@ -81,8 +81,8 @@
 
         <activity
             android:name=".Control.NoEnoughCreditsDialogActivity"
-            android:theme="@android:style/Theme.Dialog"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".Control.StartConnectionActivity"
