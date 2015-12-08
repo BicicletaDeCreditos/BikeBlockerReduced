@@ -1,16 +1,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="bikeblocker.bikeblocker.Control.RegisterUserActivity"
-    android:id="@+id/activity_add_new_user">
+    android:id="@+id/activity_add_new_user"
+    android:background="@drawable/user_background">
+
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/newUserLayout">
+        android:id="@+id/newUserLayout"
+        android:nestedScrollingEnabled="false"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white"
+        android:baselineAligned="false">
 
         <EditText android:id="@+id/nameEditText"
         android:layout_width="match_parent"
@@ -19,9 +28,11 @@
         android:inputType="textPersonName|textCapWords"
             android:contentDescription="userName"
             android:layout_row="0"
-            android:layout_column="0" />
+            android:layout_column="0"
+            android:textColor="@android:color/white"/>
 
         <EditText
+            android:textColor="@android:color/white"
             android:id="@+id/usernameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,6 +44,7 @@
             android:layout_column="0" />
 
         <EditText android:id="@+id/passwordEditText"
+            android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext" android:hint="@string/insert_password"
@@ -42,6 +54,7 @@
             android:contentDescription="userPassword" />
 
         <EditText android:id="@+id/confirmPasswordEditText"
+            android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext" android:hint="@string/confirm_password"
@@ -50,7 +63,7 @@
             android:layout_column="0"
             android:contentDescription="userConfirmPassword" />
 
-        <Button
+        <info.hoang8f.widget.FButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/saveUser"
@@ -61,7 +74,12 @@
             android:clickable="true"
             android:enabled="true"
             android:focusable="false"
-            android:focusableInTouchMode="true" />
+            android:textColor="@android:color/white"
+            fbutton:buttonColor="@color/fbutton_color_turquoise"
+            android:layout_gravity="center_horizontal"
+            android:focusableInTouchMode="true"
+            android:minHeight="40dp"
+            android:minWidth="200dp"/>
 
     </GridLayout>
 
