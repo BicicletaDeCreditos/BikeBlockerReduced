@@ -40,7 +40,6 @@ public class AddAppActivity extends Activity {
         allInstalledAppsList = (ListView) findViewById(R.id.allInstalledAppsList);
         allInstalledAppsList.setAdapter(getInstalledAppsAdapter());
         allInstalledAppsList.setOnItemClickListener(listener());
-        allInstalledAppsList.setAdapter(getInstalledAppIconAdapter());
 
         if(getInstalledAppsAdapter().isEmpty()){
             Toast.makeText(getApplicationContext(), "No apps", Toast.LENGTH_LONG).show();
@@ -63,11 +62,7 @@ public class AddAppActivity extends Activity {
         return new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getAppsNames());
     }
 
-    public ArrayAdapter<Drawable> getInstalledAppIconAdapter(){
-        String[] from ={"app_icon"};
-        int[] to = new int[]{ R.id.app_icon };
-        return new ArrayAdapter<Drawable>(this, R.layout.installed_apps, getAppsIcon());
-    }
+
 
 
     public ArrayList<String> getAppsNames(){
