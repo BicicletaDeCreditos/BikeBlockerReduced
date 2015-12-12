@@ -5,7 +5,7 @@
 /captures
 
 #Build application files
-*.apk
+
 *.ap
 
 #Files for the Dalvik VM
