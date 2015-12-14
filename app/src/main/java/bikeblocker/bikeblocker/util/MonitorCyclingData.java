@@ -14,7 +14,8 @@ public class MonitorCyclingData {
     private BluetoothConnection bluetoothConnection;
     private Handler handler;
     private int distance = 0;
-    boolean firstReading = true;
+    private int aux = 0;
+    private boolean read = false;
 
     public MonitorCyclingData(CyclingActivity activity, BluetoothConnection connection,
                               Handler mHandler) {
@@ -37,14 +38,14 @@ public class MonitorCyclingData {
                         cyclingActivity.setVelocityTextView(String.valueOf(readData));
                         break;
                     case DISTANCE:
-                        if(firstReading){
-                            distance = readData;
-                            firstReading = false;
-                        }
-                        if(distance != readData){
-                            distance++;
-                        }
                         cyclingActivity.setDistanceTextView(String.valueOf(distance));
+                        if(readData == 255){
+                            read = true;
+                        }else if (readData == 0 && read == true){
+                            aux++;
+                            read = false;
+                        }
+                        distance = readData + (aux * 255);
                         break;
                     case CREDITS:
                         cyclingActivity.setCreditsTextView(String.valueOf(readData));
